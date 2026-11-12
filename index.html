@@ -82,14 +82,30 @@ h2{font-family:var(--serif);font-size:clamp(26px,3.4vw,36px);letter-spacing:1px;
 
 /* projects */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-.proj{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;
+.proj{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0;
   text-decoration:none;transition:.25s;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.proj .body{padding:24px 26px 26px;display:flex;flex-direction:column;flex:1}
+.proj img.cover{width:100%;height:170px;object-fit:cover;display:block;border-bottom:1px solid var(--line);transition:transform .4s}
+.proj:hover img.cover{transform:scale(1.04)}
 .proj:hover{transform:translateY(-4px);box-shadow:0 20px 44px -18px rgba(20,24,29,.22);border-color:var(--accent)}
 .proj .tag{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
 .proj h3{font-family:var(--serif);font-size:21px;margin-bottom:8px}
 .proj p{font-size:14px;color:var(--ink-soft);flex:1}
 .proj .go{margin-top:18px;font-size:13px;color:var(--accent);font-weight:600;letter-spacing:.5px}
-.proj::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold));opacity:0;transition:.25s}
+.proj::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold));opacity:0;transition:.25s;z-index:2}
+
+/* writing cards */
+.write-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.write{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;transition:.25s;text-decoration:none;display:flex;flex-direction:column}
+.write:hover{transform:translateY(-3px);box-shadow:0 16px 36px -16px rgba(20,24,29,.2);border-color:var(--gold)}
+.write .cat{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
+.write h3{font-size:16px;line-height:1.5;margin-bottom:8px}
+.write p{font-size:13px;color:var(--ink-soft);flex:1}
+.write .meta{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:1px}
+/* cert */
+.cert-row{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+.cert-row img{width:min(340px,100%);border-radius:10px;border:1px solid var(--line);box-shadow:0 14px 30px -14px rgba(20,24,29,.25)}
+.cert-row .cert-text{flex:1;min-width:240px}
 .proj:hover::after{opacity:1}
 .proj .lock{display:inline-block;font-size:11px;background:var(--line);border-radius:10px;padding:1px 8px;margin-left:8px;vertical-align:2px;color:var(--ink-soft)}
 
@@ -137,6 +153,7 @@ footer a{color:var(--accent);text-decoration:none}
     <a href="#education" data-zh="教育" data-en="Education">教育</a>
     <a href="#research" data-zh="研究" data-en="Research">研究</a>
     <a href="#pubs" data-zh="论著" data-en="Publications">论著</a>
+    <a href="#writing" data-zh="写作" data-en="Writing">写作</a>
     <a href="#life" data-zh="经历" data-en="Beyond">经历</a>
     <a href="CV_QianruHuang.pdf" target="_blank">CV ↓</a>
   </div>
@@ -189,40 +206,57 @@ footer a{color:var(--accent);text-decoration:none}
   <h2 data-zh="产品与研究项目" data-en="Products & Research Projects">产品与研究项目</h2>
   <div class="proj-grid">
     <a class="proj" href="https://sinyu1998-eng.github.io/chengxing-landing/" target="_blank">
+      <img class="cover" src="assets/chengxing.jpg" alt="成行 The Concierge AI" loading="lazy">
+      <div class="body">
       <div class="tag">TO C · AI AGENT</div>
       <h3>成行 · The Concierge AI</h3>
       <p data-zh="面向个人用户的 AI 管家：从产品介绍到种子用户报名的完整入口站，让每一次计划都成行。" data-en="A concierge AI for individuals — full entry site from product intro to early-adopter signup. 让每一次计划都成行。">面向个人用户的 AI 管家：从产品介绍到种子用户报名的完整入口站，让每一次计划都成行。</p>
       <div class="go" data-zh="访问官网 →" data-en="Visit site →">访问官网 →</div>
+      </div>
     </a>
     <a class="proj" href="https://sinyu1998-eng.github.io/CloudSail-Fideight/" target="_blank">
+      <img class="cover" src="assets/cloudsail.jpg" alt="CloudSail 云帆出海" loading="lazy">
+      <div class="body">
       <div class="tag">TO B · SAAS</div>
       <h3>CloudSail 云帆出海</h3>
       <p data-zh="AI 全托管出海系统：客户开发、建档报价、多语翻译、跟单催收、验货排期、物流追踪——工厂只需要发货。" data-en="AI-managed cross-border operating system: client development, quoting, translation, order follow-up, inspection & logistics — factories just ship.">AI 全托管出海系统：客户开发、建档报价、多语翻译、跟单催收、验货排期、物流追踪——工厂只需要发货。</p>
       <div class="go" data-zh="访问官网 →" data-en="Visit site →">访问官网 →</div>
+      </div>
     </a>
     <a class="proj" href="https://github.com/sinyu1998-eng/cloudsail-glasses" target="_blank">
+      <img class="cover" src="assets/glasses.jpg" alt="CloudSail Glasses" loading="lazy">
+      <div class="body">
       <div class="tag">HACKATHON · AR</div>
       <h3>CloudSail Glasses</h3>
       <p data-zh="基于 Rokid AIUI 的出海现场助手（山海 wo 黑客松作品）：AR 眼镜里的实时翻译与商务助理。" data-en="CloudSail field assistant on Rokid AIUI (ShanHaiWoo hackathon): real-time translation & business aide in AR glasses.">基于 Rokid AIUI 的出海现场助手（山海Woo 黑客松作品）：AR 眼镜里的实时翻译与商务助理。</p>
       <div class="go">GitHub ↗</div>
+      </div>
     </a>
     <a class="proj" href="https://sinyu1998-eng.github.io/verifiable-trade-events/" target="_blank">
+      <img class="cover" src="assets/trade.jpg" alt="Verifiable Trade Events" loading="lazy">
+      <div class="body">
       <div class="tag">OPEN RESEARCH · BLOCKCHAIN</div>
       <h3>Verifiable Trade Events</h3>
       <p data-zh="开放研究：把跨境贸易事件变成可验证、可审计的链上凭证（Solidity + 白皮书 + 场景库）。" data-en="Open research on turning trade events into verifiable, auditable on-chain proofs (Solidity + whitepaper + scenarios).">开放研究：把跨境贸易事件变成可验证、可审计的链上凭证（Solidity + 白皮书 + 场景库）。</p>
       <div class="go" data-zh="阅读白皮书 →" data-en="Read whitepaper →">阅读白皮书 →</div>
+      </div>
     </a>
     <a class="proj" href="https://sinyu1998-eng.github.io/burger-shop/" target="_blank">
+      <img class="cover" src="assets/salon.jpg" alt="义乌屋顶沙龙海报" loading="lazy">
+      <div class="body">
       <div class="tag">EVENT · COMMUNITY</div>
       <h3>Salon · 义乌屋顶沙龙</h3>
       <p data-zh="线下沙龙活动页：中英双语、场地信息与海报一体化呈现——Toastmaster 社区运营的延伸。" data-en="Bilingual salon event page with venue & poster — an extension of my Toastmaster community work.">线下沙龙活动页：中英双语、场地信息与海报一体化呈现——Toastmaster 社区运营的延伸。</p>
       <div class="go" data-zh="查看活动页 →" data-en="View event page →">查看活动页 →</div>
+      </div>
     </a>
     <a class="proj" href="https://github.com/sinyu1998-eng/CloudSail" target="_blank">
+      <div class="body">
       <div class="tag">BACKEND · PYTHON</div>
       <h3>CloudSail Portal<span class="lock" data-zh="私有" data-en="private">私有</span></h3>
       <p data-zh="CloudSail 的系统核心：门户服务、连接器框架（Amazon SP-API / Noon）、发布与部署管线。" data-en="CloudSail core: portal service, connector framework (Amazon SP-API / Noon), release & deploy pipeline.">CloudSail 的系统核心：门户服务、连接器框架（Amazon SP-API / Noon）、发布与部署管线。</p>
       <div class="go">GitHub ↗</div>
+      </div>
     </a>
   </div>
 </section>
@@ -297,6 +331,50 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="pub"><div class="idx">J2</div><p>“Sixology” (LiuXue): Internet memes and the construction of collective identity <i>(under review, 2023)</i></p></div>
       <div class="pub"><div class="idx">J3</div><p>How Culture Affects People's Health Choices and Attitude: Food, Blessing, Energy <i>(under review, 2023)</i></p></div>
       <div class="pub"><div class="idx">J4</div><p>Huang, Q. R., & Zhao, Y. Digital Literacy and Interdisciplinarity in Digital Research: Lessons from a Comparative Analysis of China and the UK <i>(under review, 2022)</i></p></div>
+    </div>
+  </div>
+  <div class="cert-row" style="margin-top:40px">
+    <img src="assets/iamcr-cert.png" alt="IAMCR 2023 conference certificate" loading="lazy">
+    <div class="cert-text">
+      <h3 style="font-family:var(--serif);margin-bottom:8px" data-zh="IAMCR 2023 · 会议证书" data-en="IAMCR 2023 · Conference Certificate">IAMCR 2023 · 会议证书</h3>
+      <p style="font-size:14px;color:var(--ink-soft)" data-zh="论文《Platform-based Cultural Production》被收录进国际媒介与传播研究学会（IAMCR）2023 年会政治经济学分组的线上会议程序。" data-en="“Platform-based Cultural Production” was included in the Political Economy Section programme of the IAMCR 2023 annual conference (online).">论文《Platform-based Cultural Production》被收录进国际媒介与传播研究学会（IAMCR）2023 年会政治经济学分组的线上会议程序。</p>
+    </div>
+  </div>
+</section>
+
+<section id="writing">
+  <div class="sec-kicker" data-zh="Writing & Projects" data-en="Writing & Projects">Writing & Projects</div>
+  <h2 data-zh="写作与更多研究" data-en="Writing & More Research">写作与更多研究</h2>
+  <div class="write-grid">
+    <div class="write">
+      <div class="cat">MASTER THESIS · ZJU</div>
+      <h3 data-zh="身份建构、社会资本与数字动员：“六学”戏仿研究" data-en="Identity, Social Capital & Digital Mobilization: “Sixology” Parody">身份建构、社会资本与数字动员：“六学”戏仿研究</h3>
+      <p data-zh="从 2006 年《一个馒头引发的血案》到“六学”“明学”的全民狂欢，以迷因理论透视中国网络戏仿亚文化的壮观图景。" data-en="From the 2006 “bloody case caused by a steamed bun” to the LiuXue carnival — a memetic lens on China's parody subculture.">从 2006 年《一个馒头引发的血案》到“六学”“明学”的全民狂欢，以迷因理论透视中国网络戏仿亚文化的壮观图景。</p>
+      <div class="meta">2021–2023 · FULL THESIS</div>
+    </div>
+    <div class="write">
+      <div class="cat">WORKING PAPER · AI & SOCIETY</div>
+      <h3 data-zh="Navigating Algorithms：中国 AI 交友软件中的 LGBTQ+ 身份与话语" data-en="Navigating Algorithms: LGBTQ+ Identity & Discourse in AI-Empowered Dating Apps in China">Navigating Algorithms：中国 AI 交友软件中的 LGBTQ+ 身份与话语</h3>
+      <p data-zh="考察 LGBTQ+ 群体如何使用 AI 增强的社交产品，以及算法在身份形成、表征与社区话语中的角色与挑战。" data-en="How the LGBTQ+ community in China uses AI-enhanced dating apps, and how algorithms shape identity, representation and discourse.">考察 LGBTQ+ 群体如何使用 AI 增强的社交产品，以及算法在身份形成、表征与社区话语中的角色与挑战。</p>
+      <div class="meta">2024 · DRAFT</div>
+    </div>
+    <div class="write">
+      <div class="cat">ESSAY · 中文评论</div>
+      <h3 data-zh="TikTok 美国业务关停风波：法律、商业与政治的博弈" data-en="TikTok's US Shutdown Saga: Law, Business and Politics">TikTok 美国业务关停风波：法律、商业与政治的博弈</h3>
+      <p data-zh="从法律禁令、字节跳动商业考量到政治变量，三重视角拆解跨国互联网企业面对地缘政治挑战的应对样本。" data-en="A three-lens analysis — legal bans, ByteDance's business calculus, political variables — of how cross-border platforms weather geopolitical shocks.">从法律禁令、字节跳动商业考量到政治变量，三重视角拆解跨国互联网企业面对地缘政治挑战的应对样本。</p>
+      <div class="meta">2025 · SUBMITTED</div>
+    </div>
+    <div class="write">
+      <div class="cat">RESEARCH REPORT · DESIGN</div>
+      <h3 data-zh="中式快餐店用餐区色彩方案分析" data-en="Color Scheme Analysis of Chinese Fast-Food Dining Areas">中式快餐店用餐区色彩方案分析</h3>
+      <p data-zh="基于 S-O-R 与 PAD 情绪模型设计问卷，走访门店访谈 153 位顾客，用 ANOVA 与广义线性模型做多尺度色彩定量分析。" data-en="S-O-R & PAD based questionnaires, 153 customer interviews, ANOVA & GLM multi-scale analysis of color temperature and harmony.">基于 S-O-R 与 PAD 情绪模型设计问卷，走访门店访谈 153 位顾客，用 ANOVA 与广义线性模型做多尺度色彩定量分析。</p>
+      <div class="meta">2018 · ZJU · PROF. M. R. LUO</div>
+    </div>
+    <div class="write">
+      <div class="cat">VENTURE · BUSINESS PLAN</div>
+      <h3 data-zh="Asbury 中国加速器：打造中国硬科技时代的创业引擎" data-en="Asbury China Accelerator: An Engine for China's Deep-Tech Era">Asbury 中国加速器：打造中国硬科技时代的创业引擎</h3>
+      <p data-zh="“硅谷基因 × 中国速度 × 产业深度”：3+6 加速计划、政府引导基金 + CVC 联合模式、顶尖机构技术转化通道的商业设计。" data-en="“Silicon-Valley genes × China speed × industry depth”: a 3+6 acceleration program with government-guided funds and CVC co-investment.">“硅谷基因 × 中国速度 × 产业深度”：3+6 加速计划、政府引导基金 + CVC 联合模式、顶尖机构技术转化通道的商业设计。</p>
+      <div class="meta">2024 · BP</div>
     </div>
   </div>
 </section>
