@@ -12,7 +12,9 @@
     { id: 'research', file: 'research.html', zh: '科研',   en: 'Research' },
     { id: 'service',  file: 'service.html',  zh: '公益',   en: 'Service' },
     { id: 'creative', file: 'creative.html', zh: '创作',   en: 'Creative' },
-    { id: 'profile',  file: 'profile.html',  zh: '档案',   en: 'Profile' }
+    { id: 'profile',  file: 'profile.html',  zh: '档案',   en: 'Profile' },
+    { id: 'ops',      file: 'ops.html',      zh: '代运营', en: 'Ops' },
+    { id: 'connect',  file: 'connect.html',  zh: '联络',   en: 'Connect' }
   ];
 
   var TITLES = {
@@ -86,7 +88,7 @@
     }).join('');
     slot.innerHTML =
       '<div class="page"><div class="pagehead">' +
-        '<div class="pageno" data-zh="PAGE <b>' + n + '</b> / 06" data-en="PAGE <b>' + n + '</b> / 06">PAGE <b>' + n + '</b> / 06</div>' +
+        '<div class="pageno" data-zh="PAGE <b>' + n + '</b> / 08" data-en="PAGE <b>' + n + '</b> / 08">PAGE <b>' + n + '</b> / 08</div>' +
         '<div class="pagetrack" aria-hidden="true">' + track + '</div>' +
       '</div></div>';
   }
