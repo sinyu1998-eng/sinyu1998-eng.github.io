@@ -96,6 +96,13 @@ h2{font-family:var(--serif);font-size:clamp(26px,3.4vw,36px);letter-spacing:1px;
 
 /* writing cards */
 .write-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.role-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;transition:.25s}
+.role-card:hover{border-color:var(--accent);box-shadow:0 12px 28px -14px rgba(20,24,29,.22);transform:translateY(-2px)}
+.role-card .role-t{font-family:var(--serif);font-size:17px;letter-spacing:1px;color:var(--ink);margin-bottom:8px}
+.role-card .role-t::after{content:"";display:block;width:26px;height:2px;background:var(--accent);margin-top:6px}
+.role-card p{font-size:13px;color:var(--ink-soft)}
+.cities{margin-top:20px;font-size:13.5px;color:var(--gold);font-family:var(--mono);letter-spacing:1px}
 .write{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;transition:.25s;text-decoration:none;display:flex;flex-direction:column}
 .write:hover{transform:translateY(-3px);box-shadow:0 16px 36px -16px rgba(20,24,29,.2);border-color:var(--gold)}
 .write .cat{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
@@ -151,6 +158,7 @@ footer a{color:var(--accent);text-decoration:none}
 <nav>
   <a class="brand" href="#top">Huang<em>.</em>倩如</a>
   <div class="links">
+    <a href="#open" data-zh="求职" data-en="Open to Work">求职</a>
     <a href="#projects" data-zh="项目" data-en="Projects">项目</a>
     <a href="#education" data-zh="教育" data-en="Education">教育</a>
     <a href="#honors" data-zh="荣誉" data-en="Honors">荣誉</a>
@@ -204,6 +212,31 @@ footer a{color:var(--accent);text-decoration:none}
     <p style="margin-top:18px;font-size:13px;opacity:.85" data-zh="在路上：Asbury 中国加速器 · 筹备中的基金会与公司 · 马德里 MBA 进行中" data-en="Also in motion: Asbury China Accelerator · a foundation & company in the works · MBA in Madrid">在路上：Asbury 中国加速器 · 筹备中的基金会与公司 · 马德里 MBA 进行中</p>
   </div>
 </div>
+
+<section id="open">
+  <div class="sec-kicker" data-zh="Open to Work · 求职意向" data-en="Open to Work">Open to Work · 求职意向</div>
+  <h2 data-zh="正在寻找的机会" data-en="Roles I'm Looking For">正在寻找的机会</h2>
+  <div class="roles-grid">
+    <div class="role-card">
+      <div class="role-t" data-zh="研究员" data-en="Researcher">研究员</div>
+      <p data-zh="计算社会科学 / 平台研究 / 健康传播方向：4 年方法训练（内容分析、情感分析、问卷与访谈）+ 4 次国际会议报告" data-en="Computational social science / platform studies / health communication: 4 years of methods training + 4 international conference presentations">计算社会科学 / 平台研究 / 健康传播方向：4 年方法训练（内容分析、情感分析、问卷与访谈）+ 4 次国际会议报告</p>
+    </div>
+    <div class="role-card">
+      <div class="role-t" data-zh="数据分析师" data-en="Data Analyst">数据分析师</div>
+      <p data-zh="Python / R / SPSS / SQL 思维 + NVivo 质性功底；真实电商数据一线经验（90+ 店铺运营数据）" data-en="Python / R / SPSS + NVivo; hands-on with real e-commerce data across 90+ stores">Python / R / SPSS / SQL 思维 + NVivo 质性功底；真实电商数据一线经验（90+ 店铺运营数据）</p>
+    </div>
+    <div class="role-card">
+      <div class="role-t" data-zh="AI 产品经理" data-en="AI Product Manager">AI 产品经理</div>
+      <p data-zh="从 0 到 1 做过 SellerPilot OS 多智能体系统与 CloudSail 连接器：懂研究、懂用户、也懂工程边界" data-en="Built SellerPilot OS multi-agent system & CloudSail connectors from 0 to 1: research fluency + user empathy + engineering literacy">从 0 到 1 做过 SellerPilot OS 多智能体系统与 CloudSail 连接器：懂研究、懂用户、也懂工程边界</p>
+    </div>
+    <div class="role-card">
+      <div class="role-t" data-zh="内容策略师" data-en="Content Strategist">内容策略师</div>
+      <p data-zh="纪录片《正在连接》执行导演（100 万+ 播放）· 浙大官微 10w+ 阅读 · 澎湃专题报道经验" data-en="Executive director of a 1M+-view documentary · 100k+ views per article on ZJU official media · featured by The Paper">纪录片《正在连接》执行导演（100 万+ 播放）· 浙大官微 10w+ 阅读 · 澎湃专题报道经验</p>
+    </div>
+  </div>
+  <p class="cities" data-zh="意向城市：杭州 · 上海 · 北京 · 深圳（薪酬面议）—— 其他城市与远程亦可谈" data-en="Cities: Hangzhou · Shanghai · Beijing · Shenzhen (salary negotiable) — other cities & remote also open">意向城市：杭州 · 上海 · 北京 · 深圳（薪酬面议）—— 其他城市与远程亦可谈</p>
+  <a class="btn primary" style="margin-top:14px" href="mailto:sinyu1998@gmail.com?subject=Job%20Opportunity" data-zh="有合适的机会？直接联系我 →" data-en="Have a fit? Email me directly →">有合适的机会？直接联系我 →</a>
+</section>
 
 <section id="projects">
   <div class="sec-kicker" data-zh="Selected Work" data-en="Selected Work">Selected Work</div>
