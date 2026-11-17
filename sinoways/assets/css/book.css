@@ -1,0 +1,37 @@
+/* 扫码落地页（book.html）：把浮层助手变成页面主体，移动优先 */
+body.book-page { background: var(--paper-2); min-height: 100vh; }
+.book-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px clamp(16px, 5vw, 40px); background: var(--ink); color: var(--white);
+}
+.book-header .brand-seal { color: #e8775c; }
+.book-header .brand-word small { color: rgba(251, 248, 242, .5); }
+.book-header .lang-switch { border-color: rgba(251, 248, 242, .3); }
+.book-header .lang-switch button { color: rgba(251, 248, 242, .7); }
+.book-header .lang-switch button:hover { background: rgba(251, 248, 242, .12); color: #fff; }
+.book-header .lang-switch button.active { background: var(--vermilion); color: #fff; }
+
+.book-wrap { max-width: 560px; margin: 0 auto; padding: clamp(28px, 6vw, 56px) 16px 60px; }
+.book-hero { margin-bottom: 26px; }
+.book-hero h1 { font-size: clamp(2.3rem, 8vw, 3.5rem); margin: 6px 0 14px; }
+.book-hero > p:not(.eyebrow) { color: var(--ink-soft); font-size: 1rem; line-height: 1.7; }
+.book-rule { display: flex; align-items: center; gap: 12px; margin-top: 22px; font-size: .68rem; letter-spacing: .16em; color: var(--vermilion); font-weight: 600; }
+.book-rule i { flex: 1; height: 1px; background: var(--line); }
+
+.book-page .as-panel {
+  position: static; inset: auto; width: 100%; height: auto;
+  transform: none; opacity: 1; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3); border: 1px solid var(--line);
+  min-height: 560px;
+}
+.book-page .as-panel[hidden] { display: none; }
+.book-page .as-messages { max-height: 44vh; min-height: 260px; }
+.book-page .as-panel.open { transform: none; opacity: 1; }
+.book-page .as-launcher { display: none; }
+.book-foot { text-align: center; margin-top: 24px; font-size: .72rem; letter-spacing: .1em; color: var(--ink-soft); }
+.book-back { display: block; text-align: center; margin-top: 10px; font-size: .7rem; letter-spacing: .18em; color: var(--vermilion); }
+@media (max-width: 480px) {
+  .book-page .as-messages { max-height: 40vh; min-height: 220px; }
+  .book-header .brand-word { font-size: 1rem; }
+  .book-header .brand-word small { font-size: .48rem; }
+}

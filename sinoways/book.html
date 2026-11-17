@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#161a17">
+  <title>SINOWAYS — Plan your China journey</title>
+  <meta name="description" content="Tell our assistant what you have in mind. A real planner replies within 24 hours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/book.css">
+</head>
+<body class="book-page grain">
+  <a class="skip-link" href="#as-panel">Skip to assistant</a>
+
+  <header class="book-header">
+    <a class="brand" href="index.html"><span class="brand-seal" aria-hidden="true"><svg viewBox="0 0 44 44"><rect x="1.5" y="1.5" width="41" height="41" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><text x="22" y="29" text-anchor="middle" font-size="21" font-family="serif" fill="currentColor">深</text></svg></span><span class="brand-word">SINOWAYS<small>深行中国 · DEEP CHINA</small></span></a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang-btn="en" class="active">EN</button>
+      <button type="button" data-lang-btn="zh">中文</button>
+      <button type="button" data-lang-btn="pt">PT</button>
+      <button type="button" data-lang-btn="ar">عربي</button>
+    </div>
+  </header>
+
+  <main class="book-wrap">
+    <div class="book-hero">
+      <p class="eyebrow" data-i18n="book.eyebrow">SINOWAYS · PRIVATE JOURNEYS</p>
+      <h1 data-i18n="book.title">Let's plan your China.</h1>
+      <p data-i18n="book.sub">Five minutes, in your language. A real planner reads every answer.</p>
+      <div class="book-rule"><span>01</span><i></i><span>08</span></div>
+    </div>
+
+    <aside class="as-panel book-panel" id="as-panel" role="dialog" aria-labelledby="as-title" hidden>
+      <div class="as-head">
+        <div class="as-avatar">深</div>
+        <div class="as-head-text"><h3 id="as-title" data-i18n="as.title">Journey assistant</h3><span><i class="live-dot"></i><span data-i18n="as.online">Planning desk is listening</span></span></div>
+        <div class="as-head-actions"><button type="button" id="as-restart" class="as-icon-btn" title="Restart" aria-label="Restart">↺</button></div>
+      </div>
+      <div class="as-progress"><div class="as-progress-bar"><i id="as-progress-fill"></i></div><span id="as-progress-text">STEP 1 OF 8</span></div>
+      <div class="as-messages" id="as-messages" aria-live="polite"></div>
+      <div class="as-actions" id="as-actions"></div>
+      <form class="as-input" id="as-input" hidden><input type="text" id="as-input-field" autocomplete="off"><button type="submit" id="as-send" aria-label="Send">↗</button></form>
+      <div class="as-foot">SINOWAYS · <span data-i18n="booking.hours">Planning desk · 09:00–21:00 China time</span></div>
+    </aside>
+
+    <p class="book-foot" data-i18n="book.foot">SINOWAYS 深行中国 · Beijing &amp; Hangzhou</p>
+    <a class="book-back" href="index.html">← SINOWAYS.COM</a>
+  </main>
+
+  <button type="button" class="as-launcher" id="as-launcher" aria-label="Open journey assistant" aria-expanded="false" hidden><span class="as-launcher-icon">✳</span></button>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/assistant.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

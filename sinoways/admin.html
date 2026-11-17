@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SINOWAYS · 行程后台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="side-brand">
+        <span class="side-seal">深</span>
+        <div><b>SINOWAYS</b><small>行程策划台 · OPERATIONS</small></div>
+      </div>
+      <nav class="side-nav" aria-label="后台导航">
+        <button type="button" data-view="leads" class="active"><span class="ni">◧</span>需求看板 <em id="badge-new"></em></button>
+        <button type="button" data-view="resources"><span class="ni">▤</span>现有资源库</button>
+        <button type="button" data-view="builder"><span class="ni">✳</span>行程编排</button>
+      </nav>
+      <div class="side-block">
+        <p>闭环流程</p>
+        <ol><li>官网 / 扫码提交需求</li><li>自动进入需求看板</li><li>匹配导游 · 体验 · 供应商</li><li>生成逐日行程草案</li></ol>
+      </div>
+      <div class="side-foot">
+        <a href="index.html">← 返回品牌官网</a>
+        <a href="book.html" target="_blank">扫码预约页 ↗</a>
+        <div class="api-status"><i id="api-dot"></i><span id="api-text">连接中…</span></div>
+      </div>
+    </aside>
+
+    <!-- 主区 -->
+    <main class="admin-main">
+      <header class="admin-top">
+        <div><p class="crumb">SINOWAYS / OPERATIONS / <span id="view-title">需求看板</span></p><h1 id="view-h1">客户需要与排期</h1></div>
+        <div class="top-actions"><span class="clock" id="clock"></span><button type="button" class="btn-o" id="btn-refresh">↻ 刷新</button></div>
+      </header>
+
+      <!-- 需求看板 -->
+      <section class="view" id="view-leads">
+        <div class="kpi-grid">
+          <div class="kpi"><span>全部需求</span><b id="kpi-total">0</b><i>ALL LEADS</i></div>
+          <div class="kpi"><span>新需求待处理</span><b id="kpi-new" class="red">0</b><i>NEW</i></div>
+          <div class="kpi"><span>排期 / 已联系</span><b id="kpi-progress" class="amber">0</b><i>IN PROGRESS</i></div>
+          <div class="kpi"><span>预计接待人数</span><b id="kpi-pax">0</b><i>GUESTS</i></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>需求列表</h2><p>来源：官网助手 · 扫码预约 · 直接录入</p></div>
+            <div class="filters">
+              <select id="f-status" aria-label="按状态筛选"><option value="">全部状态</option><option value="new">新需求</option><option value="contacted">已联系</option><option value="planned">已排期</option><option value="confirmed">已成行</option><option value="closed">已关闭</option></select>
+              <select id="f-purpose" aria-label="按目的筛选"><option value="">全部类型</option><option value="culture">文化</option><option value="sourcing">找货</option></select>
+              <input type="search" id="f-search" placeholder="搜索姓名 / 国家 / 关键词" aria-label="搜索需求">
+              <button type="button" class="btn-sync" id="btn-sync" hidden>同步离线需求</button>
+            </div>
+          </div>
+          <div class="lead-head"><span>编号 / 时间</span><span>客户</span><span>需求</span><span>区域</span><span>人数</span><span>状态</span><span></span></div>
+          <div id="lead-list" class="lead-list"></div>
+        </div>
+      </section>
+
+      <!-- 资源库 -->
+      <section class="view" id="view-resources" hidden>
+        <div class="panel">
+          <div class="panel-head"><div><h2>现有资源库</h2><p>导游、体验项目、供应商、保障与合作方 —— 需求匹配就是从这里取</p></div><span class="count-chip" id="res-count">0 条资源</span></div>
+          <div class="res-tabs" id="res-tabs"></div>
+          <div class="res-grid" id="res-grid"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h2>新增一条资源</h2><p>标签用英文逗号分隔，例如 culture, beijing, tea</p></div></div>
+          <form class="res-form" id="res-form">
+            <label>分组<select name="group"><option value="guides">导游 / 接待</option><option value="experiences">文化体验</option><option value="suppliers">供应商 / 市场</option><option value="logistics">后勤保障</option><option value="partners">合作方</option></select></label>
+            <label>名称<input name="name" required placeholder="例如：苏州缂丝工坊"></label>
+            <label>说明<input name="detail" placeholder="一句话说明能提供什么"></label>
+            <label>标签<input name="tags" placeholder="culture, jiangnan, textile"></label>
+            <label>补充信息<input name="meta" placeholder="城市 · 时长 · 语言"></label>
+            <button type="submit" class="btn-p">+ 加入资源库</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 行程编排 -->
+      <section class="view" id="view-builder" hidden>
+        <div class="panel">
+          <div class="panel-head"><div><h2>把一条需求变成行程</h2><p>按需求标签与资源库自动匹配，生成可编辑的逐日草案</p></div></div>
+          <div class="builder-controls">
+            <label>选择需求<select id="b-lead"></select></label>
+            <label>天数<input type="number" id="b-days" min="3" max="21" value="7"></label>
+            <button type="button" class="btn-p" id="b-match">✳ 匹配现有资源并生成草案</button>
+          </div>
+          <div id="b-summary" class="b-summary"></div>
+        </div>
+        <div class="builder-grid">
+          <div class="panel"><div class="panel-head"><h2>匹配到的资源</h2><span class="count-chip" id="b-match-count">—</span></div><div id="b-matched" class="matched-list"><p class="empty">尚未匹配。选择需求后点击上方按钮。</p></div></div>
+          <div class="panel"><div class="panel-head"><h2>逐日行程草案</h2></div><div id="b-plan" class="plan-list"><p class="empty">草案会显示在这里，可直接编辑。</p></div>
+            <div class="panel-actions"><button type="button" class="btn-p" id="b-save">保存草案到该需求</button><button type="button" class="btn-o" id="b-export">导出文本</button></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 需求详情抽屉 -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="drawer" hidden aria-label="需求详情">
+    <div class="drawer-head"><div><p class="crumb">LEAD DETAIL</p><h2 id="d-id">—</h2></div><button type="button" id="d-close" aria-label="关闭">×</button></div>
+    <div class="drawer-body" id="d-body"></div>
+    <div class="drawer-foot">
+      <label>状态<select id="d-status"><option value="new">新需求</option><option value="contacted">已联系</option><option value="planned">已排期</option><option value="confirmed">已成行</option><option value="closed">已关闭</option></select></label>
+      <label>负责人<input id="d-assignee" placeholder="例如：Sofia Chen"></label>
+      <label>内部备注<textarea id="d-notes" rows="3" placeholder="沟通记录、供应商进度、特殊要求…"></textarea></label>
+      <div class="drawer-btns"><button type="button" class="btn-p" id="d-save">保存更新</button><button type="button" class="btn-o" id="d-match">→ 去编排行程</button></div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
