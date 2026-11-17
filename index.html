@@ -128,10 +128,6 @@ section{position:relative}
 .bcard:hover .open{opacity:1;transform:none}
 .bcard.live::after{content:"";position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:#7ee08a;box-shadow:0 0 8px #7ee08a;animation:blink 2s infinite}
 @keyframes blink{50%{opacity:.35}}
-.src-row{margin-top:18px;border:1px dashed var(--line);padding:16px 20px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline}
-.src-row .src-label{font-size:11px;color:var(--gold);letter-spacing:.3em;flex-shrink:0}
-.src-row a{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:var(--dim);text-decoration:none}
-.src-row a:hover{color:var(--gold)}
 
 #talk{background:var(--bg2);border-top:1px solid var(--line)}
 .talk-box{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:44px;margin-top:50px;align-items:start}
@@ -267,18 +263,6 @@ footer b{color:var(--dim)}
         <div class="bn">BASE 10 · 存档</div><h4>学术简历版主页</h4>
         <p>上一版个人主页：论文、荣誉、演讲全记录。</p><div class="open">打开 →</div>
       </a>
-    </div>
-    <div class="src-row rv">
-      <span class="src-label">源码 · SOURCE</span>
-      <a href="https://github.com/sinyu1998-eng/cloudsail-portal" target="_blank" rel="noopener">cloudsail-portal</a>
-      <a href="https://github.com/sinyu1998-eng/sellerpilot-os" target="_blank" rel="noopener">sellerpilot-os</a>
-      <a href="https://github.com/sinyu1998-eng/marguerite-asbury" target="_blank" rel="noopener">marguerite-asbury</a>
-      <a href="https://github.com/sinyu1998-eng/cloudsail-crm" target="_blank" rel="noopener">cloudsail-crm</a>
-      <a href="https://github.com/sinyu1998-eng/site-sellerpilot-demo" target="_blank" rel="noopener">site-sellerpilot-demo</a>
-      <a href="https://github.com/sinyu1998-eng/site-diglab" target="_blank" rel="noopener">site-diglab</a>
-      <a href="https://github.com/sinyu1998-eng/site-dropshiplab" target="_blank" rel="noopener">site-dropshiplab</a>
-      <a href="https://github.com/sinyu1998-eng/site-linglink" target="_blank" rel="noopener">site-linglink</a>
-      <a href="https://github.com/sinyu1998-eng/sinyu1998-eng.github.io/tree/main/sinoways" target="_blank" rel="noopener">sinoways</a>
     </div>
   </div>
 </section>
@@ -446,6 +430,9 @@ footer b{color:var(--dim)}
       </div>
     </div>
     <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="glasses-route.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × CloudSail 技术路线 →</a>。</div>
+    <div class="rv" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="hbtn g" href="bridge/">试手机桥原型（真识别一张标签）→</a>
+    </div>
   </div>
 </section>
 

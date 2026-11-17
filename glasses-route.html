@@ -281,6 +281,15 @@ footer{border-top:1px solid var(--line);margin-top:80px;padding:26px 24px;text-a
 </div>
 
 <div class="sec">
+  <h2 class="rv">原型已可跑<small>不是演示动画，是真的识别</small></h2>
+  <div class="now" style="grid-template-columns:repeat(2,1fr)">
+    <div class="rv"><div class="tag">LIVE</div><h4>手机桥 v0.1</h4><ul><li>上传/粘贴一张眼镜拍的标签照 → 浏览器内 OCR（Tesseract，照片不出本机）</li><li>自动抽出 SKU / 批次 / 数量 / 日期 / 箱号，全部可手改，改动记入变更日志</li><li>对照 PO 与应收数量 → PASS / HOLD / REJECT</li><li>生成报告号 + 全字段 SHA-256 指纹，可打印存 PDF、可导出 JSON</li></ul></div>
+    <div class="rv"><div class="tag">WHY</div><h4>它验证的是什么</h4><ul><li>验证「现场拍照 → 结构化数据 → 可核验报告」这条链路成立</li><li>验证工厂 QC 只多按一个键的可用性</li><li>下一步：把 OCR 换成 Qwen-VL（识别缺陷与规格偏差），后端接 CloudSail 工单</li></ul></div>
+  </div>
+  <div class="rv" style="margin-top:24px"><a class="hbtn g" href="bridge/">打开手机桥原型 →</a></div>
+</div>
+
+<div class="sec">
   <h2 class="rv">三条红线<small>不能省的合规动作</small></h2>
   <div class="now" style="grid-template-columns:repeat(3,1fr)">
     <div class="rv"><div class="tag w">01 · 知情</div><h4>被拍摄方同意</h4><ul><li>录制时 LED 必亮（硬件已有，别关）</li><li>工厂与员工签拍摄知情书</li><li>客户来访验货单独授权</li></ul></div>
