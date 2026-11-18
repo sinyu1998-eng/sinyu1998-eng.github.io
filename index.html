@@ -549,7 +549,16 @@ addEventListener('keydown',e=>{
     document.getElementById('talk').scrollIntoView({behavior:'smooth'});
 });
 
-/* ---------- 入场 reveal + 计数 ---------- */
+/* ---------- 入场 reveal + 计数（含老内核兜底） ---------- */
+/* QQ 浏览器 / 老版 WebKit 可能不触发 IntersectionObserver，
+   若不支持则直接显示全部内容，避免整片黑屏下滑看不见 */
+if(!('IntersectionObserver' in window)){
+  document.querySelectorAll('.rv,.stage').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
+  document.querySelectorAll('.nnum').forEach(el=>{
+    const to=+el.dataset.to,sfx=el.dataset.suffix||'';
+    el.innerHTML=to+'<small>'+sfx+'</small>';
+  });
+}else{
 const io=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});
 },{threshold:0.15});
@@ -568,6 +577,14 @@ const nio=new IntersectionObserver(es=>{
   });
 },{threshold:0.6});
 document.querySelectorAll('.nnum').forEach(el=>nio.observe(el));
+}
+/* 兜底2：即使支持观察者，首屏之外若 1.5s 仍未触发，强制显示，防止个别内核卡住 */
+setTimeout(()=>{
+  document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight*3){el.style.opacity=1;el.style.transform='none';}
+  });
+},1500);
 
 /* ---------- 眼镜场景切换 ---------- */
 const SCEN=[
