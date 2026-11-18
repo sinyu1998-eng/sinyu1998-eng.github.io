@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>手机桥 · AiMB-G3 验货取证 — CloudSail</title>
+<meta name="description" content="把 AI 眼镜拍到的现场变成可核验的验货报告：拍照 → OCR 识别 → 工单比对 → 结论 + 哈希。"">
+<style>
+:root{
+  --bg:#08090A; --panel:#0E1011; --panel2:#131617; --line:#22282A;
+  --ink:#E9EEEA; --dim:#8A9490; --acid:#C9F95C; --warn:#FFB020; --bad:#FF5A4E; --ok:#6FE39A;
+  --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:"Helvetica Neue",Inter,system-ui,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+body{padding-bottom:60px}
+a{color:inherit}
+.top{display:flex;align-items:center;gap:14px;padding:18px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(8,9,10,.92);backdrop-filter:blur(10px);z-index:20}
+.logo{width:26px;height:26px;border:1.5px solid var(--acid);border-radius:50%;display:grid;place-items:center;color:var(--acid);font-family:var(--mono);font-size:11px}
+.top b{font-size:14px;letter-spacing:.02em}
+.top .tag{font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line);padding:3px 7px;border-radius:3px}
+.top .sp{flex:1}
+.top a.lnk{font-family:var(--mono);font-size:11px;color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.top a.lnk:hover{color:var(--acid);border-color:var(--acid)}
+.wrap{max-width:1360px;margin:0 auto;padding:26px}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.hd h1{font-size:clamp(26px,4vw,44px);line-height:1.02;letter-spacing:-.02em;font-weight:600}
+.hd h1 em{font-style:normal;color:var(--acid)}
+.hd p{color:var(--dim);font-size:13px;max-width:520px;margin-top:10px;line-height:1.65}
+.steps{display:flex;gap:8px;font-family:var(--mono);font-size:10px;color:var(--dim);flex-wrap:wrap}
+.steps span{border:1px solid var(--line);padding:5px 8px;border-radius:2px}
+.steps span.on{color:#0A0B0A;background:var(--acid);border-color:var(--acid)}
+.grid{display:grid;grid-template-columns:330px minmax(0,1fr) 360px;gap:14px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.card h3{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim);padding:11px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.card h3 i{font-style:normal;color:var(--acid)}
+.body{padding:14px}
+.drop{border:1px dashed #2E3638;border-radius:5px;min-height:210px;display:grid;place-items:center;text-align:center;padding:18px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.drop:hover,.drop.hot{border-color:var(--acid);background:rgba(201,249,92,.03)}
+.drop .ico{font-size:26px;color:#4A5450;margin-bottom:8px}
+.drop p{font-size:12px;color:var(--dim);line-height:1.6}
+.drop small{display:block;margin-top:6px;font-family:var(--mono);font-size:9.5px;color:#55605C}
+.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
+.drop.has img{opacity:1}
+.drop .chip{position:absolute;left:8px;bottom:8px;background:rgba(8,9,10,.85);border:1px solid var(--line);font-family:var(--mono);font-size:9.5px;padding:4px 7px;border-radius:2px;color:var(--acid)}
+.btn{width:100%;margin-top:10px;background:var(--acid);color:#0A0B0A;border:0;border-radius:4px;padding:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--acid);color:var(--acid)}
+.row{display:flex;gap:8px}
+.row .btn{margin-top:0}
+.prog{height:3px;background:#1B2021;border-radius:2px;overflow:hidden;margin-top:10px;display:none}
+.prog.on{display:block}
+.prog i{display:block;height:100%;width:0;background:var(--acid);transition:width .25s}
+.plog{font-family:var(--mono);font-size:9.5px;color:#65706C;margin-top:8px;line-height:1.7;max-height:64px;overflow:hidden}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.f label{display:block;font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-bottom:5px;letter-spacing:.06em}
+.f input,.f select{width:100%;background:#0A0C0D;border:1px solid var(--line);color:var(--ink);border-radius:3px;padding:9px 10px;font-size:12.5px;font-family:var(--mono)}
+.f input:focus{outline:0;border-color:var(--acid)}
+.f.wide{grid-column:1/-1}
+.raw{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.raw summary{font-family:var(--mono);font-size:10px;color:var(--dim);cursor:pointer}
+.raw pre{margin-top:8px;font-family:var(--mono);font-size:10px;color:#7C8783;white-space:pre-wrap;max-height:130px;overflow:auto;line-height:1.6}
+.chk{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.chk button{text-align:left;background:#0A0C0D;border:1px solid var(--line);color:var(--dim);border-radius:3px;padding:9px 10px;font-size:11.5px;cursor:pointer;font-family:inherit;transition:.15s}
+.chk button:hover{border-color:#3A4446}
+.chk button[aria-pressed="true"]{border-color:var(--bad);color:#FFD9D5;background:rgba(255,90,78,.10)}
+.po{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.diff{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin:6px 0 12px;min-height:16px}
+.diff b{color:var(--warn)}
+.verdict{border:1px solid var(--line);border-radius:5px;padding:12px;margin-top:12px;background:#0A0C0D}
+.verdict .st{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim)}
+.verdict .vd{font-size:19px;font-weight:600;margin:5px 0 3px;letter-spacing:-.01em}
+.verdict.pass{border-color:rgba(111,227,154,.45)} .verdict.pass .vd{color:var(--ok)}
+.verdict.hold{border-color:rgba(255,176,32,.45)} .verdict.hold .vd{color:var(--warn)}
+.verdict.rej{border-color:rgba(255,90,78,.5)} .verdict.rej .vd{color:var(--bad)}
+.verdict .why{font-size:11.5px;color:var(--dim);line-height:1.55}
+.rep{margin-top:12px;border:1px solid var(--line);border-radius:5px;padding:12px;font-family:var(--mono);font-size:10.5px;color:#9AA5A1;display:none}
+.rep.on{display:block}
+.rep dl{display:grid;grid-template-columns:86px 1fr;gap:5px 8px}
+.rep dt{color:#5E6A66}
+.rep dd{word-break:break-all;color:#C6CFCB}
+.rep .hash{color:var(--acid)}
+.hint{font-size:10.5px;color:#5E6A66;line-height:1.6;margin-top:10px}
+.note{border-left:2px solid var(--acid);padding-left:10px;font-size:11px;color:var(--dim);line-height:1.65;margin-top:14px}
+@media (max-width:1080px){.grid{grid-template-columns:1fr}.chk{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){
+  .wrap{padding:16px}.fields{grid-template-columns:1fr}.top{padding:14px 16px}.top .tag{display:none}
+  .hd h1{font-size:28px}
+}
+@media print{
+  .top,.steps,.hd p,.drop,.btn,.prog,.plog,.chk,.po,.raw,.hint{display:none!important}
+  body{background:#fff;color:#000}
+  .card{border:1px solid #ccc} .grid{display:block} .rep{display:block!important;border-color:#ccc;color:#000}
+  .rep dd,.verdict .vd{color:#000}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo">CS</div>
+  <b>手机桥 · 眼镜验货取证</b>
+  <span class="tag">PROTOTYPE v0.1 · 本地识别</span>
+  <div class="sp"></div>
+  <a class="lnk" href="../index.html">← 回到 CloudSail 主页</a>
+</div>
+
+<div class="wrap">
+  <div class="hd">
+    <div>
+      <h1>眼镜看到的东西，<br>变成一张<em>改不了的</em>单。</h1>
+      <p>AiMB-G3 拍下标签 → 手机桥识别 SKU / 批次 / 数量 → 对照工单 → 出结论并签名。整条链路在你的浏览器里跑，照片不出本机。</p>
+    </div>
+    <div class="steps">
+      <span class="on" data-s="1">01 采集</span>
+      <span data-s="2">02 识别</span>
+      <span data-s="3">03 比对</span>
+      <span data-s="4">04 出单</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- 左：采集 -->
+    <section class="card">
+      <h3>采集 / CAPTURE <i>01</i></h3>
+      <div class="body">
+        <div class="drop" id="drop">
+          <div class="ico">▣</div>
+          <p>把眼镜拍的标签照片拖进来<br>或点击选择</p>
+          <small>JPG / PNG · 建议正对标签、光线均匀</small>
+        </div>
+        <input type="file" id="file" accept="image/*" hidden>
+        <button class="btn" id="run" disabled>开始识别 →</button>
+        <div class="prog" id="prog"><i></i></div>
+        <div class="plog" id="plog">等待图像…</div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn ghost" id="demo">用示例图</button>
+          <button class="btn ghost" id="reset">清空</button>
+        </div>
+        <div class="hint">示例图是一张标准外箱标签。真实场景建议同一箱拍两张：标签 + 封口。</div>
+      </div>
+    </section>
+
+    <!-- 中：识别 -->
+    <section class="card">
+      <h3>识别 / EXTRACT <i>02</i></h3>
+      <div class="body">
+        <div class="fields">
+          <div class="f"><label>SKU 编码</label><input id="fSku" placeholder="待识别"></div>
+          <div class="f"><label>批次 LOT</label><input id="fLot" placeholder="待识别"></div>
+          <div class="f"><label>数量 QTY</label><input id="fQty" placeholder="0" inputmode="numeric"></div>
+          <div class="f"><label>生产日期</label><input id="fDate" placeholder="YYYY-MM-DD"></div>
+          <div class="f wide"><label>箱号 / 唛头</label><input id="fCarton" placeholder="CTN-____"></div>
+        </div>
+        <details class="raw">
+          <summary>▸ 原始识别文本（OCR raw）</summary>
+          <pre id="raw">—</pre>
+        </details>
+        <div class="note">识别结果可手动改。手机桥的规则是：<b>机器先给草案，人只做确认</b>，任何一处修改都会记进报告的变更日志。</div>
+      </div>
+    </section>
+
+    <!-- 右：判定 -->
+    <section class="card">
+      <h3>比对与判定 / VERDICT <i>03</i></h3>
+      <div class="body">
+        <div class="po">
+          <div class="f"><label>工单号 PO</label><input id="fPo" value="PO-2026-1108"></div>
+          <div class="f"><label>应有数量</label><input id="fExp" value="120" inputmode="numeric"></div>
+        </div>
+        <div class="diff" id="diff">数量比对：—</div>
+        <div class="chk" id="chk">
+          <button data-k="外箱破损" aria-pressed="false">外箱破损</button>
+          <button data-k="标签错贴" aria-pressed="false">标签错贴</button>
+          <button data-k="封口不严" aria-pressed="false">封口不严</button>
+          <button data-k="色差明显" aria-pressed="false">色差明显</button>
+          <button data-k="数量短装" aria-pressed="false">数量短装</button>
+          <button data-k="混装/错货" aria-pressed="false">混装/错货</button>
+        </div>
+        <button class="btn" id="make">生成验货报告</button>
+        <div class="verdict" id="verdict">
+          <div class="st">STATUS</div>
+          <div class="vd">待判定</div>
+          <div class="why">识别完成并确认数量后生成结论。</div>
+        </div>
+        <div class="rep" id="rep">
+          <dl id="repDl"></dl>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn ghost" id="print">打印 / 存 PDF</button>
+          <button class="btn ghost" id="json">导出 JSON</button>
+        </div>
+        <div class="hint">哈希 = 报告全部字段的 SHA-256 前 16 位。同一份数据永远得到同一个值，改一个字就变——这就是「锚」。</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="vendor/tess.js"></script>
+<script src="bridge.js"></script>
+</body>
+</html>

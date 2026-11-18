@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CloudSail · 交付控制台</title>
+<meta name="description" content="CloudSail 交付控制台：点开一个批次，核验义乌到欧洲的每一次寻源、验厂、质检、出运与签收。可交互演示。">
+<meta name="theme-color" content="#08090B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308090B'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C9F95C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-role="buyer">
+
+<header>
+  <div class="logo"><span class="mark"></span><small>CloudSail</small></div>
+  <div class="crumb"><i>/</i><b id="crumbTitle">锚 Anchor</b><i>·</i><span id="crumbSub">凭证核验台</span></div>
+  <div class="spacer"></div>
+  <div class="stats">
+    <span class="live"><span class="dot"></span><span data-zh="系统在线" data-en="Live">系统在线</span></span>
+    <span><span data-zh="在库批次" data-en="Batches">在库批次</span><b id="stBatches">1,284</b></span>
+    <span><span data-zh="今日核验" data-en="Verified today">今日核验</span><b id="stToday">47</b></span>
+  </div>
+  <div class="segs" id="roleSegs" role="group" aria-label="视角">
+    <button class="on" data-role="buyer" data-zh="买家" data-en="Buyer">买家</button>
+    <button data-role="factory" data-zh="工厂" data-en="Factory">工厂</button>
+    <button data-role="ops" data-zh="运营" data-en="Ops">运营</button>
+  </div>
+  <div class="segs" id="langSegs" role="group" aria-label="Language">
+    <button class="on" data-lang="zh">中</button>
+    <button data-lang="en">EN</button>
+  </div>
+</header>
+
+<nav class="rail" aria-label="工作台">
+  <div class="railtitle" data-zh="工作台" data-en="Workspaces">工作台</div>
+  <button class="navi on" data-view="anchor">
+    <span class="n">01</span><span class="lbl"><b data-zh="锚 Anchor" data-en="Anchor">锚 Anchor</b><span data-zh="凭证核验" data-en="Chain of custody">凭证核验</span></span>
+  </button>
+  <button class="navi" data-view="helm">
+    <span class="n">02</span><span class="lbl"><b data-zh="舵手 Helm" data-en="Helm">舵手 Helm</b><span data-zh="订单流水线" data-en="Order pipeline">订单流水线</span></span>
+  </button>
+  <button class="navi" data-view="captain">
+    <span class="n">03</span><span class="lbl"><b data-zh="船长 Captain" data-en="Captain">船长 Captain</b><span data-zh="代运营测算" data-en="Ops calculator">代运营测算</span></span>
+  </button>
+  <button class="navi" data-view="fanxuan">
+    <span class="n">04</span><span class="lbl"><b data-zh="帆选 Fanxuan" data-en="Fanxuan">帆选 Fanxuan</b><span data-zh="单品毛利" data-en="Unit margin">单品毛利</span></span>
+  </button>
+  <button class="navi" data-view="beacon">
+    <span class="n">05</span><span class="lbl"><b data-zh="灯塔 Beacon" data-en="Beacon">灯塔 Beacon</b><span data-zh="内容排期" data-en="Content calendar">内容排期</span></span>
+  </button>
+  <button class="navi" data-view="matrix">
+    <span class="n">06</span><span class="lbl"><b data-zh="矩阵 Matrix" data-en="Matrix">矩阵 Matrix</b><span data-zh="站点与生成器" data-en="Sites & builder">站点与生成器</span></span>
+  </button>
+  <div class="railfoot">
+    <div class="rf"><span data-zh="区域" data-en="Region">区域</span><b>义乌 · 新加坡</b></div>
+    <div class="rf"><span data-zh="自营跑通" data-en="In production">自营跑通</span><b id="rfMonths">12 mo</b></div>
+    <div class="rf"><span data-zh="版本" data-en="Build">版本</span><b>v2.4.1</b></div>
+  </div>
+</nav>
+
+<main>
+  <!-- ========== 01 锚 ========== -->
+  <section class="view on" id="v-anchor">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="锚 · 凭证核验台" data-en="Anchor · Chain of Custody">锚 · 凭证核验台</span><em>VERIFY</em></h1>
+        <p data-zh="左边选一个批次，中间点开任意节点看原始凭证，右边是买家真正看到的结论。然后点「模拟篡改」——看系统怎么把被改过的那一行抓出来。" data-en="Pick a batch on the left, open any node to inspect the original document, and read the verdict a buyer actually sees on the right. Then hit “Simulate tampering” and watch it catch the altered field.">左边选一个批次，中间点开任意节点看原始凭证，右边是买家真正看到的结论。然后点「模拟篡改」——看系统怎么把被改过的那一行抓出来。</p>
+      </div>
+    </div>
+    <div class="anchor-grid">
+      <div class="pane">
+        <div class="paneh"><b data-zh="批次" data-en="Batches">批次</b><span class="cnt" id="bcnt">6</span></div>
+        <div class="blist" id="blist"></div>
+      </div>
+      <div class="pane">
+        <div class="paneh"><b data-zh="凭证链" data-en="Chain of custody">凭证链</b><span class="cnt" id="bid">—</span></div>
+        <div class="tlwrap" id="tl"></div>
+      </div>
+      <div class="pane concl" id="concl"></div>
+    </div>
+  </section>
+
+  <!-- ========== 02 舵手 ========== -->
+  <section class="view" id="v-helm">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="舵手 · 订单流水线" data-en="Helm · Order Pipeline">舵手 · 订单流水线</span><em>PIPELINE</em></h1>
+        <p data-zh="拖动卡片推进阶段。每一步都要求上一步的凭证齐全——缺一张就走不动。这就是「九步闭环」实际长什么样。" data-en="Drag a card forward. Each stage requires the previous stage's document before it can move — miss one and it stalls. This is what the closed loop actually feels like.">拖动卡片推进阶段。每一步都要求上一步的凭证齐全——缺一张就走不动。这就是「九步闭环」实际长什么样。</p>
+      </div>
+      <div><button class="btn ghost" id="kbReset" data-zh="重置看板" data-en="Reset board">重置看板</button></div>
+    </div>
+    <div class="kb" id="kb"></div>
+    <div class="kbnote" id="kbnote"><span data-zh="提示：把「等验厂报告」拖到「生产」会被拦下——先补凭证。" data-en="Tip: drag “awaiting audit” into Production and it will bounce — document first.">提示：把「等验厂报告」拖到「生产」会被拦下——先补凭证。</span></div>
+  </section>
+
+  <!-- ========== 03 船长 ========== -->
+  <section class="view" id="v-captain">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="船长 · 代运营测算" data-en="Captain · Ops Calculator">船长 · 代运营测算</span><em>OPS</em></h1>
+        <p data-zh="勾选渠道、拉预算，右边直接出人力、内容量、询盘和单个询盘成本。数字按义乌本地人力与内容产能估，不是拍脑袋。" data-en="Select channels, drag the budget, and read staffing, content volume, inbound leads and cost per lead on the right — modelled on local Yiwu rates.">勾选渠道、拉预算，右边直接出人力、内容量、询盘和单个询盘成本。数字按义乌本地人力与内容产能估，不是拍脑袋。</p>
+      </div>
+    </div>
+    <div class="calcgrid">
+      <div class="pane">
+        <div class="paneh"><b data-zh="渠道" data-en="Channels">渠道</b><span class="cnt" id="chCnt">0 / 6</span></div>
+        <div class="chlist" id="chlist"></div>
+        <div class="slider">
+          <div class="sl"><span data-zh="月度内容预算" data-en="Monthly content budget">月度内容预算</span><b id="budgetVal">¥ 0</b></div>
+          <input type="range" id="budget" min="10" max="200" step="5" value="60" aria-label="月度预算（千元）">
+          <div class="note" data-zh="口径：内容成本 ¥650/条（本地拍摄 + 剪辑）；单条内容触达按平台权重折算；B2B 单个询盘成本 1,500–2,500 元属正常区间，超过 3,200 会标黄。" data-en="Assumptions: ¥650 per piece (local shoot + edit); reach weighted per platform; ¥1,500–2,500 per B2B lead is normal, above ¥3,200 turns amber.">口径：内容成本 ¥650/条（本地拍摄 + 剪辑）；单条内容触达按平台权重折算；B2B 单个询盘成本 1,500–2,500 元属正常区间，超过 3,200 会标黄。</div>
+        </div>
+        <div class="alloc" id="alloc"></div>
+      </div>
+      <div class="pane">
+        <div class="paneh"><b data-zh="测算结果" data-en="Projection">测算结果</b></div>
+        <div class="out" id="calcOut"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 04 帆选 ========== -->
+  <section class="view" id="v-fanxuan">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="帆选 · 单品毛利" data-en="Fanxuan · Unit Margin">帆选 · 单品毛利</span><em>MARGIN</em></h1>
+        <p data-zh="选品类，拉售价和成本，看净利是怎么被一层层吃掉的。低于 12% 会提醒你别做。" data-en="Pick a category, drag price and cost, and watch margin get eaten layer by layer. Below 12% it turns red on purpose.">选品类，拉售价和成本，看净利是怎么被一层层吃掉的。低于 12% 会提醒你别做。</p>
+      </div>
+    </div>
+    <div class="mgrid">
+      <div class="pane">
+        <div class="paneh"><b data-zh="品类" data-en="Category">品类</b></div>
+        <div class="catlist" id="catlist"></div>
+      </div>
+      <div class="pane">
+        <div class="paneh"><b data-zh="参数" data-en="Inputs">参数</b></div>
+        <div class="sliders" id="sliders"></div>
+        <div class="note" id="catnote"></div>
+      </div>
+      <div class="pane">
+        <div class="paneh"><b data-zh="成本结构" data-en="Cost waterfall">成本结构</b></div>
+        <div class="waterfall" id="waterfall"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 05 灯塔 ========== -->
+  <section class="view" id="v-beacon">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="灯塔 · 内容排期" data-en="Beacon · Content Calendar">灯塔 · 内容排期</span><em>CONTENT</em></h1>
+        <p data-zh="点任意空格子生成一条内容，或一键铺满一周。每条都带钩子和平台，直接能派给拍摄。" data-en="Click any empty slot to generate a piece, or fill the week in one go. Each comes with a hook and a platform, ready to hand to a shooter.">点任意空格子生成一条内容，或一键铺满一周。每条都带钩子和平台，直接能派给拍摄。</p>
+      </div>
+      <div><button class="btn primary" id="fillWeek" data-zh="铺满一周" data-en="Fill the week">铺满一周</button></div>
+    </div>
+    <div class="calgrid" id="calgrid"></div>
+  </section>
+
+  <!-- ========== 06 矩阵 ========== -->
+  <section class="view" id="v-matrix">
+    <div class="vhead">
+      <div>
+        <h1><span data-zh="矩阵 · 站点与生成器" data-en="Matrix · Sites & Builder">矩阵 · 站点与生成器</span><em>ECOSYSTEM</em></h1>
+        <p data-zh="八个已上线的站点与系统，加一个自然语言建站入口：客户说一段话、传几张物料图，官网自动生成。点卡片直达线上环境。" data-en="Eight live sites and systems, plus a natural-language website builder: a customer describes their business in plain words, uploads materials, and a site comes out. Click any card to open it.">八个已上线的站点与系统，加一个自然语言建站入口：客户说一段话、传几张物料图，官网自动生成。点卡片直达线上环境。</p>
+      </div>
+    </div>
+    <a class="mxhero" href="../builder/" target="_blank" rel="noopener">
+      <div class="mxh-l">
+        <span class="tag">NEW · 自然语言建站</span>
+        <b data-zh="官网生成器：说一段话，官网自动生成" data-en="Website Builder: describe it, get a site">官网生成器：说一段话，官网自动生成</b>
+        <span data-zh="输入自然语言描述 + 产品物料 → 双语官网成站，可预览、可下载 HTML；托管发布交给我们。" data-en="Natural language + materials → a bilingual website, preview and download instantly; hosting and launch handled by us.">输入自然语言描述 + 产品物料 → 双语官网成站，可预览、可下载 HTML；托管发布交给我们。</span>
+      </div>
+      <span class="go">打开 →</span>
+    </a>
+    <div class="mxtable">
+      <div class="mxtr mxhead"><span data-zh="站点" data-en="Site">站点</span><span>GitHub</span><span data-zh="规模" data-en="Scale">规模</span><span data-zh="线上" data-en="Live">线上</span></div>
+      <a class="mxtr case" href="https://margueriteasbury.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>Marguerite &amp; Asbury 商城</b><em data-zh="合作案例 CASE" data-en="Partnership case">合作案例 CASE</em></span><span>marguerite-asbury</span><span>77 <i data-zh="文件" data-en="files">文件</i></span><span class="url">margueriteasbury.47-79-34-141.sslip.io</span></a>
+      <a class="mxtr" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>CloudSail 聚合总站</b></span><span>cloudsail-portal</span><span>97 <i data-zh="文件" data-en="files">文件</i></span><span class="url">sellerpilot.47-79-34-141.sslip.io</span></a>
+      <a class="mxtr" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>SellerPilot OS</b></span><span>sellerpilot-os</span><span>60 <i data-zh="文件" data-en="files">文件</i></span><span class="url">sellerpilot-os.47-79-34-141.sslip.io</span></a>
+      <a class="mxtr" href="https://crm.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>CRM（EspoCRM）</b></span><span>cloudsail-crm</span><span>4 <i data-zh="文件" data-en="files">文件</i></span><span class="url">crm.47-79-34-141.sslip.io</span></a>
+      <a class="mxtr" href="https://sellerpilot-demo.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>SellerPilot 镜像站</b></span><span>site-sellerpilot-demo</span><span>9 <i data-zh="文件" data-en="files">文件</i></span><span class="url">sellerpilot-demo.…sslip.io</span></a>
+      <a class="mxtr" href="https://diglab.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>DigLab AI 镜像站</b></span><span>site-diglab</span><span>343 <i data-zh="文件" data-en="files">文件</i></span><span class="url">diglab.47-79-34-141.sslip.io</span></a>
+      <a class="mxtr" href="https://dropshiplab.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>DropshipLab 镜像站</b></span><span>site-dropshiplab</span><span>897 <i data-zh="文件" data-en="files">文件</i></span><span class="url">dropshiplab.…sslip.io</span></a>
+      <a class="mxtr" href="https://linglink.47-79-34-141.sslip.io" target="_blank" rel="noopener"><span><b>LingLink AI 镜像站</b></span><span>site-linglink</span><span>305 <i data-zh="文件" data-en="files">文件</i></span><span class="url">linglink.47-79-34-141.sslip.io</span></a>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<div class="help">
+  <div class="helpcard" id="helpcard">
+    <b data-zh="这是一个能操作的东西，不是一份介绍" data-en="This is a working console, not a brochure">这是一个能操作的东西，不是一份介绍</b><br>
+    <span data-zh="· 按" data-en="· Press">· 按</span> <kbd>1</kbd>–<kbd>6</kbd> <span data-zh="切换工作台" data-en="to switch workspace">切换工作台</span><br>
+    <span data-zh="· 点时间轴节点，展开原始凭证" data-en="· Click a timeline node to open the document">· 点时间轴节点，展开原始凭证</span><br>
+    <span data-zh="· 点「模拟篡改」，看系统当场抓出改动" data-en="· Hit “Simulate tampering” to watch it get caught">· 点「模拟篡改」，看系统当场抓出改动</span><br>
+    <span data-zh="· 舵手台可以拖卡片；帆选台可以拉滑杆" data-en="· Drag cards in Helm; drag sliders in Fanxuan">· 舵手台可以拖卡片；帆选台可以拉滑杆</span>
+  </div>
+  <button class="helpbtn" id="helpbtn" aria-label="帮助">?</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

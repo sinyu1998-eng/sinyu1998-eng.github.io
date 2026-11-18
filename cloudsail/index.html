@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudSail · 跨境供应链的 AI 操作系统</title>
+<meta name="description" content="CloudSail：验货、交付、渠道与毛利，一套系统跑完。含交付控制台、AI 眼镜验货手机桥、行业独立站交付案例。">
+<meta name="theme-color" content="#05090e">
+<meta property="og:title" content="CloudSail · 跨境供应链的 AI 操作系统">
+<meta property="og:description" content="验货、交付、渠道与毛利，一套系统跑完。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305090e'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23C9F95C' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23C9F95C'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#05090e;--panel:#0a1220;--line:#1c2a3a;--acid:#C9F95C;--blue:#4f8fd9;--text:#e8eef2;--mut:#8fa3b3;--faint:#5a6b7a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;overflow-x:hidden}
+::selection{background:var(--acid);color:#0a0f14}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(5,9,14,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:58px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.4px;cursor:pointer}
+.logo .mark{width:14px;height:14px;border:3px solid var(--acid);border-radius:50%;position:relative;transition:transform .3s}
+.logo .mark::after{content:"";position:absolute;inset:2px;background:var(--acid);border-radius:50%}
+.logo:active .mark{transform:scale(1.5)}
+.logo small{color:var(--mut);font-weight:400;font-size:11px;margin-left:2px}
+nav a{color:var(--mut);text-decoration:none;font-size:13.5px;transition:color .2s}
+nav a:hover{color:var(--acid)}
+nav .sp{flex:1}
+nav .cta{background:var(--acid);color:#0a0f14!important;padding:7px 16px;border-radius:8px;font-weight:700}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:110px 0 60px;overflow:hidden}
+.hero .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.25;mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 20%,transparent 75%)}
+.cell-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:min(72vw,560px);height:min(72vw,560px);pointer-events:none}
+.cell-orb canvas{width:100%;height:100%}
+.hero .in{position:relative;z-index:2;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:99px;padding:6px 16px;font-size:12.5px;color:var(--mut);background:rgba(10,18,32,.6)}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--acid);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-size:clamp(38px,6.4vw,76px);line-height:1.12;letter-spacing:-1px;margin:26px 0 18px;font-weight:800}
+h1 em{font-style:normal;color:var(--acid)}
+.hero p.sub{max-width:620px;margin:0 auto;color:var(--mut);font-size:clamp(15px,1.8vw,18px);line-height:1.8}
+.hbtns{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.hbtn{display:inline-block;padding:14px 30px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.hbtn:hover{transform:translateY(-2px)}
+.hbtn.p{background:var(--acid);color:#0a0f14;box-shadow:0 6px 30px rgba(201,249,92,.25)}
+.hbtn.g{border:1px solid var(--line);color:var(--text);background:rgba(10,18,32,.6)}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--faint);font-size:12px;letter-spacing:2px;z-index:2;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:30px 18px;text-align:center;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-size:clamp(24px,3.4vw,38px);color:var(--acid);font-variant-numeric:tabular-nums}
+.stat span{color:var(--mut);font-size:12.5px}
+section{padding:88px 0}
+.sec-kicker{color:var(--acid);font-size:12px;letter-spacing:3px;font-weight:700;margin-bottom:14px}
+h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.5px;line-height:1.2;margin-bottom:12px}
+.sec-lead{color:var(--mut);max-width:640px;line-height:1.8;margin-bottom:44px}
+.apps{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.app{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 24px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;transition:transform .25s,border-color .25s;position:relative;overflow:hidden}
+.app:hover{transform:translateY(-4px);border-color:var(--acid)}
+.app .no{font-size:11px;letter-spacing:2px;color:var(--faint)}
+.app h3{font-size:20px}
+.app p{color:var(--mut);font-size:13.5px;line-height:1.7;flex:1}
+.app .tags{display:flex;gap:6px;flex-wrap:wrap}
+.app .tags span{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--mut)}
+.app .go{color:var(--acid);font-size:13px;font-weight:700}
+.app::after{content:"";position:absolute;top:-40%;right:-40%;width:80%;height:80%;background:radial-gradient(circle,rgba(201,249,92,.06),transparent 70%);opacity:0;transition:opacity .3s}
+.app:hover::after{opacity:1}
+.case{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:40px;position:relative;overflow:hidden}
+.case .ribbon{position:absolute;top:18px;right:-38px;transform:rotate(35deg);background:var(--acid);color:#0a0f14;font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 44px}
+.case h3{font-size:clamp(22px,2.6vw,30px);margin-bottom:10px}
+.case .who{color:var(--blue);font-size:13px;margin-bottom:16px;font-weight:600}
+.case ul{list-style:none;color:var(--mut);font-size:14px;line-height:2}
+.case ul li::before{content:"▸";color:var(--acid);margin-right:8px}
+.case .shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0d1622;aspect-ratio:16/10;position:relative}
+.case .shot iframe{position:absolute;inset:0;width:100%;height:100%;border:none;transform-origin:0 0}
+.qr{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:center}
+.qr .frame{width:280px;height:280px;border:1.5px dashed var(--faint);border-radius:18px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:var(--panel);overflow:hidden}
+.qr .frame img{width:100%;height:100%;object-fit:cover;display:block}
+.qr .frame .ph{color:var(--faint);font-size:13px;text-align:center;line-height:1.8;padding:0 20px}
+.qr .frame .ph b{color:var(--mut);font-size:15px}
+.qr h2{margin-bottom:14px}
+.qr p{color:var(--mut);line-height:1.9;max-width:520px}
+.qr .mini{margin-top:20px;font-size:12.5px;color:var(--faint)}
+.founder{display:grid;grid-template-columns:300px 1fr;gap:44px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:44px}
+.founder .idbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0d1622}
+.founder .idbox .top{background:linear-gradient(135deg,rgba(201,249,92,.14),rgba(79,143,217,.10));padding:30px 22px;text-align:center;border-bottom:1px solid var(--line)}
+.founder .avatar{width:84px;height:84px;border-radius:50%;margin:0 auto 14px;background:var(--acid);color:#0a0f14;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800}
+.founder .idbox .top b{display:block;font-size:20px;letter-spacing:.5px}
+.founder .idbox .top span{color:var(--mut);font-size:12.5px}
+.founder .idbox .facts{padding:18px 20px;display:grid;gap:10px}
+.founder .idbox .facts div{font-size:13px;color:var(--mut);line-height:1.6;padding-left:14px;position:relative}
+.founder .idbox .facts div::before{content:"▸";color:var(--acid);position:absolute;left:0}
+.founder .idbox .facts b{color:var(--text);font-weight:600}
+.founder h2{margin-bottom:6px}
+.founder .role{color:var(--acid);font-size:13px;letter-spacing:2px;font-weight:700;margin-bottom:18px}
+.founder .bio{color:var(--mut);font-size:14.5px;line-height:2;max-width:640px}
+.founder .bio b{color:var(--text)}
+.founder .tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
+.founder .tl div{border:1px solid var(--line);border-radius:12px;padding:14px 14px;background:rgba(5,9,14,.5)}
+.founder .tl b{display:block;font-size:13px;color:var(--acid);margin-bottom:5px}
+.founder .tl span{font-size:12.5px;color:var(--mut);line-height:1.6;display:block}
+.founder .links{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:38px 0;color:var(--faint);font-size:12.5px;line-height:2}
+footer a{color:var(--mut);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--acid)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.rv.on{opacity:1;transform:none}
+@media(max-width:860px){
+  .stats .wrap{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:none}
+  .apps{grid-template-columns:1fr}
+  .case{grid-template-columns:1fr;padding:26px}
+  .qr{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .qr p{margin:0 auto}
+  nav .wrap{gap:14px}
+  nav a.toplink{display:none}
+  .founder{grid-template-columns:1fr;padding:26px}
+  .founder .tl{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="logo"><span class="mark"></span>CloudSail<small>by 小黄</small></div>
+  <a class="toplink" href="#position">服务定位</a>
+  <a class="toplink" href="#apps">系统</a>
+  <a class="toplink" href="#case">客户案例</a>
+  <a class="toplink" href="#qr">微信接入</a>
+  <a class="toplink" href="#founder">创始人</a>
+  <span class="sp"></span>
+  <a class="cta" href="console/">打开控制台</a>
+</div></nav>
+
+<header class="hero">
+  <div class="grid-bg"></div>
+  <div class="cell-orb"><canvas id="orb"></canvas></div>
+  <div class="wrap in">
+    <span class="kicker rv"><i></i>CLOUDSAIL OS · 已上线运行</span>
+    <h1 class="rv">验货、交付、毛利，<br><em>一套系统</em>跑完</h1>
+    <p class="sub rv">从义乌档口到海外仓：订单上链可核验、AI 眼镜看现场、渠道毛利实时算。这不是 PPT——下面每个系统都能点开用。</p>
+    <div class="hbtns rv">
+      <a class="hbtn p" href="console/">进入交付控制台 →</a>
+      <a class="hbtn g" href="bridge/">试手机桥（拍照识别）</a>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<div class="stats"><div class="wrap">
+  <div class="stat rv"><b data-n="5">0</b><span>个工作台（控制台内）</span></div>
+  <div class="stat rv"><b data-n="12">0</b><span>单真实交付记录（演示数据）</span></div>
+  <div class="stat rv"><b data-n="88" data-suf="%">0</b><span>手机桥 OCR 实测置信度</span></div>
+  <div class="stat rv"><b data-n="1">0</b><span>个行业客户案例（多肽）</span></div>
+</div></div>
+
+<section id="position"><div class="wrap">
+  <div class="sec-kicker rv">CLOUDSAIL · 服务层</div>
+  <h2 class="rv">系统交给你，生意我们帮你跑</h2>
+  <p class="sec-lead rv">CloudSail 是 AI Native 的生意托管与放大服务：先把你的流程拆清楚（<b style="color:var(--text)">引导</b>），交给一组 AI 子代理每天替你跑、异常才推给你审批（<b style="color:var(--text)">托管</b>），跑通后把同一套模板复制成多语言站点与多条渠道（<b style="color:var(--text)">放大</b>）。同一套系统也落在你手里 —— 源码能拿走，可以放在自己的服务器和域名下自托管。交付时客户把账号密码（或子账号权限）给我们，我们<b style="color:var(--text)">进他的网站后台直接改、上、发</b>；交付即已上线，不是给一份物料让他自己传。</p>
+  <div class="hbtns rv" style="justify-content:flex-start;margin-top:0">
+    <a class="hbtn p" href="ai-native/" style="padding:12px 24px;font-size:14px">看完整定位说明 →</a>
+    <a class="hbtn g" href="ai-native/#scripts" style="padding:12px 24px;font-size:14px">复制对外话术</a>
+  </div>
+</div></section>
+
+<section id="apps"><div class="wrap">
+  <div class="sec-kicker rv">THE SYSTEM · 系统</div>
+  <h2 class="rv">三块能点开的拼图</h2>
+  <p class="sec-lead rv">CloudSail 不是一页介绍，是一组已经在跑的工具。点开即用，全部浏览器内运行。</p>
+  <div class="apps">
+    <a class="app rv" href="console/">
+      <span class="no">MODULE 01</span>
+      <h3>交付控制台</h3>
+      <p>五个工作台：锚（凭证链 + 指纹防篡改）、舵手（订单看板拖拽）、船长（渠道 ROI）、帆选（毛利瀑布）、灯塔（内容日历）。支持采购方 / 工厂 / 运营三种视角切换。</p>
+      <div class="tags"><span>凭证链</span><span>拖拽看板</span><span>ROI 计算</span></div>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="app rv" href="bridge/">
+      <span class="no">MODULE 02</span>
+      <h3>手机桥 · 验货取证</h3>
+      <p>上传或粘贴一张现场标签照，浏览器内 OCR 抽出 SKU / 批次 / 数量，对照 PO 出 PASS / HOLD / REJECT，生成带 SHA-256 指纹的验货报告。照片不出本机。</p>
+      <div class="tags"><span>本地 OCR</span><span>工单比对</span><span>哈希出单</span></div>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="app rv" href="glasses/">
+      <span class="no">MODULE 03</span>
+      <h3>AI 眼镜技术路线</h3>
+      <p>AiMB-G3 智能眼镜 → 手机桥 → CloudSail 中台 → VLM 识别 → 验货报告上链。含现状解剖、三条落地路线、软硬件盘点和 90 天试点计划。</p>
+      <div class="tags"><span>第一人称验货</span><span>VLM</span><span>90 天计划</span></div>
+      <span class="go">打开 →</span>
+    </a>
+    <a class="app rv" href="builder/">
+      <span class="no">MODULE 04</span>
+      <h3>官网生成器 · 自然语言建站</h3>
+      <p>客户用一段话描述生意、拖入产品物料，自动生成可上线的双语官网：内置模板引擎秒出成站，可选接入大模型让文案更聪明。生成后下载 HTML，或交给我们进后台发布。</p>
+      <div class="tags"><span>自然语言输入</span><span>物料上传</span><span>双语成站</span></div>
+      <span class="go">打开 →</span>
+    </a>
+  </div>
+</div></section>
+
+<section id="case" style="padding-top:20px"><div class="wrap">
+  <div class="sec-kicker rv">CASE 001 · 首批用户</div>
+  <h2 class="rv">多肽企业的出海独立站</h2>
+  <p class="sec-lead rv">CloudSail 的第一种交付形态：给工厂客户做能收询盘的 B2B 独立站，从演示到上线一天完成。</p>
+  <div class="case rv">
+    <span class="ribbon">CASE 001</span>
+    <div>
+      <h3>CloudSail Peptide — 定制多肽合成官网</h3>
+      <div class="who">客户画像：多肽 CDMO / 原料厂 · 目标市场：欧美药企与实验室采购商</div>
+      <ul>
+        <li>中英双语一键切换，面向海外买家</li>
+        <li>HPLC / MS 质控数据可视化展示</li>
+        <li>产品目录 + 询价表单，询盘直进客户邮箱</li>
+        <li>静态部署：免费托管、全球 CDN、免维护</li>
+        <li>上线成本：域名首年 $2.90（≈¥21），其余为零</li>
+      </ul>
+      <div class="hbtns" style="justify-content:flex-start;margin-top:24px">
+        <a class="hbtn p" href="peptide-demo/" style="padding:11px 22px;font-size:14px">打开演示站 →</a>
+      </div>
+    </div>
+    <div class="shot"><iframe id="caseFrame" title="peptide demo preview" loading="lazy"></iframe></div>
+  </div>
+</div></section>
+
+<section id="qr" style="padding-top:20px"><div class="wrap">
+  <div class="sec-kicker rv">WECHAT · 微信接入</div>
+  <div class="qr">
+    <div class="frame rv" id="qrFrame">
+      <div class="ph" id="qrPh"><b>二维码位</b>微信扫码<br>在手机上使用 CloudSail<br><span style="font-size:11px">（图片就位后自动替换）</span></div>
+      <img id="qrImg" alt="CloudSail 微信二维码" style="display:none">
+    </div>
+    <div class="rv">
+      <h2>扫一扫，手机上用</h2>
+      <p>用微信「扫一扫」扫描左侧二维码，即可在微信里打开 CloudSail 移动端：查看订单、接收验货报告、审批 PASS / HOLD。PC 端的一切，手机上都能处理。</p>
+      <p class="mini">若二维码暂未显示，可直接访问 console/ 与 bridge/ —— 两个模块均已做手机端适配。</p>
+      <div class="hbtns" style="justify-content:flex-start;margin-top:22px">
+        <a class="hbtn g" href="bridge/" style="padding:11px 22px;font-size:14px">先在浏览器里试 →</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="founder" style="padding-top:20px"><div class="wrap">
+  <div class="sec-kicker rv">FOUNDER · 创始人</div>
+  <div class="founder rv">
+    <div class="idbox">
+      <div class="top">
+        <div class="avatar">黄</div>
+        <b>黄倩如 <span style="font-weight:400;color:var(--mut);font-size:14px">Qianru "Carol" Huang</span></b>
+        <span>CloudSail 发起人 · 义乌人</span>
+      </div>
+      <div class="facts">
+        <div><b>教育</b>　浙江大学学士（专业第 1/69）· 硕士（第 1/4）</div>
+        <div><b>在读</b>　ASU 计算机与 AI 创新 MEng · MBA（GPA 4.00/4.00）</div>
+        <div><b>出身</b>　义乌商贸城长大，长尾供给与出运流程是"母语"</div>
+        <div><b>经历</b>　浙大女篮控卫 · CUBA 全国八强 · 浙江省冠军</div>
+        <div><b>联系</b>　sinyu1998@gmail.com</div>
+      </div>
+    </div>
+    <div>
+      <h2>做这套系统的人</h2>
+      <div class="role">FOUNDER &amp; ARCHITECT</div>
+      <p class="bio">在义乌商贸城长大，从小看档口怎么报价、怎么成交、怎么出运。浙大硕士毕业后回到家乡做电商村田野研究——对两个电商村做参与式观察、深访 12 位主播，用学术方法解剖长尾供给的组织方式。现在做 CloudSail：把「验货、交付、毛利」做成一套跨境供应链的 AI 操作系统，CloudSail 服务层负责替客户把生意跑起来。首案已交付：<b>多肽企业出海独立站（CASE 001，当天上线，域名成本 ¥21）</b>。亲手交付过累计 GMV ¥1 亿+ 的跨境生意，所以这套系统写的不是想象中的流程。</p>
+      <div class="tl">
+        <div><b>2016–2020 · 本科</b><span>传播学，GPA 3.97，专业排名 1/69；女篮控卫，CUBA 全国八强</span></div>
+        <div><b>2020–2023 · 硕士</b><span>传播学哲学硕士，核心课 4.00；论文回义乌做电商村田野（12 位主播深访）</span></div>
+        <div><b>2024– · AI/CS</b><span>ASU 计算机科学与 AI 创新硕士在读；MBA GPA 4.00/4.00</span></div>
+        <div><b>2026 · 创业</b><span>发起 CloudSail，交付 CASE 001，手机桥 OCR 实测 88% 置信</span></div>
+      </div>
+      <div class="links">
+        <a class="hbtn g" href="https://sinyu1998-eng.github.io" style="padding:11px 22px;font-size:14px">个人主页（完整时间轴）→</a>
+        <a class="hbtn g" href="peptide-demo/" style="padding:11px 22px;font-size:14px">看 founder 亲手交付的 CASE 001 →</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <b style="color:var(--text)">CloudSail</b> · 跨境供应链的 AI 操作系统 · 由 <a href="https://sinyu1998-eng.github.io">小黄（黄倩如）</a> 设计与构建<br>
+  模块：<a href="console/">交付控制台</a> · <a href="bridge/">手机桥</a> · <a href="builder/">官网生成器</a> · <a href="glasses/">眼镜路线</a> · <a href="peptide-demo/">多肽案例</a> · <a href="ai-native/">AI Native 定位说明</a><br>
+  © 2026 CloudSail
+</div></footer>
+
+<script>
+// 滚动显现
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// 数字滚动
+const nio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return; nio.unobserve(e.target);
+  const el=e.target,end=+el.dataset.n,suf=el.dataset.suf||'',t0=performance.now();
+  (function tick(t){const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(tick)})(t0);
+}),{threshold:.5});
+document.querySelectorAll('.stat b').forEach(el=>nio.observe(el));
+// 粒子细胞球
+const cv=document.getElementById('orb'),ctx=cv.getContext('2d');
+function size(){const r=cv.parentElement.getBoundingClientRect();cv.width=r.width*2;cv.height=r.height*2}
+size();addEventListener('resize',size);
+const N=340,pts=[];
+for(let i=0;i<N;i++){const th=Math.acos(2*Math.random()-1),ph=Math.random()*Math.PI*2;pts.push({th,ph,r:.92+Math.random()*.08,tw:Math.random()*Math.PI*2})}
+let rot=0;
+(function draw(){
+  const W=cv.width,H=cv.height,R=Math.min(W,H)*.42,cx=W/2,cy=H/2;
+  ctx.clearRect(0,0,W,H);rot+=.0028;
+  const sorted=pts.map(p=>{
+    const th=p.th+rot*.6,ph=p.ph+rot;
+    const x=Math.sin(th)*Math.cos(ph),y=Math.cos(th),z=Math.sin(th)*Math.sin(ph);
+    return{x:cx+x*R*p.r,y:cy+y*R*p.r*.96,z,tw:p.tw};
+  }).sort((a,b)=>a.z-b.z);
+  for(const q of sorted){
+    const a=.15+.75*((q.z+1)/2),s=1.2+2.6*((q.z+1)/2);
+    q.tw+=.03;
+    ctx.beginPath();ctx.arc(q.x,q.y,s,0,7);
+    ctx.fillStyle=`rgba(201,249,92,${a*(.7+.3*Math.sin(q.tw))})`;ctx.fill();
+  }
+  requestAnimationFrame(draw);
+})();
+// 案例预览 iframe 缩放
+(function(){
+  const f=document.getElementById('caseFrame'),box=f.parentElement;
+  function fit(){const w=box.clientWidth;f.style.width='1280px';f.style.height='800px';f.style.transform=`scale(${w/1280})`}
+  fit();addEventListener('resize',fit);
+  f.src='peptide-demo/';
+})();
+// 二维码：文件存在则替换占位
+(function(){
+  const img=document.getElementById('qrImg'),ph=document.getElementById('qrPh');
+  img.onload=()=>{ph.style.display='none';img.style.display='block'};
+  img.src='wechat-qr.png?v='+Date.now();
+})();
+</script>
+</body>
+</html>
