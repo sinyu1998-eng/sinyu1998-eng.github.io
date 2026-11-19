@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CloudSail OS · 现实世界操作台</title>
+<meta name="description" content="CloudSail OS — 硬件是现实世界的延伸，让大脑看见现实。眼睛/手/大脑三通道中央集成，全程 human in the loop。">
+<meta name="theme-color" content="#08090B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308090B'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C9F95C'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#08090B;--panel:#101216;--panel2:#15181e;--line:#23272f;--tx:#e9ece7;--mut:#8b9187;--acc:#C9F95C;--acc2:#7fd4ff;--warn:#ffb454;--danger:#ff6b6b;--ok:#57d98b;--r:11px;--rail:238px}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{display:flex;min-height:100vh}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#2b3038;border-radius:4px}
+/* rail */
+.rail{width:var(--rail);flex:none;position:sticky;top:0;height:100vh;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px 11px;overflow-y:auto;z-index:10}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.brand .mark{width:27px;height:27px;border-radius:8px;background:var(--acc);box-shadow:0 0 20px rgba(201,249,92,.35);position:relative;flex:none}
+.brand .mark::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--bg)}
+.brand b{font-size:15px;letter-spacing:.4px}.brand small{display:block;color:var(--mut);font-size:9px;letter-spacing:2px}
+.rt{font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;padding:9px 10px 5px}
+.navi{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;color:var(--mut);padding:9px 10px;text-align:left;border-radius:8px;cursor:pointer;font-size:13px;margin-bottom:2px;transition:.15s}
+.navi:hover{background:var(--panel2);color:var(--tx)}
+.navi.on{background:rgba(201,249,92,.1);color:var(--acc)}
+.navi .n{font-size:10px;width:19px;color:var(--mut);font-variant-numeric:tabular-nums}.navi.on .n{color:var(--acc)}
+.navi .lbl{display:flex;flex-direction:column;min-width:0}.navi .lbl b{font-weight:600}.navi .lbl span{font-size:10px;color:var(--mut);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge-n{background:var(--danger);color:#08090b;font-size:9px;font-weight:700;border-radius:9px;padding:1px 6px;margin-left:auto;flex:none}
+.badge-n.zero{display:none}
+.railfoot{margin-top:auto;border-top:1px solid var(--line);padding:11px 9px 2px;font-size:10px;color:var(--mut)}
+.railfoot .rf{display:flex;justify-content:space-between;margin-bottom:5px}.railfoot b{color:var(--tx);font-weight:600}
+/* main */
+.main{flex:1;min-width:0}
+.top{position:sticky;top:0;z-index:8;background:rgba(8,9,11,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:12px}
+.top .crumb{font-size:13px}.top .crumb i{color:var(--mut);font-style:normal;margin:0 6px}.top .crumb b{color:var(--acc)}
+.spacer{flex:1}
+.live{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mut)}
+.live .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:p 2s infinite}
+@keyframes p{50%{opacity:.35}}
+.wrap{padding:24px;max-width:1180px;margin:0 auto}
+.view{display:none}.view.on{display:block}
+.vhead{margin-bottom:20px}
+.vhead h1{font-size:24px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.vhead h1 em{font-style:normal;font-size:10px;letter-spacing:2px;color:var(--acc);border:1px solid var(--acc);border-radius:4px;padding:2px 7px}
+.vhead p{color:var(--mut);font-size:13px;margin-top:8px;max-width:840px}
+/* thesis */
+.thesis{background:linear-gradient(135deg,rgba(201,249,92,.09),rgba(127,212,255,.05));border:1px solid rgba(201,249,92,.25);border-radius:14px;padding:22px 24px;margin-bottom:20px;position:relative;overflow:hidden}
+.thesis::after{content:"";position:absolute;right:-30px;top:-40px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(201,249,92,.14),transparent 70%)}
+.thesis .kick{font-size:10px;color:var(--acc);letter-spacing:2px;margin-bottom:9px}
+.thesis h2{font-size:21px;line-height:1.42;font-weight:600;max-width:760px}.thesis h2 span{color:var(--acc)}
+.thesis .sub{color:var(--mut);font-size:12px;margin-top:11px;max-width:740px}
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px}
+.stat .k{font-size:10px;color:var(--mut);letter-spacing:1px;text-transform:uppercase}
+.stat .v{font-size:26px;font-weight:700;margin-top:5px;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:12px;color:var(--mut);font-weight:400}
+.stat.c1 .v{color:var(--warn)}.stat.c2 .v{color:var(--acc2)}.stat.c3 .v{color:var(--acc)}
+/* panels */
+.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px}
+.panel h3.t{font-size:12px;color:var(--mut);letter-spacing:1px;margin-bottom:13px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.panel h3.t::before{content:"";width:12px;height:1px;background:var(--acc);order:-1;margin-right:-4px}
+.panel h3.t .r{font-size:10px;color:var(--acc);font-weight:400}
+/* flow lanes */
+.lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.lane{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.lane::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.lane.eye::before{background:var(--acc2)}.lane.hand::before{background:var(--warn)}.lane.brain::before{background:var(--acc)}
+.lane .lh{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-bottom:3px}
+.lane .lh .ic{font-size:15px}.lane.eye .ic{color:var(--acc2)}.lane.hand .ic{color:var(--warn)}.lane.brain .ic{color:var(--acc)}
+.lane .en{font-size:9px;color:var(--mut);letter-spacing:1.5px;margin-bottom:8px}
+.lane p{font-size:11px;color:var(--mut);line-height:1.5}
+/* event stream */
+.stream{display:flex;flex-direction:column;gap:7px;max-height:330px;overflow-y:auto;padding-right:3px}
+.ev{display:flex;gap:9px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:11.5px}
+.ev .tm{color:var(--mut);font-variant-numeric:tabular-nums;font-size:10px;width:42px;flex:none;padding-top:1px}
+.chip{font-size:9px;padding:2px 6px;border-radius:4px;flex:none;font-weight:600}
+.chip.eye{background:rgba(127,212,255,.12);color:var(--acc2)}.chip.hand{background:rgba(255,180,84,.12);color:var(--warn)}.chip.brain{background:rgba(201,249,92,.12);color:var(--acc)}
+.ev .msg{flex:1;color:var(--tx);min-width:0}
+.ev .msg .sub{display:block;color:var(--mut);font-size:10px;margin-top:2px}
+/* controls */
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button.act{background:var(--acc);color:#08090b;border:0;border-radius:7px;padding:9px 13px;font-size:12px;font-weight:600;cursor:pointer;transition:.15s}
+button.act:hover{filter:brightness(1.08)}button.act:disabled{opacity:.4;cursor:not-allowed}
+button.act.ghost{background:none;color:var(--tx);border:1px solid var(--line)}
+button.act.ghost:hover{border-color:var(--acc)}
+button.act.sm{padding:6px 10px;font-size:11px}
+button.act.ok{background:rgba(87,217,139,.15);color:var(--ok);border:1px solid rgba(87,217,139,.35)}
+button.act.no{background:rgba(255,107,107,.12);color:var(--danger);border:1px solid rgba(255,107,107,.3)}
+/* approval queue */
+.queue{display:flex;flex-direction:column;gap:10px}
+.task{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:9px;padding:13px 14px}
+.task .th{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.task .th b{font-size:13px}
+.task .th .sl{font-size:9px;color:var(--mut);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.task .th .risk{margin-left:auto;font-size:9px;padding:2px 7px;border-radius:4px}
+.risk.hi{background:rgba(255,107,107,.12);color:var(--danger)}.risk.md{background:rgba(255,180,84,.12);color:var(--warn)}.risk.lo{background:rgba(87,217,139,.12);color:var(--ok)}
+.task .td{font-size:11.5px;color:var(--mut);margin-bottom:4px}
+.task .why{font-size:10.5px;color:var(--acc2);background:rgba(127,212,255,.06);border-radius:5px;padding:6px 8px;margin:7px 0}
+.task .ta{display:flex;gap:7px;margin-top:9px;align-items:center}
+.task .who{font-size:10px;color:var(--mut);margin-left:auto}
+.empty{text-align:center;color:var(--mut);font-size:12px;padding:34px 10px;border:1px dashed var(--line);border-radius:9px}
+.empty .big{font-size:30px;display:block;margin-bottom:8px;opacity:.5}
+/* audit log */
+.audit{background:#0a0b0d;border:1px solid var(--line);border-radius:9px;padding:12px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:10.5px;line-height:1.7;max-height:250px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
+.audit .t-acc{color:var(--acc)}.audit .t-blue{color:var(--acc2)}.audit .t-red{color:var(--danger)}.audit .t-mut{color:var(--mut)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:11px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:block;position:relative;transition:.18s}
+a.card:hover,.card.click{cursor:pointer;border-color:var(--acc);transform:translateY(-2px)}
+.card .row1{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;gap:8px}
+.card b{font-size:13.5px}.card .badge{font-size:9px;padding:2px 6px;border-radius:4px;letter-spacing:.3px;flex:none}
+.badge.live{background:rgba(201,249,92,.13);color:var(--acc)}
+.badge.code{background:rgba(127,212,255,.13);color:var(--acc2)}
+.badge.plan{background:rgba(139,145,135,.13);color:var(--mut)}
+.card p{font-size:11px;color:var(--mut);line-height:1.55}
+.card .ext{position:absolute;right:13px;bottom:12px;font-size:10px;color:var(--acc)}
+.sec{margin-bottom:20px}.sec h3.t{font-size:11px;color:var(--mut);letter-spacing:1.5px;margin-bottom:10px;text-transform:uppercase}
+/* codes */
+.codes{display:flex;gap:15px;flex-wrap:wrap}
+.qrbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px;text-align:center;width:165px}
+.qrbox img{width:135px;height:135px;object-fit:contain;background:#fff;border-radius:6px;padding:5px}
+.qrbox b{display:block;font-size:12px;margin-top:8px}.qrbox span{font-size:9.5px;color:var(--mut)}
+/* hitl */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:13px;position:relative}
+.step .sn{font-size:9px;color:var(--acc2);letter-spacing:1px;margin-bottom:5px}
+.step b{font-size:12.5px;display:block;margin-bottom:4px}.step p{font-size:10.5px;color:var(--mut)}
+.step::after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:13px;z-index:2}.step:last-child::after{display:none}
+.hitl-box{background:rgba(127,212,255,.06);border:1px solid rgba(127,212,255,.25);border-radius:9px;padding:14px 16px;font-size:11.5px;color:var(--tx)}.hitl-box b{color:var(--acc2)}
+.foot{padding:18px 24px;border-top:1px solid var(--line);color:var(--mut);font-size:10.5px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+/* toast */
+.toast{position:fixed;right:20px;bottom:20px;background:var(--panel2);border:1px solid var(--acc);color:var(--tx);border-radius:9px;padding:12px 16px;font-size:12px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.5);transform:translateY(80px);opacity:0;transition:.3s;max-width:320px}
+.toast.show{transform:none;opacity:1}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.rail{width:60px}.rail .lbl,.rt,.railfoot,.navi span:not(.n),.brand b,.brand small,.badge-n{display:none}.navi{justify-content:center}.navi .n{width:auto}.lanes,.loop{grid-template-columns:1fr}.step::after{display:none}.codes{flex-direction:column}.qrbox{width:100%}}
+@media(max-width:560px){.wrap{padding:15px}.top{padding:11px 15px}.vhead h1{font-size:19px}.thesis h2{font-size:17px}.stats{gap:8px}.stat .v{font-size:21px}}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="brand"><span class="mark"></span><div><b>CloudSail OS</b><small>REAL-WORLD OPS</small></div></div>
+  <div class="rt">操作台</div>
+  <button class="navi on" data-view="hub"><span class="n">00</span><span class="lbl"><b>控制台</b><span>实时态势</span></span></button>
+  <button class="navi" data-view="signal"><span class="n">01</span><span class="lbl"><b>信号总线</b><span>眼→脑→手</span></span></button>
+  <button class="navi" data-view="approve"><span class="n">02</span><span class="lbl"><b>待批事项</b><span>人来判断</span></span><span class="badge-n zero" id="navBadge">0</span></button>
+  <button class="navi" data-view="audit"><span class="n">03</span><span class="lbl"><b>决策留痕</b><span>审批记录</span></span></button>
+  <div class="rt">能力 / 系统</div>
+  <button class="navi" data-view="eye"><span class="n">04</span><span class="lbl"><b>眼睛 · 看</b><span>采集 / CV</span></span></button>
+  <button class="navi" data-view="hand"><span class="n">05</span><span class="lbl"><b>手 · 动</b><span>执行 / 上线</span></span></button>
+  <button class="navi" data-view="brain"><span class="n">06</span><span class="lbl"><b>大脑 · 判</b><span>清洗 / 核验</span></span></button>
+  <button class="navi" data-view="systems"><span class="n">07</span><span class="lbl"><b>已有工作台</b><span>7 个系统</span></span></button>
+  <div class="railfoot">
+    <div class="rf"><span>人在环</span><b id="hitlState">开启</b></div>
+    <div class="rf"><span>区域</span><b>义乌 · 库比蒂诺</b></div>
+    <div class="rf"><span>版本</span><b>v0.2.0 · OS</b></div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="top">
+    <div class="crumb"><i>/</i><b id="crumb">控制台</b></div>
+    <div class="spacer"></div>
+    <div class="live"><span class="dot"></span><span id="liveTime">--:--:--</span></div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- 00 控制台 -->
+    <section class="view on" id="v-hub">
+      <div class="thesis">
+        <div class="kick">CENTRAL INTEGRATION · 中央集成与控制</div>
+        <h2>硬件是现实世界的延伸，让<span>大脑</span>看见现实正在发生什么。</h2>
+        <div class="sub">和现实互动只有三条路：<b style="color:var(--acc2)">眼睛</b>（看）、<b style="color:var(--warn)">手</b>（动）、<b style="color:var(--acc)">大脑</b>（判断）。这里把三路信号汇总、清洗、识别，生成动作建议——但每个动作都要<strong>人点确认才执行</strong>。</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="k">待你判断</div><div class="v" id="s-pending">0<small> 件</small></div></div>
+        <div class="stat c1"><div class="k">今日信号</div><div class="v" id="s-signals">0<small> 条</small></div></div>
+        <div class="stat c2"><div class="k">已执行</div><div class="v" id="s-done">0<small> 件</small></div></div>
+        <div class="stat c3"><div class="k">人在环</div><div class="v">ON</div></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <h3 class="t">实时信号流 <span class="r" id="streamCount">0 条</span></h3>
+          <div class="stream" id="stream"></div>
+          <div class="ctrl">
+            <button class="act" onclick="genSignal()">▶ 产生一条现实信号</button>
+            <button class="act ghost" data-goto="approve">去处理待批 →</button>
+          </div>
+        </div>
+        <div class="panel">
+          <h3 class="t">三通道 <span class="r">眼 / 手 / 大脑</span></h3>
+          <div class="lanes">
+            <div class="lane eye"><div class="lh"><span class="ic">◉</span>眼睛</div><div class="en">PERCEIVE</div><p>眼镜 / 摄像头采集画面声音，CV 识别成结构化信号。</p></div>
+            <div class="lane brain"><div class="lh"><span class="ic">◈</span>大脑</div><div class="en">DECIDE</div><p>清洗、比对、核验，生成带来源和置信度的建议。</p></div>
+            <div class="lane hand"><div class="lh"><span class="ic">✋</span>手</div><div class="en">ACT</div><p>人确认后，才进后台执行——机器狗、上线、发报价。</p></div>
+          </div>
+          <div class="hitl-box" style="margin-top:4px"><b>硬约束：</b>没有人工确认，任何动作都不执行。系统只负责"看见 + 建议"，人负责"判断 + 拍板"。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 信号总线 -->
+    <section class="view" id="v-signal">
+      <div class="vhead"><h1>信号总线 <em>BUS</em></h1><p>一条现实信号从采集到执行的完整链路。每次产生信号，都会走 眼 → 大脑 → 手，并在"手"这一步<strong>生成一个待批事项</strong>等人确认。</p></div>
+      <div class="panel">
+        <h3 class="t">链路演练 <span class="r">点击逐步产生</span></h3>
+        <div class="ctrl" style="margin-top:0;margin-bottom:14px">
+          <button class="act" onclick="genSignal()">① 眼睛采集一条信号</button>
+          <button class="act ghost" onclick="go('approve')">② 去待批列表判断 →</button>
+          <button class="act ghost" onclick="resetAll()">重置演示数据</button>
+        </div>
+        <div class="stream" id="stream2"></div>
+        <div class="audit" id="busLog" style="margin-top:12px">[BUS] 信号总线就绪。等待现实信号输入…</div>
+      </div>
+    </section>
+
+    <!-- 02 待批事项 -->
+    <section class="view" id="v-approve">
+      <div class="vhead"><h1>待批事项 <em>HUMAN DECISION</em></h1><p>这是 human in the loop 的核心：AI 生成的所有动作建议都在这里等人。<strong>只有你点"批准执行"，动作才真正发生</strong>；驳回则记录原因。状态保存在本机浏览器，刷新不丢。</p></div>
+      <div class="panel">
+        <h3 class="t">待你判断 <span class="r" id="queueCount">0 件</span></h3>
+        <div class="queue" id="queue"></div>
+      </div>
+    </section>
+
+    <!-- 03 决策留痕 -->
+    <section class="view" id="v-audit">
+      <div class="vhead"><h1>决策留痕 <em>AUDIT TRAIL</em></h1><p>每一次批准/驳回都留下时间、操作人、理由——谁做的判断、为什么，可追溯。这是"人负责"的证据链。</p></div>
+      <div class="panel">
+        <h3 class="t">审批日志 <span class="r" id="auditCount">0 条</span></h3>
+        <div class="audit" id="auditLog" style="max-height:440px">[AUDIT] 决策日志就绪。</div>
+      </div>
+    </section>
+
+    <!-- 04 眼睛 -->
+    <section class="view" id="v-eye">
+      <div class="vhead"><h1>眼睛 · 看现实 <em>PERCEIVE</em></h1><p>把现实里的画面和声音，变成大脑能读的结构化信号。状态：✅ 已上线 / 🔧 代码骨架在你本机 Xcode 编译 / 📋 规划中。</p></div>
+      <div class="cards">
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/glasses/" target="_blank"><div class="row1"><b>AI 眼镜工厂版</b><span class="badge live">已上线</span></div><p>QC 戴上验来料，识别 SKU 当场留证。</p><span class="ext">打开 ↗</span></a>
+        <div class="card"><div class="row1"><b>眼镜录音</b><span class="badge code">Xcode 骨架</span></div><p>AVFoundation 采集音频，边录边转写、打时间戳。</p><span class="ext">ios/</span></div>
+        <div class="card"><div class="row1"><b>Computer Vision</b><span class="badge code">Xcode 骨架</span></div><p>Vision 做物体/SKU/文字检测，输出结构化标签。</p><span class="ext">ios/</span></div>
+        <div class="card"><div class="row1"><b>面部识别</b><span class="badge code">Xcode 骨架</span></div><p>人脸检测+比对，用于到店核验；结果必须人确认。</p><span class="ext">ios/</span></div>
+        <div class="card"><div class="row1"><b>录音录像采集</b><span class="badge code">Xcode 骨架</span></div><p>音视频同步采集、分片、上传，喂给清洗管线。</p><span class="ext">ios/</span></div>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/bridge/" target="_blank"><div class="row1"><b>手机桥 OCR</b><span class="badge live">已上线</span></div><p>浏览器本地 OCR 读标签 + PO 比对 + 指纹报告。</p><span class="ext">打开 ↗</span></a>
+      </div>
+    </section>
+
+    <!-- 05 手 -->
+    <section class="view" id="v-hand">
+      <div class="vhead"><h1>手 · 动现实 <em>ACT</em></h1><p>把大脑的决定变成现实世界的动作。所有动作经"待批事项"里的人确认后才执行。</p></div>
+      <div class="cards">
+        <div class="card"><div class="row1"><b>机器狗音乐互动</b><span class="badge code">Xcode 骨架</span></div><p>蓝牙/Multipeer 连接机器狗，节拍驱动动作；指令需人授权。</p><span class="ext">ios/</span></div>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/console/" target="_blank"><div class="row1"><b>交付控制台</b><span class="badge live">已上线</span></div><p>询盘→验厂→质检→出运→签收全流程，6 个工作台。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/" target="_blank"><div class="row1"><b>进后台直接上线</b><span class="badge live">服务</span></div><p>客户给子账号，我们进后台直接改上线——不是给一份文件。</p><span class="ext">看服务 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/builder/" target="_blank"><div class="row1"><b>一句话建站</b><span class="badge live">已上线</span></div><p>说一段话出中英双语站，当天上线。</p><span class="ext">打开 ↗</span></a>
+        <div class="card"><div class="row1"><b>询盘转报价</b><span class="badge live">已上线</span></div><p>海外询盘自动解析、匹配产品、生成草稿，人确认后发出。</p><span class="ext">console/</span></div>
+      </div>
+    </section>
+
+    <!-- 06 大脑 -->
+    <section class="view" id="v-brain">
+      <div class="vhead"><h1>大脑 · 做判断 <em>DECIDE</em></h1><p>把多源信号清洗、核验、理解，给出可执行建议——最终判断权在人。</p></div>
+      <div class="cards">
+        <div class="card"><div class="row1"><b>Multimodal Data Cleaning</b><span class="badge code">代码骨架</span></div><p>音视频去抖/降噪/去重/对齐，输出干净数据集。Python 管线，7 测试通过。</p><span class="ext">pipeline/</span></div>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/ai-native/" target="_blank"><div class="row1"><b>LLM 理解与推理</b><span class="badge live">已上线</span></div><p>AI Native 服务页，讲清"托管→引导→放大"。</p><span class="ext">打开 ↗</span></a>
+        <div class="card"><div class="row1"><b>社媒资料核验</b><span class="badge plan">合规 · 人在环</span></div><p>B2B 公开信息核验（非个人画像/追踪），每条标来源，人工复核。</p><span class="ext">规划中</span></div>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/market/" target="_blank"><div class="row1"><b>市场地图 TAM/SAM/SOM</b><span class="badge live">已上线</span></div><p>竞品与市场数据，给判断提供事实底座。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/peptide-demo/" target="_blank"><div class="row1"><b>CASE 001 多肽站</b><span class="badge live">已上线</span></div><p>真实客户案例，验证"当天上线"的交付能力。</p><span class="ext">打开 ↗</span></a>
+      </div>
+    </section>
+
+    <!-- 07 已有工作台 -->
+    <section class="view" id="v-systems">
+      <div class="vhead"><h1>已有工作台 <em>WORKSPACES</em></h1><p>一个没落下——7 个已上线系统，按眼/手/脑归位，全部可点开。及官方服务入口。</p></div>
+      <div class="sec"><h3 class="t">眼睛 / 看</h3><div class="cards">
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/glasses/" target="_blank"><div class="row1"><b>Glasses</b><span class="badge live">上线</span></div><p>工厂版 AI 眼镜技术路线。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/bridge/" target="_blank"><div class="row1"><b>Bridge</b><span class="badge live">上线</span></div><p>浏览器 OCR + PO 比对 + 指纹报告。</p><span class="ext">打开 ↗</span></a>
+      </div></div>
+      <div class="sec"><h3 class="t">手 / 动</h3><div class="cards">
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/console/" target="_blank"><div class="row1"><b>Console</b><span class="badge live">上线</span></div><p>6 大工作台：核验/订单/代运营/毛利/内容/站点矩阵。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/builder/" target="_blank"><div class="row1"><b>Builder</b><span class="badge live">上线</span></div><p>自然语言生成中英双语官网。</p><span class="ext">打开 ↗</span></a>
+      </div></div>
+      <div class="sec"><h3 class="t">大脑 / 判</h3><div class="cards">
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/ai-native/" target="_blank"><div class="row1"><b>AI Native</b><span class="badge live">上线</span></div><p>AI 原生服务定位页。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/market/" target="_blank"><div class="row1"><b>Market</b><span class="badge live">上线</span></div><p>竞品与 TAM/SAM/SOM。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/peptide-demo/" target="_blank"><div class="row1"><b>CASE 001</b><span class="badge live">上线</span></div><p>多肽客户双语站案例。</p><span class="ext">打开 ↗</span></a>
+        <a class="card" href="https://sinyu1998-eng.github.io/cloudsail/" target="_blank"><div class="row1"><b>客户总入口</b><span class="badge live">上线</span></div><p>cloudsail 首页，客户看懂的全面项目。</p><span class="ext">打开 ↗</span></a>
+      </div></div>
+      <div class="sec"><h3 class="t">官方服务群 · 进来找人</h3>
+        <div class="codes">
+          <div class="qrbox"><img src="qr/群聊_FideightGlobalSeedUser.png" alt="Fideight-GlobalSeedUser 群"><b>Fideight-GlobalSeedUser</b><span>官方服务群 · 11.26 前有效</span></div>
+          <div class="qrbox"><img src="qr/个人微信_CarolHuang.png" alt="Carol Huang 个人微信"><b>Carol Huang</b><span>美国 · 库比蒂诺</span></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <footer class="foot">
+    <span>CloudSail OS · 硬件是现实世界的延伸 · 眼 / 手 / 大脑 三通道中央集成</span>
+    <span>全程 Human in the Loop · 人接收 · 人判断 · 人兜底</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 状态（localStorage 持久化）============ */
+const KEY='cloudsail_os_v2';
+const SEED_SIGNALS=[
+ {ch:'eye',msg:'眼镜拍到货架 SKU「肽类样品 A」，画面流入 CV 识别',sub:'来源：glasses 工作台 · 置信度 0.94',
+  act:'生成验货留证报告并归档',risk:'lo',why:'画面与 PO-Peptide-001 匹配度 94%，建议归档留证'},
+ {ch:'eye',msg:'录音转写：客户问「能不能加西语页面」',sub:'来源：录音豆 · 转写置信度 0.89',
+  act:'生成西语页面草稿，确认后上线',risk:'md',why:'客户明确需求，先出草稿；上线前需人核对文案'},
+ {ch:'brain',msg:'CV 识别到来宾人脸，检索公开 B2B 资料生成接待建议',sub:'来源：Vision + 公开信息核验 · 每条标来源',
+  act:'推送接待建议给业务员',risk:'lo',why:'仅公开商业信息，人工复核后使用，不做个人画像'},
+ {ch:'hand',msg:'机器狗摄像头检测到来宾靠近，触发迎宾流程',sub:'来源：机器狗 · 事件',
+  act:'机器狗播放迎宾音乐',risk:'md',why:'现场迎宾动作，需人授权后执行'},
+ {ch:'brain',msg:'Multimodal Cleaning 完成一批录音录像去噪去重',sub:'来源：pipeline · 7 测试通过',
+  act:'将清洗后的数据集入库',risk:'lo',why:'数据已通过质量检查，建议入库'},
+ {ch:'eye',msg:'手机桥 OCR 读到箱唛与 PO 不符（数量 480 vs 500）',sub:'来源：bridge · 置信度 0.91',
+  act:'标记异常并通知 QC 复核',risk:'hi',why:'数量差异 20 件，涉及收货，必须人复核后处理'}
+];
+const SCENARIO={
+ '控制台':'hub','信号总线':'signal','待批事项':'approve','决策留痕':'audit',
+ '眼睛 · 看现实':'eye','眼睛 · 看':'eye','手 · 动现实':'hand','手 · 动':'hand',
+ '大脑 · 做判断':'brain','已有工作台':'systems','OK':'hub','ON':'hub'
+};
+let state=load();
+function load(){
+  try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.signals))return s}catch(e){}
+  return {signals:[],queue:[],audit:[],seq:0};
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function now(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0')}
+/* ============ 导航 ============ */
+const LABELS={hub:'控制台',signal:'信号总线',approve:'待批事项',audit:'决策留痕',eye:'眼睛 · 看现实',hand:'手 · 动现实',brain:'大脑 · 做判断',systems:'已有工作台'};
+function go(v){
+  document.querySelectorAll('.navi').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById('v-'+v);if(el)el.classList.add('on');
+  document.getElementById('crumb').textContent=LABELS[v]||v;
+  window.scrollTo({top:0,behavior:'smooth'});
+  render();
+}
+document.querySelectorAll('.navi').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+/* ============ 渲染 ============ */
+function render(){
+  // 信号流（两个视图）
+  const ss=[...state.signals].reverse();
+  const html=ss.map(s=>`<div class="ev"><span class="tm">${s.tm}</span><span class="chip ${s.ch}">${chName(s.ch)}</span><span class="msg">${esc(s.msg)}<span class="sub">${esc(s.sub)}</span></span></div>`).join('')
+    ||'<div class="empty"><span class="big">◌</span>还没有信号。点上方按钮产生一条现实信号。</div>';
+  document.getElementById('stream').innerHTML=html;
+  document.getElementById('stream2').innerHTML=html;
+  document.getElementById('streamCount').textContent=state.signals.length+' 条';
+  // 待批队列
+  const q=state.queue.filter(t=>t.status==='pending');
+  const qh=q.map(t=>taskHtml(t)).join('')
+    ||'<div class="empty"><span class="big">✓</span>没有待批事项。产生一条信号试试，或这里本来就很清爽。</div>';
+  document.getElementById('queue').innerHTML=qh;
+  document.getElementById('queueCount').textContent=q.length+' 件';
+  const nb=document.getElementById('navBadge');nb.textContent=q.length;nb.classList.toggle('zero',q.length===0);
+  // 审计日志
+  const al=[...state.audit].reverse().map(a=>a.line).join('\n')||'[AUDIT] 决策日志就绪。尚无审批记录。';
+  document.getElementById('auditLog').innerHTML=al;
+  document.getElementById('auditCount').textContent=state.audit.length+' 条';
+  // 统计
+  document.getElementById('s-pending').innerHTML=q.length+'<small> 件</small>';
+  document.getElementById('s-signals').innerHTML=state.signals.length+'<small> 条</small>';
+  document.getElementById('s-done').innerHTML=state.queue.filter(t=>t.status==='approved').length+'<small> 件</small>';
+}
+function chName(c){return c==='eye'?'眼':c==='brain'?'脑':'手'}
+function taskHtml(t){
+  const rk=t.risk==='hi'?'高':t.risk==='md'?'中':'低';
+  return `<div class="task"><div class="th"><b>${esc(t.act)}</b><span class="sl">${chName(t.ch)} · ${esc(t.src||'系统')}</span><span class="risk ${t.risk}">风险 ${rk}</span></div>
+    <div class="td">触发信号：${esc(t.msg)}</div>
+    <div class="why">大脑建议：${esc(t.why)}</div>
+    <div class="ta"><button class="act ok sm" onclick="decide('${t.id}','approved')">✓ 批准执行</button><button class="act no sm" onclick="decide('${t.id}','rejected')">✕ 驳回</button><span class="who">待人判断</span></div></div>`;
+}
+/* ============ 动作 ============ */
+function genSignal(){
+  const s=SEED_SIGNALS[state.seq%SEED_SIGNALS.length];state.seq++;
+  const tm=now();
+  state.signals.push({tm,ch:s.ch,msg:s.msg,sub:s.sub});
+  const id='t'+Date.now()+'_'+state.seq;
+  state.queue.push({id,tm,ch:s.ch,msg:s.msg,src:s.sub.split('·')[0].trim(),act:s.act,risk:s.risk,why:s.why,status:'pending'});
+  const bus=document.getElementById('busLog');
+  bus.innerHTML+=`\n<span class="t-blue">[${tm}]</span> <span class="t-acc">眼/脑</span> 采集并清洗信号：${esc(s.msg)}\n<span class="t-mut">      →</span> 生成动作建议「${esc(s.act)}」→ 已推入待批队列，等人判断。`;
+  bus.scrollTop=bus.scrollHeight;
+  save();render();
+  toast('新信号已入总线，并生成 1 件待批事项');
+}
+function decide(id,decision){
+  const t=state.queue.find(x=>x.id===id);if(!t||t.status!=='pending')return;
+  let reason='';
+  if(decision==='rejected'){reason=prompt('驳回原因（记录到留痕）：','暂不需要 / 信息不足');if(reason===null)return;reason=reason||'未填写原因';}
+  t.status=decision;t.decidedAt=now();t.decisionBy='袁明坤（操作员）';t.reason=reason;
+  const verb=decision==='approved'?'批准执行':'驳回';
+  const line=`<span class="t-mut">[${t.decidedAt}]</span> <span class="${decision==='approved'?'t-acc':'t-red'}">${verb}</span> — ${esc(t.act)}\n     操作人：${t.decisionBy} · 触发：${esc(t.msg)}${reason?'\n     驳回原因：'+esc(reason):''}${decision==='approved'?'\n     <span class="t-blue">→ 动作已进入执行队列（演示）</span>':''}`;
+  state.audit.push({line});
+  const bus=document.getElementById('busLog');
+  bus.innerHTML+=`\n<span class="t-mut">[${t.decidedAt}]</span> 人在环：${verb}「${esc(t.act)}」→ ${decision==='approved'?'放行执行':'终止'}`;
+  bus.scrollTop=bus.scrollHeight;
+  save();render();
+  toast(decision==='approved'?'已批准，动作放行执行':'已驳回，原因已留痕');
+}
+function resetAll(){if(!confirm('重置所有演示数据（信号/待批/留痕）？'))return;state={signals:[],queue:[],audit:[],seq:0};save();document.getElementById('busLog').innerHTML='[BUS] 已重置。等待现实信号输入…';render();toast('演示数据已重置')}
+let tt;function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),2600)}
+setInterval(()=>{document.getElementById('liveTime').textContent=now()},1000);
+render();
+</script>
+</body>
+</html>
