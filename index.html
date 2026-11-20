@@ -127,6 +127,19 @@ section{position:relative}
 .bcard .open{margin-top:auto;font-size:12px;color:var(--gold);letter-spacing:.14em;opacity:0;transform:translateY(4px);transition:all .35s}
 .bcard:hover .open{opacity:1;transform:none}
 .bcard.live::after{content:"";position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:#7ee08a;box-shadow:0 0 8px #7ee08a;animation:blink 2s infinite}
+.bgroup{margin-top:52px}
+.bgh{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.bgh i{font-style:normal;font-size:11px;letter-spacing:.3em;color:var(--gold);font-weight:600}
+.bgh b{font-size:18px;letter-spacing:.04em;font-weight:600}
+.bgh span{margin-left:auto;font-size:11px;color:var(--faint);letter-spacing:.1em;text-align:right}
+.bcard .open.always{opacity:1!important;transform:none!important}
+.bcard .bn b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.bcard.key{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,179,106,.07),var(--bg2))}
+.bcard.tool{border-color:rgba(79,143,217,.55)}
+.bcard.tool .bn{color:#7fb2e8}
+.bcard .sep{height:1px;background:var(--line);margin:4px 0}
+@media(max-width:760px){.bgh span{display:none}.bgh b{font-size:16px}}
+
 @keyframes blink{50%{opacity:.35}}
 
 #talk{background:var(--bg2);border-top:1px solid var(--line)}
@@ -181,7 +194,7 @@ footer b{color:var(--dim)}
 <nav id="nav">
   <b id="logo">小黄 · XIAOHUANG</b>
   <span>
-    <a href="#life">年轮</a><a href="#specs">眼镜</a><a href="#bases">基地</a><a href="#work">作品</a><a href="#talk">留言</a>
+    <a href="#life">年轮</a><a href="#specs">眼镜</a><a href="#bases">总入口</a><a href="#work">作品</a><a href="#talk">留言</a>
     <a href="papers.html">论文</a>
     <a href="CV_QianruHuang.pdf" target="_blank">CV ↓</a>
   </span>
@@ -196,8 +209,8 @@ footer b{color:var(--dim)}
     <div class="hero-sub">义乌人，从小在商贸城长大。现在做 AI 出海系统，给工厂配眼镜，也做研究。这是我自己搭的小站，欢迎来逛。</div>
     <div class="hero-id"><b>黄倩如 Qianru (Carol) Huang</b> · CloudSail 发起人</div>
     <div class="hero-cta">
-      <a class="hbtn g" href="#talk">给我留言</a>
-      <a class="hbtn" href="https://sinyu1998-eng.github.io/cloudsail/">我做的系统 CloudSail →</a>
+      <a class="hbtn g" href="#bases">所有系统 · 总入口 →</a>
+      <a class="hbtn" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener">进入操作台 →</a>
     </div>
   </div>
   <div class="scroll-hint">往下滚 · 有我的时间轴</div>
@@ -216,53 +229,116 @@ footer b{color:var(--dim)}
   </div>
 </section>
 
-<!-- ============ 站点矩阵 ============ -->
+<!-- ============ 总入口：所有系统收在一页 ============ -->
 <section id="bases">
   <div class="wrap">
-    <div class="sec-kicker rv">BASES · 基地</div>
-    <h2 class="sec-h2 rv">我的站点矩阵</h2>
-    <p class="sec-lead rv">朋友帮我把 CloudSail 的全套系统都部署到了线上服务器——主站、工作台、商城、CRM，还有几个镜像站。下面这些点进去都能直接用：</p>
-    <div class="bgrid">
-      <a class="bcard live rv" href="https://sinyu1998-eng.github.io/cloudsail/" target="_blank" style="grid-column:1/-1;border-color:var(--gold)">
-        <div class="bn">旗舰 · 我做的系统</div><h4>CloudSail · 跨境供应链的 AI 操作系统</h4>
-        <p>交付控制台（五工作台）、手机桥验货取证、AI 眼镜技术路线，还有给客户交付的行业独立站案例。全部能点开直接用。</p><div class="open" style="opacity:1;transform:none">进入 CloudSail →</div>
-      </a>
-      <a class="bcard live rv" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 01 · 主站</div><h4>CloudSail 聚合总站</h4>
-        <p>整个系统的入口，也是我的主站门面。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 02 · 工作台</div><h4>SellerPilot OS 外贸工作台</h4>
-        <p>外贸全流程操作系统：询盘、报价、跟单、验货。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://margueriteasbury.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 03 · 商城</div><h4>Marguerite &amp; Asbury</h4>
-        <p>AI 搭配 + USDC 结账的线上商城。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://crm.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 04 · CRM</div><h4>EspoCRM 客户关系</h4>
-        <p>客户与联系人管理，点进去就能用。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://sellerpilot-demo.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 05 · 镜像</div><h4>SellerPilot 镜像站</h4>
-        <p>演示与备份环境。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://diglab.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 06 · 镜像</div><h4>DigLab AI</h4>
-        <p>社媒运营平台镜像。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://dropshiplab.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 07 · 镜像</div><h4>DropshipLab</h4>
-        <p>代发货业务镜像。</p><div class="open">打开 →</div>
-      </a>
-      <a class="bcard live rv" href="https://linglink.47-79-34-141.sslip.io" target="_blank">
-        <div class="bn">BASE 08 · 镜像</div><h4>LingLink AI</h4>
-        <p>语言与沟通工具镜像。</p><div class="open">打开 →</div>
-      </a>
-      <a class="base rv" href="/sinoways/" target="_blank" rel="noopener">
-        <div class="bn">BASE 09 · 旅游</div><h4>Sinoways 丝路行</h4>
-        <p>运河·文化·货源地深度游，可在线预约。</p><div class="open">打开 →</div>
-      </a>
+    <div class="sec-kicker rv">ONE PLACE · 总入口</div>
+    <h2 class="sec-h2 rv">所有东西，都在这一页</h2>
+    <p class="sec-lead rv">以前散在十几个目录、好几台服务器上，现在收到一处，分三组：<b>我在做的 CloudSail</b>、<b>独立运行的操作台</b>、<b>朋友服务器上托管的系统</b>。点哪个都能直接打开。</p>
+
+    <!-- 组 01 · CloudSail 主业 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>01</i><b>CloudSail · 我在做的主业</b><span>对外门面 · 交付工具 · 技术路线</span></div>
+      <div class="bgrid">
+        <a class="bcard key live" href="/cloudsail/" target="_blank" rel="noopener" style="grid-column:1/-1">
+          <div class="bn">企业官网 · 对外门面</div>
+          <h4>CloudSail 云帆出海</h4>
+          <p>讲清我做什么、怎么收费、怎么联系。客户、工厂、资本都从这里进来。</p>
+          <div class="open always">进入官网 →</div>
+        </a>
+        <a class="bcard tool" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
+          <div class="bn">独立操作台 · 与个人站分开</div>
+          <h4>CloudSail 运营控制台</h4>
+          <p>报价与毛利、客户订单、审批留痕、交付物生成。单文件程序，下载可离线用，数据存本机。这是干活的工具，不是介绍页——所以单独放在这里，不混进个人主页。</p>
+          <div class="open always">打开操作台 →</div>
+        </a>
+        <a class="bcard" href="/cloudsail-os/" target="_blank" rel="noopener">
+          <div class="bn">运营台 v2</div><h4>信号 · 审批 · 审计</h4>
+          <p>现实信号进来自动排队，人工批准才执行，每一步留痕可核验。</p>
+          <div class="open always">打开 →</div>
+        </a>
+        <a class="bcard" href="/cloudsail/console/" target="_blank" rel="noopener">
+          <div class="bn">交付控制台</div><h4>五个工作台</h4>
+          <p>询盘、报价、跟单、验货、物流，客户交付用的那一套。</p>
+          <div class="open always">打开 →</div>
+        </a>
+        <a class="bcard" href="/cloudsail/bridge/" target="_blank" rel="noopener">
+          <div class="bn">手机桥 · 验货取证</div><h4>拍一张标签就能核</h4>
+          <p>手机拍标签，识别 SKU 与批次，与工单核对，异常当场留证。</p>
+          <div class="open always">试用 →</div>
+        </a>
+        <a class="bcard" href="/cloudsail/glasses/" target="_blank" rel="noopener">
+          <div class="bn">硬件 · 进行中</div><h4>AI 眼镜 · 工厂版</h4>
+          <p>消费级眼镜重配为验货/巡检设备，第一视角留证，接进工单。</p>
+          <div class="open always">看技术路线 →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 组 02 · 独立运行的系统 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>02</i><b>独立运行的系统</b><span>外部服务器托管 · 点开即用</span></div>
+      <div class="bgrid">
+        <a class="bcard live" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 01 · 聚合总站</div><h4>CloudSail 聚合总站</h4>
+          <p>整套系统的外部入口与门面。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 02 · 工作台</div><h4>SellerPilot OS 外贸工作台</h4>
+          <p>外贸全流程：询盘、报价、跟单、验货。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://margueriteasbury.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 03 · 商城</div><h4>Marguerite &amp; Asbury</h4>
+          <p>AI 搭配 + USDC 结账的线上商城。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://crm.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 04 · CRM</div><h4>EspoCRM 客户关系</h4>
+          <p>客户与联系人管理，点进去就能用。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://sellerpilot-demo.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 05 · 镜像</div><h4>SellerPilot 镜像站</h4>
+          <p>演示与备份环境。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://diglab.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 06 · 镜像</div><h4>DigLab AI</h4>
+          <p>社媒运营平台镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://dropshiplab.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 07 · 镜像</div><h4>DropshipLab</h4>
+          <p>代发货业务镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://linglink.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 08 · 镜像</div><h4>LingLink AI</h4>
+          <p>语言与沟通工具镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="/sinoways/" target="_blank" rel="noopener">
+          <div class="bn">BASE 09 · 旅游</div><h4>Sinoways 丝路行</h4>
+          <p>运河 · 文化 · 货源地深度游，可在线预约。</p><div class="open always">打开 →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 组 03 · 研究 · 简历 · 存档 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>03</i><b>研究 · 简历 · 存档</b><span>个人内容，与业务系统分开</span></div>
+      <div class="bgrid">
+        <a class="bcard" href="papers.html">
+          <div class="bn">研究</div><h4>论文空间</h4>
+          <p>政治传播与 AI 治理方向的研究、会议报告、在读计划。</p><div class="open always">进入 →</div>
+        </a>
+        <a class="bcard" href="/index-academic.html">
+          <div class="bn">学术版</div><h4>学术主页</h4>
+          <p>给学术场合看的版本：研究问题、方法、发表。</p><div class="open always">进入 →</div>
+        </a>
+        <a class="bcard" href="CV_QianruHuang.pdf" target="_blank" rel="noopener">
+          <div class="bn">简历</div><h4>CV · 黄倩如</h4>
+          <p>一页看清教育与经历，可直接下载。</p><div class="open always">下载 PDF ↓</div>
+        </a>
+        <a class="bcard" href="https://github.com/sinyu1998-eng" target="_blank" rel="noopener">
+          <div class="bn">代码</div><h4>GitHub</h4>
+          <p>开源项目与提交记录。</p><div class="open always">打开 →</div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -429,9 +505,9 @@ footer b{color:var(--dim)}
         <p>眼镜拍的东西直接挂在订单/批次上，产出「验货报告 PDF + 带时间戳的视频」，可交给客户、平台、保险与采购方复核。这才是工厂愿意付钱的部分。</p>
       </div>
     </div>
-    <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="https://sinyu1998-eng.github.io/cloudsail/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × CloudSail 技术路线 →</a>。</div>
+    <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="/cloudsail/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × CloudSail 技术路线 →</a>。</div>
     <div class="rv" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-      <a class="hbtn g" href="https://sinyu1998-eng.github.io/cloudsail/bridge/">试手机桥原型（真识别一张标签）→</a>
+      <a class="hbtn g" href="/cloudsail/bridge/">试手机桥原型（真识别一张标签）→</a>
     </div>
   </div>
 </section>
@@ -441,7 +517,7 @@ footer b{color:var(--dim)}
   <div class="wrap">
     <div class="sec-kicker rv">SELECTED WORK · 作品</div>
     <h2 class="sec-h2 rv">一些做过的东西</h2>
-    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="https://sinyu1998-eng.github.io/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail 交付控制台 →</a> 五个工作台都能点。</p>
+    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail 交付控制台 →</a> 五个工作台都能点。</p>
     <div class="two rv">
       <div>
         <div class="item"><span class="k">PRODUCT · TO B</span><b>CloudSail 云帆出海</b><span>AI 全托管出口系统：询盘、报价、翻译、跟单、验货排程、物流——工厂只需要发货。</span></div>
@@ -478,7 +554,7 @@ footer b{color:var(--dim)}
 </section>
 
 <footer>
-  <b>sinyu1998@gmail.com</b> · 公众号 Marguerite&amp;Asbury · <a href="https://sinyu1998-eng.github.io/cloudsail/" style="border-bottom:1px solid var(--faint)">CloudSail</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
+  <b>sinyu1998@gmail.com</b> · 公众号 Marguerite&amp;Asbury · <a href="/cloudsail/" style="border-bottom:1px solid var(--faint)">CloudSail</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
   <a href="/papers.html" style="border-bottom:1px solid var(--faint)">论文空间</a> · <a href="/index-academic.html" style="border-bottom:1px solid var(--faint)">旧版主页</a><br><br>
   © 2026 黄倩如 Qianru (Carol) Huang
 </footer>
@@ -531,7 +607,8 @@ addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onS
       const x=p.x*(1-e)+gx*e,y=p.y*(1-e)+gy*e;
       ctx.globalAlpha=z1>0?0.75*persp:0.18;
       ctx.fillStyle=p.g?'#d9b36a':'#8fb3e0';
-      ctx.beginPath();ctx.arc(x,y,p.d*devicePixelRatio*persp,0,6.28);ctx.fill();
+      var _rr=p.d*devicePixelRatio*persp;
+      if(_rr>0.05){ctx.beginPath();ctx.arc(x,y,_rr,0,6.28);ctx.fill();}
     }
     ctx.globalAlpha=1;
     requestAnimationFrame(frame);
@@ -578,13 +655,22 @@ const nio=new IntersectionObserver(es=>{
 },{threshold:0.6});
 document.querySelectorAll('.nnum').forEach(el=>nio.observe(el));
 }
-/* 兜底2：即使支持观察者，首屏之外若 1.5s 仍未触发，强制显示，防止个别内核卡住 */
-setTimeout(()=>{
-  document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    if(r.top<window.innerHeight*3){el.style.opacity=1;el.style.transform='none';}
-  });
-},1500);
+/* 兜底2：滚动时补显示（观察者卡住也不黑），1.5s 后无条件全显 */
+(function(){
+  var pending=false;
+  function sweep(){
+    pending=false;
+    document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.top<window.innerHeight-20&&r.bottom>0)el.classList.add('show');
+    });
+  }
+  window.addEventListener('scroll',function(){if(!pending){pending=true;requestAnimationFrame(sweep);}},{passive:true});
+  setTimeout(function(){
+    document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(function(el){el.classList.add('show');});
+  },1500);
+  setTimeout(sweep,300);
+})();
 
 /* ---------- 眼镜场景切换 ---------- */
 const SCEN=[
