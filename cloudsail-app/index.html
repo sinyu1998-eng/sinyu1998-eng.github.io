@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudSail 本地运行版 · 下载</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f6f8;color:#1b2030;font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:40px 20px 60px}
+h1{font-size:24px;margin:0 0 6px}
+.sub{color:#6b7280;font-size:13px;margin:0 0 26px}
+.box{background:#fff;border:1px solid #d9dde3;border-radius:8px;padding:24px;margin-bottom:14px}
+.dl{display:block;background:#1f4e79;color:#fff;text-decoration:none;text-align:center;padding:15px;border-radius:6px;font-size:17px;font-weight:600}
+.dl:hover{background:#2a5f92}
+.dl small{display:block;font-weight:400;font-size:12px;opacity:.85;margin-top:3px}
+.dl2{display:block;text-align:center;padding:10px;margin-top:9px;border:1px solid #d9dde3;border-radius:6px;color:#1f4e79;text-decoration:none;font-size:13px;background:#fff}
+.dl2:hover{background:#f7f9fb}
+h2{font-size:14px;margin:0 0 10px;color:#1f4e79}
+ol,ul{margin:0;padding-left:20px}
+li{margin:5px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td{border-bottom:1px solid #eef1f4;padding:6px 4px;vertical-align:top}
+td:first-child{color:#6b7280;width:110px;white-space:nowrap}
+code{background:#eef2f7;padding:1px 5px;border-radius:3px;font-size:12px}
+.note{background:#eaf1f8;border:1px solid #c3d6e8;color:#1f4e79;padding:10px 12px;border-radius:5px;font-size:13px;margin-top:12px}
+.foot{color:#9aa3ad;font-size:12px;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>CloudSail 本地运行版</h1>
+  <p class="sub">单文件 · 离线运行 · 不用安装 · 不用联网 · 数据存在你自己电脑上</p>
+
+  <div class="box">
+    <a class="dl" href="CloudSail-Desktop.html" download>下载（86 KB，单个文件）
+      <small>点这里下载 → 双击打开就能用</small></a>
+    <a class="dl2" href="CloudSail-Desktop-v1.0.zip" download>下载完整包（含 Windows / Mac 启动脚本 + 说明）· 28 KB</a>
+  </div>
+
+  <div class="box">
+    <h2>三步就能用</h2>
+    <ol>
+      <li>点上面的按钮，文件会下载到你的「下载」文件夹。</li>
+      <li>双击 <code>CloudSail-Desktop.html</code>，用浏览器打开（Chrome / Edge / Safari 都行）。</li>
+      <li>开始用。关掉浏览器再打开，数据还在。</li>
+    </ol>
+    <div class="note">手机上也能用：下载后点文件 →「用其他应用打开」→ 选浏览器。电脑上体验更完整。</div>
+  </div>
+
+  <div class="box">
+    <h2>里面是什么</h2>
+    <table>
+      <tr><td>报价 / 毛利</td><td>按真实外贸成本结构算：采购、国内杂费、FOB/CIF、海运、保险、关税、退税、佣金、汇率。给出建议售价、实际毛利率、盈亏平衡价，外加 7 种波动情景的敏感性。每一步计算都列出来，能拿计算器复核。</td></tr>
+      <tr><td>客户 · 商品 · 订单</td><td>真实增删改，本地保存。订单从待审批开始，必须人工批准才推进。</td></tr>
+      <tr><td>审批与留痕</td><td>每步操作写进审计链，带前序哈希；能一键校验完整性，也能模拟篡改看它能不能发现。</td></tr>
+      <tr><td>交付物生成</td><td>报价单、询盘跟进邮件（中英）、周度经营简报、交付验收清单。可下载 .md，也可直接打印成 PDF。</td></tr>
+      <tr><td>项目归位</td><td>把散在 63 个目录里的东西按「感知 / 运营 / 决策 / 结算 / 交付 / 主体合规 / 归档」归到一条线上，可搜索、可改处置、可导出清单。</td></tr>
+      <tr><td>导入 / 导出</td><td>客户、商品、订单、审计日志都能导 CSV（Excel 直接打开）；全量数据可导出/导入 JSON 备份。</td></tr>
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>它不做什么</h2>
+    <ul>
+      <li>不联网、不上传、不收集数据——你可以断网后照常用。</li>
+      <li>不自动替客户发消息。需要人确认的地方就停在那里，等人批。</li>
+      <li>内置的几条客户和订单是<strong>示例数据</strong>，用来验证功能，可在「导入 / 导出」里一键清空。</li>
+    </ul>
+  </div>
+
+  <p class="foot">v1.0 · 2026-11-20 · 单文件 86 KB · 零外部依赖（SHA-256、CSV 解析、计算引擎全部内置）</p>
+</div>
+</body>
+</html>

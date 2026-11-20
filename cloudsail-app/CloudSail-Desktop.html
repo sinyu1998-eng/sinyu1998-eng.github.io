@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudSail 本地运行版 v1.0 · 离线可用</title>
+<style>
+:root{--bg:#f5f6f8;--panel:#fff;--line:#d9dde3;--ink:#1b2030;--sub:#6b7280;--accent:#1f4e79;--accent2:#0f7b6c;--warn:#b45309;--bad:#b91c1c;--ok:#15803d;--chip:#eef2f7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+header{background:var(--accent);color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+header h1{font-size:17px;margin:0;font-weight:650;letter-spacing:.3px}
+header .badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:2px 8px;border-radius:3px}
+header .spacer{flex:1}
+button,select,input,textarea{font-family:inherit;font-size:13px}
+button{background:var(--accent);color:#fff;border:1px solid var(--accent);padding:6px 12px;border-radius:4px;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button.sec{background:#fff;color:var(--accent);border:1px solid var(--line)}
+button.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+button.danger{background:#fff;color:var(--bad);border-color:#e5b4b4}
+button.ok{background:var(--accent2);border-color:var(--accent2)}
+button.sm{padding:3px 8px;font-size:12px}
+button:disabled{opacity:.45;cursor:not-allowed}
+nav{background:#fff;border-bottom:1px solid var(--line);padding:0 12px;display:flex;flex-wrap:wrap;gap:2px}
+nav button{background:transparent;color:var(--sub);border:none;border-bottom:3px solid transparent;border-radius:0;padding:11px 14px;font-size:13px}
+nav button:hover{background:#f7f9fb;filter:none}
+nav button.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+main{padding:16px 18px 60px;max-width:1400px;margin:0 auto}
+section{display:none}
+section.on{display:block}
+h2{font-size:16px;margin:0 0 4px}
+.hint{color:var(--sub);font-size:12px;margin:0 0 14px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px}
+.card h3{margin:0 0 10px;font-size:14px;color:var(--accent)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.tight{gap:5px}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--sub)}
+label.f b{color:var(--ink);font-weight:600}
+input,select,textarea{border:1px solid var(--line);border-radius:4px;padding:5px 7px;background:#fff;color:var(--ink);width:100%}
+input[type=number]{text-align:right}
+textarea{resize:vertical;min-height:70px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff}
+th,td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+th{background:var(--chip);font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:hover td{background:#fafbfd}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:var(--chip);color:var(--accent);white-space:nowrap}
+.tag.g{background:#e7f4ee;color:var(--ok)}
+.tag.w{background:#fdf1e0;color:var(--warn)}
+.tag.r{background:#faeaea;color:var(--bad)}
+.tag.b{background:#e6eef7;color:var(--accent)}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi .v small{font-size:11px;font-weight:400;color:var(--sub)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px}
+.pre{white-space:pre-wrap;word-break:break-all;background:#f7f9fb;border:1px solid var(--line);border-radius:4px;padding:10px;max-height:420px;overflow:auto}
+.msg{padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12.5px}
+.msg.ok{background:#e7f4ee;color:var(--ok);border:1px solid #b9ddc9}
+.msg.bad{background:#faeaea;color:var(--bad);border:1px solid #e8b9b9}
+.msg.info{background:#eaf1f8;color:var(--accent);border:1px solid #c3d6e8}
+.scroll{max-height:440px;overflow:auto;border:1px solid var(--line);border-radius:4px}
+.divider{height:1px;background:var(--line);margin:14px 0}
+.pill{font-size:11px;color:var(--sub)}
+.empty{padding:22px;text-align:center;color:var(--sub);font-size:13px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filters input,.filters select{width:auto;min-width:130px}
+.asset{display:grid;grid-template-columns:1fr auto;gap:6px;border-bottom:1px dashed var(--line);padding:7px 2px}
+.asset:last-child{border-bottom:none}
+.asset .n{font-weight:600;font-size:13px}
+.asset .m{font-size:11.5px;color:var(--sub)}
+.flex{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.flex>*{flex:1;min-width:260px}
+.foot{margin-top:24px;padding-top:12px;border-top:1px solid var(--line);color:var(--sub);font-size:11.5px}
+#toast{position:fixed;right:16px;bottom:16px;background:#1b2030;color:#fff;padding:9px 14px;border-radius:5px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99;max-width:420px}
+#toast.show{opacity:1}
+@media print{body{background:#fff}header,nav,.noprint,button,.filters,#toast,.foot{display:none!important}main{padding:0;max-width:none}section{display:none!important}section.on{display:block!important}#printArea{display:none!important}.card{border:1px solid #bbb;break-inside:avoid;margin-bottom:8px}table{font-size:11px}}
+#printArea{display:none}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CloudSail 本地运行版 <span style="font-weight:400;opacity:.8">v1.0</span></h1>
+  <div class="badges">
+    <span class="badge" id="bOffline">离线运行</span>
+    <span class="badge" id="bStore">本地存储</span>
+    <span class="badge" id="bCount">0 条记录</span>
+    <span class="badge">零依赖 · 无需联网</span>
+  </div>
+  <span class="spacer"></span>
+  <button class="ghost sm" onclick="exportBackup()">导出备份</button>
+  <button class="ghost sm" onclick="document.getElementById('importFile').click()">导入备份</button>
+  <button class="ghost sm" onclick="runSelfTest()">一键自检</button>
+  <input type="file" id="importFile" style="display:none" accept=".json,.csv,.txt" onchange="importAny(this)">
+</header>
+
+<nav id="nav">
+  <button class="on" data-t="home">总台</button>
+  <button data-t="quote">报价 / 毛利引擎</button>
+  <button data-t="crm">客户 · 商品 · 订单</button>
+  <button data-t="flow">审批与留痕</button>
+  <button data-t="assets">项目归位（63）</button>
+  <button data-t="price">价目表</button>
+  <button data-t="deliver">交付物生成</button>
+  <button data-t="io">导入 / 导出</button>
+</nav>
+
+<main>
+
+<!-- ============ 总台 ============ -->
+<section id="home" class="on">
+  <h2>总台</h2>
+  <p class="hint">数据全部保存在这台设备的浏览器里，不上传、不联网。刷新、关机再打开都还在。建议定期点右上角「导出备份」。</p>
+  <div class="grid g4" id="kpis"></div>
+  <div class="divider"></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>流程闭环（每一步都留痕）</h3>
+      <div class="mono pre" id="pipeline" style="max-height:300px"></div>
+      <div class="row tight noprint" style="margin-top:8px">
+        <button class="sm" onclick="go('quote')">去算一单</button>
+        <button class="sm sec" onclick="go('flow')">看待办审批</button>
+        <button class="sm sec" onclick="go('deliver')">生成交付物</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>自检结果（证明它在真算，不是演示页）</h3>
+      <div id="selfTestResult" class="hint">尚未运行。点右上角「一键自检」。</div>
+      <div class="divider"></div>
+      <h3>存储与运行环境</h3>
+      <div class="mono pre" id="envInfo" style="max-height:150px"></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>最近动作</h3>
+    <div class="scroll"><table id="recentAudit"></table></div>
+  </div>
+</section>
+
+<!-- ============ 报价引擎 ============ -->
+<section id="quote">
+  <h2>报价 / 毛利引擎</h2>
+  <p class="hint">按外贸真实成本结构计算，公式全部可核对（下方「计算依据」逐项列出）。改任一参数立即重算，并给出汇率/成本/运费波动的敏感性。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>输入</h3>
+      <div class="grid g2">
+        <label class="f"><b>客户</b><select id="qCustomer"></select></label>
+        <label class="f"><b>商品</b><select id="qProduct"></select></label>
+        <label class="f"><b>数量（件）</b><input type="number" id="qQty" value="1000" min="1"></label>
+        <label class="f"><b>采购成本（CNY/件）</b><input type="number" id="qCost" value="38" step="0.01"></label>
+        <label class="f"><b>汇率 USD/CNY</b><input type="number" id="qFx" value="7.15" step="0.0001"></label>
+        <label class="f"><b>贸易术语</b><select id="qTerm"><option>FOB</option><option>CIF</option><option>EXW</option></select></label>
+        <label class="f"><b>国内杂费合计（CNY）</b><input type="number" id="qDomestic" value="2200" step="1"></label>
+        <label class="f"><b>内陆拖车+港口费（CNY）</b><input type="number" id="qPort" value="1800" step="1"></label>
+        <label class="f"><b>海运费合计（USD）</b><input type="number" id="qOcean" value="950" step="1"></label>
+        <label class="f"><b>保险费率</b><input type="number" id="qIns" value="0.003" step="0.0001"></label>
+        <label class="f"><b>目的国关税率</b><input type="number" id="qDuty" value="0.12" step="0.001"></label>
+        <label class="f"><b>平台佣金率</b><input type="number" id="qComm" value="0.05" step="0.001"></label>
+        <label class="f"><b>目标毛利率</b><input type="number" id="qMargin" value="0.28" step="0.001"></label>
+        <label class="f"><b>出口退税率（0 不适用）</b><input type="number" id="qRebate" value="0.13" step="0.001"></label>
+        <label class="f"><b>采购增值税率</b><input type="number" id="qVat" value="0.13" step="0.001"></label>
+      </div>
+      <div class="row tight" style="margin-top:10px">
+        <button onclick="calcQuote()">重算</button>
+        <button class="sec" onclick="saveQuote()">存为报价单</button>
+        <button class="sec" onclick="window.print()">打印 / 存 PDF</button>
+      </div>
+      <div class="msg info" style="margin-top:10px">输入示例值仅用于验证计算，非真实订单。可直接在「客户 · 商品」里改成你的真实数据。</div>
+    </div>
+    <div class="card">
+      <h3>结果</h3>
+      <div class="grid g2" id="qResult"></div>
+      <div id="qWarn"></div>
+      <div class="divider"></div>
+      <h3>敏感性分析（对毛利率的影响）</h3>
+      <div class="scroll"><table id="qSens"></table></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>计算依据（逐项可核对）</h3>
+      <div class="mono pre" id="qBasis"></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>已存报价单</h3>
+    <div class="scroll"><table id="quoteList"></table></div>
+  </div>
+</section>
+
+<!-- ============ CRM ============ -->
+<section id="crm">
+  <h2>客户 · 商品 · 订单</h2>
+  <p class="hint">真实增删改，数据落在本地。订单必须经「审批」才能推进到已批准 / 执行中，这是刻意保留的人工关口。</p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>新增客户</h3>
+      <div class="grid" style="gap:7px">
+        <label class="f"><b>名称</b><input id="cName" placeholder="例：义乌某服饰档口"></label>
+        <label class="f"><b>国家 / 地区</b><input id="cCountry" placeholder="例：俄罗斯"></label>
+        <label class="f"><b>渠道</b><select id="cChannel"><option>展会</option><option>社媒</option><option>转介绍</option><option>独立站询盘</option><option>线下拜访</option><option>其他</option></select></label>
+        <label class="f"><b>档位</b><select id="cTier"><option>轻量档</option><option>行业包</option><option>托管档</option><option>线索</option></select></label>
+        <label class="f"><b>联系人 / 备注</b><input id="cNote"></label>
+        <button onclick="addCustomer()">添加客户</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>新增商品</h3>
+      <div class="grid" style="gap:7px">
+        <label class="f"><b>SKU</b><input id="pSku" placeholder="例：DRS-001"></label>
+        <label class="f"><b>品名</b><input id="pName" placeholder="例：连衣裙"></label>
+        <label class="f"><b>采购成本 CNY/件</b><input type="number" id="pCost" value="38" step="0.01"></label>
+        <label class="f"><b>毛重 KG/件</b><input type="number" id="pWeight" value="0.45" step="0.01"></label>
+        <label class="f"><b>HS 编码</b><input id="pHs" placeholder="例：6104.43"></label>
+        <label class="f"><b>供应商</b><input id="pSupplier"></label>
+        <button onclick="addProduct()">添加商品</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>新建订单（进审批）</h3>
+      <div class="grid" style="gap:7px">
+        <label class="f"><b>客户</b><select id="oCustomer"></select></label>
+        <label class="f"><b>商品</b><select id="oProduct"></select></label>
+        <label class="f"><b>数量</b><input type="number" id="oQty" value="1000"></label>
+        <label class="f"><b>成交单价 USD</b><input type="number" id="oPrice" value="9.8" step="0.01"></label>
+        <label class="f"><b>备注</b><input id="oNote"></label>
+        <button onclick="addOrder()">提交订单（待审批）</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>客户 <span class="pill" id="cCnt"></span></h3>
+    <div class="scroll"><table id="customerList"></table></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><h3>商品 <span class="pill" id="pCnt"></span></h3><div class="scroll"><table id="productList"></table></div></div>
+    <div class="card"><h3>订单 <span class="pill" id="oCnt"></span></h3><div class="scroll"><table id="orderList"></table></div></div>
+  </div>
+</section>
+
+<!-- ============ 审批与留痕 ============ -->
+<section id="flow">
+  <h2>审批与留痕</h2>
+  <p class="hint">所有关键动作写入审计链，每条记录带前序哈希。点「校验链完整性」可发现任何被改动的历史（校验为完整性校验，非数字签名）。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>待办审批 <span class="pill" id="apCnt"></span></h3>
+      <div id="approvalList"></div>
+    </div>
+    <div class="card">
+      <h3>审计链</h3>
+      <div class="row tight noprint">
+        <button class="sm ok" onclick="verifyChain()">校验链完整性</button>
+        <button class="sm sec" onclick="exportCSV('audit')">导出日志 CSV</button>
+        <button class="sm danger" onclick="tamperTest()">模拟篡改检测</button>
+      </div>
+      <div id="chainMsg" style="margin-top:8px"></div>
+      <div class="scroll" style="margin-top:8px"><table id="auditList"></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目归位 ============ -->
+<section id="assets">
+  <h2>项目归位</h2>
+  <p class="hint">把散在 63 个目录的资产按「感知 / 运营 / 决策 / 结算 / 交付 / 主体合规 / 归档」一条主线收拢。可标记处置、搜索、导出归位清单。这里显示的是本机真实扫描结果。</p>
+  <div class="card">
+    <div class="filters noprint">
+      <input id="aSearch" placeholder="搜索目录名 / 说明" oninput="renderAssets()">
+      <select id="aLayer" onchange="renderAssets()"><option value="">全部层级</option></select>
+      <select id="aDisp" onchange="renderAssets()"><option value="">全部处置</option><option>主线</option><option>保留</option><option>合并</option><option>归档</option><option>待确认</option></select>
+      <button class="sm sec" onclick="exportCSV('assets')">导出归位清单</button>
+    </div>
+    <div class="grid g4" id="aSummary" style="margin-bottom:12px"></div>
+    <div id="assetList"></div>
+  </div>
+</section>
+
+<!-- ============ 价目表 ============ -->
+<section id="price">
+  <h2>价目表（内置，报价时可直接引用）</h2>
+  <p class="hint">按交付物收费，不按工时。50% 定金启动，50% 验收付清。这里是你 2026-11 版价目表的结构化副本，可在「交付物生成」里一键带进报价单。</p>
+  <div id="priceTables"></div>
+</section>
+
+<!-- ============ 交付物 ============ -->
+<section id="deliver">
+  <h2>交付物生成</h2>
+  <p class="hint">从真实数据生成能直接发给客户 / 打印的文件。不是模板占位符，内容取自本机的客户、商品、报价与订单。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>选择要生成的内容</h3>
+      <div class="grid" style="gap:8px">
+        <label class="f"><b>类型</b><select id="dType" onchange="genDeliver()"><option value="quote">客户报价单（可打印/存 PDF/存 Markdown）</option><option value="followup">询盘跟进邮件（中/英）</option><option value="weekly">周度经营简报</option><option value="handover">交付验收清单</option></select></label>
+        <label class="f"><b>客户</b><select id="dCustomer" onchange="genDeliver()"></select></label>
+        <label class="f"><b>关联订单（可选）</b><select id="dOrder" onchange="genDeliver()"></select></label>
+      </div>
+      <div class="row tight" style="margin-top:10px">
+        <button onclick="genDeliver()">生成</button>
+        <button class="sec" onclick="downloadDeliver()">下载 .md</button>
+        <button class="sec" onclick="window.print()">打印 / 存 PDF</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>输出</h3>
+      <div class="mono pre" id="deliverOut" style="min-height:260px;max-height:520px"></div>
+    </div>
+  </div>
+  <div id="printArea"></div>
+</section>
+
+<!-- ============ 导入导出 ============ -->
+<section id="io">
+  <h2>导入 / 导出</h2>
+  <p class="hint">不依赖任何在线服务。CSV 用 UTF-8 BOM，Excel 双击可直接打开；JSON 备份可完整还原全部数据（含审批与审计链）。</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>导出</h3>
+      <div class="row tight">
+        <button class="sm sec" onclick="exportCSV('customers')">客户 CSV</button>
+        <button class="sm sec" onclick="exportCSV('products')">商品 CSV</button>
+        <button class="sm sec" onclick="exportCSV('orders')">订单 CSV</button>
+        <button class="sm sec" onclick="exportCSV('quotes')">报价单 CSV</button>
+        <button class="sm sec" onclick="exportCSV('audit')">审计日志 CSV</button>
+        <button class="sm sec" onclick="exportCSV('assets')">归位清单 CSV</button>
+        <button class="sm" onclick="exportBackup()">全量备份 JSON</button>
+      </div>
+      <div class="divider"></div>
+      <h3>导入</h3>
+      <div class="grid" style="gap:8px">
+        <label class="f"><b>导入到</b><select id="ioTarget"><option value="customers">客户</option><option value="products">商品</option><option value="orders">订单</option></select></label>
+        <label class="f"><b>选择 CSV / JSON 文件</b><input type="file" id="ioFile" accept=".csv,.json,.txt"></label>
+        <button onclick="importTable()">导入</button>
+        <button class="sec" onclick="document.getElementById('importFile').click()">导入全量备份</button>
+      </div>
+      <div class="msg info">CSV 表头支持中文或英文别名，例如：名称/name、国家/country、采购成本/cost、数量/qty、单价/price。导入会追加，不会覆盖已有数据。</div>
+    </div>
+    <div class="card">
+      <h3>数据管理</h3>
+      <div class="grid g2" id="dataStats"></div>
+      <div class="divider"></div>
+      <div class="row tight">
+        <button class="sm sec" onclick="loadDemo()">载入示例数据</button>
+        <button class="sm danger" onclick="clearAll()">清空全部数据</button>
+      </div>
+      <div class="divider"></div>
+      <h3>使用说明（最短版）</h3>
+      <div class="mono pre" style="max-height:none">1. 这个文件下载到电脑后，双击用浏览器打开即可，不用装任何东西、不用联网。
+2. 数据存在本机浏览器里；换电脑/换浏览器请用「导出备份」→「导入备份」。
+3. 用「报价 / 毛利引擎」算价 →「存为报价单」。
+4. 在「客户 · 商品 · 订单」建订单 → 到「审批与留痕」批准 → 状态才会推进。
+5. 在「交付物生成」出报价单 / 跟进邮件 / 周报，下载或打印成 PDF。
+6. 右上角「一键自检」可验证计算、导入导出、审计链是否都正常。</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>操作日志（最近 60 条）</h3>
+    <div class="mono pre" id="ioLog" style="max-height:220px"></div>
+  </div>
+</section>
+
+</main>
+<div class="foot">CloudSail 本地运行版 v1.0 · 单文件 / 离线 / 零依赖 · 数据仅存本机 · 示例数据为验证功能用，非真实客户与订单</div>
+<div id="toast"></div>
+
+<script>
+/* ==================== 基础 ==================== */
+var KEY='cloudsail_local_v1';
+var S=null, LOG=[], DELIVER_TEXT='';
+
+function uid(p){return (p||'id')+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function now(){return new Date().toISOString()}
+function ts(){return new Date().toLocaleString('zh-CN',{hour12:false})}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function n(v,d){var x=parseFloat(v);return isNaN(x)?(d===undefined?0:d):x}
+function money(v,d){d=d===undefined?2:d;return (isFinite(v)?v:0).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function pct(v,d){d=d===undefined?1:d;return (isFinite(v)?v*100:0).toFixed(d)+'%'}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.className='show';clearTimeout(window._tt);window._tt=setTimeout(function(){t.className=''},2400)}
+function log(m){LOG.unshift('['+ts()+'] '+m);if(LOG.length>200)LOG.pop();var e=document.getElementById('ioLog');if(e)e.textContent=LOG.join('\n')}
+
+/* 纯 JS SHA-256（无依赖，file:// 下也可用） */
+function sha256(msg){
+  function rr(x,n){return (x>>>n)|(x<<(32-n))}
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  var s=unescape(encodeURIComponent(String(msg)));var bytes=[];for(var i=0;i<s.length;i++)bytes.push(s.charCodeAt(i));
+  var L=bytes.length*8;bytes.push(0x80);while(bytes.length%64!==56)bytes.push(0);
+  var hi=Math.floor(L/0x100000000),lo=L>>>0;
+  bytes.push((hi>>>24)&255,(hi>>>16)&255,(hi>>>8)&255,hi&255,(lo>>>24)&255,(lo>>>16)&255,(lo>>>8)&255,lo&255);
+  for(var b=0;b<bytes.length;b+=64){
+    var w=[];for(var j=0;j<16;j++){w[j]=(bytes[b+4*j]<<24)|(bytes[b+4*j+1]<<16)|(bytes[b+4*j+2]<<8)|bytes[b+4*j+3]}
+    for(j=16;j<64;j++){var s0=rr(w[j-15],7)^rr(w[j-15],18)^(w[j-15]>>>3),s1=rr(w[j-2],17)^rr(w[j-2],19)^(w[j-2]>>>10);w[j]=(w[j-16]+s0+w[j-7]+s1)|0}
+    var a=H[0],bb=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(j=0;j<64;j++){var S1=rr(e,6)^rr(e,11)^rr(e,25),ch=(e&f)^((~e)&g),t1=(h+S1+ch+K[j]+w[j])|0,S0=rr(a,2)^rr(a,13)^rr(a,22),maj=(a&bb)^(a&c)^(bb&c),t2=(S0+maj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=bb;bb=a;a=(t1+t2)|0}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+bb)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  return H.map(function(x){return ('00000000'+(x>>>0).toString(16)).slice(-8)}).join('');
+}
+
+/* ==================== 内置真实数据 ==================== */
+/* 63 个目录，按能力主线归位。files 为真实扫描值 */
+var ASSETS=[
+ ['AI眼镜方案','感知层','9','保留','方案 PDF + 现场图','早期方案'],
+ ['AI眼镜现场版','感知层','45','主线','AIUI 话术 v7 / glasses backend / 隐私授权','采集层真身'],
+ ['bridge','感知层','3','主线','手机桥验货 OCR','验货取证入口'],
+ ['cloudsail-connectors','感知层','11','保留','Amazon SP-API / Noon / CSV 连接器','数据接入'],
+ ['cloudsail-perception','感知层','11','主线','Swift 5 文件 + 多模态清洗管线','眼/手/脑 iOS 骨架'],
+ ['CloudSail_整合主页','运营层','1','主线','客户总入口','对外统一入口'],
+ ['cloudsail-console','运营层','5','保留','控制台 html/js','早期控制台'],
+ ['cloudsail-os','运营层','4','合并','OS v1 展示页','已被 v2 取代'],
+ ['cloudsail-os-v2','运营层','3','主线','可操作运营台 signal/approve/audit','当前 OS'],
+ ['cloudsail-site','运营层','67','主线','30 py / 12 html · 7 agent · WMS/ERP/CRM','内部引擎，不当品牌讲'],
+ ['cloudsail-www','运营层','3','保留','站点','待确认'],
+ ['mobai-app','运营层','2','合并','陌拜助手独立版','并入 soho-app/mobai'],
+ ['sellerpilot-demo','运营层','34','保留','Docker demo','投资人演示环境'],
+ ['sellerpilot-os','运营层','34','主线','26 py / 3 csv · 九步闭环','运营规则与确定性公式'],
+ ['soho-app','运营层','9','保留','PWA + 陌拜','获客漏斗入口'],
+ ['2026-11-10_总整合','决策层','42','保留','总整合材料','历史整合'],
+ ['2026-11-12_商业模型','决策层','5','保留','模型 md','定价与分成'],
+ ['2026-11-12_量化模型','决策层','10','保留','模型 py + 图','确定性公式依据'],
+ ['2026-11-14_愿景叙事与融资路径','决策层','5','归档','叙事 md','归档'],
+ ['cloudsail-competitor-study','决策层','10','保留','竞品 mhtml/图','竞品地图'],
+ ['market-map','决策层','1','保留','市场地图 html','TAM/SAM/SOM'],
+ ['pixer-bp','决策层','3','保留','BP','融资材料'],
+ ['会议录音_20261118','决策层','1','主线','11/18 会议转写与要点','合作与创业讨论'],
+ ['2026-11-11_协议层构思','结算层','5','归档','构思 md','归档'],
+ ['cloudsail-fideight','结算层','96','合并','协议+门户混合','与 fideight-kit/site 重复'],
+ ['cloudsail-fideight-private-backup','结算层','91','归档','私有备份','归档'],
+ ['cloudsail-onchain','结算层','13','主线','链上 js/json','存证与合约'],
+ ['fideight-kit','结算层','62','主线','attest API / EAS / 合约仿真','协议层，仿真 -86%'],
+ ['fideight-site','结算层','16','主线','首页/BP/收款/种子群/众筹','结算与收款入口'],
+ ['kite-hono-work','结算层','113','保留','issue #77 修复 · fork 分支','任务一'],
+ ['kite-x402-receipt-verify','结算层','16','主线','17 tests 全过 · 公开仓库','任务二原创项目'],
+ ['verifiable-trade-events','结算层','14','主线','可验证交易事件 html/md','x402 收据叙事'],
+ ['branding','交付层','12','保留','logo/svg/ico','统一挂站点 assets'],
+ ['cloudsail_wechat_push','交付层','19','合并','推送 md/py','重复，并入 wechat_articles'],
+ ['generated-videos','交付层','2','保留','2 支产品视频','改标题复用'],
+ ['tiktok','交付层','23','归档','短视频与图','归档'],
+ ['wechat_articles','交付层','60','主线','16 md / 11 html / 16 png','唯一保留的内容库'],
+ ['wechat_autoreply','交付层','4','保留','自动回复 py','渠道自动化'],
+ ['云帆出海_公众号推送包','交付层','33','合并','推送 md/图','重复，并入 wechat_articles'],
+ ['广交会作战包','交付层','6','归档','客户登记表 xlsx','一次性物料，保留数据'],
+ ['推文','交付层','22','合并','推文 md/png','重复，并入 wechat_articles'],
+ ['比赛活动','交付层','21','归档','赛事 md/pdf','一次性物料'],
+ ['活动物料_可打印','交付层','5','主线','介绍卡 PDF + 二维码','线下获客'],
+ ['海报_CarolHuang','交付层','5','保留','海报','线下物料'],
+ ['蚂蚁灵波大会_一页纸','交付层','5','归档','一页纸','一次性物料'],
+ ['路演PPT','交付层','4','归档','pptx/pdf','归档'],
+ ['2026-11-13_沟通入口与渠道运营','主体合规','5','归档','渠道 md','归档'],
+ ['AWS申请表_云帆','主体合规','2','保留','申请表','云资源'],
+ ['BOSCH简历','主体合规','5','归档','简历 docx/pdf','求职材料'],
+ ['M_LANDING报名_2026-11-16','主体合规','5','归档','报名材料','一次性'],
+ ['cloudcell','主体合规','1','归档','旧重定向','归档'],
+ ['cloudcell-site','主体合规','13','合并','旧 CloudCell 站','品牌已统一 CloudSail'],
+ ['personal-site','主体合规','11','合并','个人站旧版','并入 site-new'],
+ ['personal-site-preview','主体合规','13','归档','预览图','归档'],
+ ['site-new','主体合规','25','主线','个人站首页（QQ 浏览器已修）','个人站'],
+ ['企业注册材料_已填','主体合规','2','主线','xlsx + docx（已填终版）','杭州主体注册'],
+ ['刘聪通话_证据包','主体合规','6','归档','录音与报告','法律参考'],
+ ['合伙人机制与分工_2026-11-16','主体合规','5','保留','分工 docx/pdf','团队机制'],
+ ['合同draft_2026-11','主体合规','4','主线','招聘/竞业/合作/投资/退出','律师核验前底稿'],
+ ['融资','主体合规','2','归档','融资 md/图','归档'],
+ ['行动地图_11.19-12.05','主体合规','2','主线','行动地图 PDF','11.20 硬截止'],
+ ['行动策略_2026-11-15','主体合规','2','归档','策略 md/xlsx','归档'],
+ ['computer-use-recordings','归档','0','归档','空目录','可删']
+].map(function(a){return {name:a[0],layer:a[1],files:parseInt(a[2],10),disp:a[3],key:a[4],note:a[5]}});
+
+var PRICE=[
+ ['轻量档','中/英简历精修+定位','一页纸简历 docx+pdf + 岗位定位说明','¥800 / 份','2–3 天'],
+ ['轻量档','活动/比赛一页纸','中英双语一页纸（可打可发），含二维码位','¥600 / 份','2 天'],
+ ['轻量档','表单代填 / 申报代填','按题目逐项填好、校对、提交前确认','¥200 / 份；复杂 ¥400','当天'],
+ ['轻量档','商业计划书 BP','10–20 页，含市场测算/竞品/财务模型，可导 PDF','¥3,000 起','5–7 天'],
+ ['轻量档','市场分析单页','竞品定位图 + TAM/SAM/SOM + 获客测算器','¥2,000 / 份','3 天'],
+ ['轻量档','数据/表格整理','清洗、透视、公式、图表、看板','¥500 起','1–2 天'],
+ ['行业包','包 A · 出海询盘官网','双语独立站+产品页+询价表单（直发邮箱）+手机适配+4 套配色','¥6,800 / 站','上线 1–2 天'],
+ ['行业包','包 B · 行业系统包','控制台+手机桥验货 OCR/AI 眼镜+询盘报价流+毛利核算，整套源码','¥38,000 起','2–3 周'],
+ ['行业包','包 B · 深度定制','按行业深度装配','¥80,000–150,000','4–8 周'],
+ ['行业包','包 C · 官网生成器定制','给同行/服务商的定制生成器模板（含 3 套行业模板+部署）','¥15,000 / 套','—'],
+ ['托管档','日常托管年费','6 个 AI 子代理进后台：询盘转报价/验货/履约/渠道/毛利/合规，异常才推审批，每周可核验日志','¥12,000–36,000 / 年','长期'],
+ ['托管档','效果分成（可选）','不收年费改分成：成交额 3%–5% 或净利润 15%，二选一','分成','长期'],
+ ['托管档','驻场/陪跑','本人到厂/档口现场','¥3,000/天 + 差旅','按天']
+];
+
+function demoState(){
+  return {
+    v:1, created:now(),
+    customers:[
+      {id:'c_demo1',name:'义乌某服饰档口（示例）',country:'中国',channel:'线下拜访',tier:'行业包',note:'示例数据，非真实客户',created:now()},
+      {id:'c_demo2',name:'多肽外贸客户（示例）',country:'中国',channel:'独立站询盘',tier:'行业包',note:'示例数据',created:now()},
+      {id:'c_demo3',name:'俄罗斯贸易商（示例）',country:'俄罗斯',channel:'展会',tier:'线索',note:'示例数据',created:now()},
+      {id:'c_demo4',name:'浅烘 · 咖啡社交（示例）',country:'中国',channel:'转介绍',tier:'轻量档',note:'示例数据',created:now()},
+      {id:'c_demo5',name:'MARGUERITE & ASBURY（示例）',country:'美国',channel:'转介绍',tier:'托管档',note:'示例数据',created:now()}
+    ],
+    products:[
+      {id:'p_demo1',sku:'DRS-001',name:'连衣裙',cost:38,weight:0.45,hs:'6104.43',supplier:'义乌江东（示例）'},
+      {id:'p_demo2',sku:'BAG-002',name:'箱包',cost:52,weight:0.9,hs:'4202.22',supplier:'示例'},
+      {id:'p_demo3',sku:'PEP-003',name:'多肽原料 CASE 001',cost:180,weight:1.2,hs:'2937.19',supplier:'示例'},
+      {id:'p_demo4',sku:'COF-004',name:'精品咖啡豆',cost:68,weight:1.0,hs:'0901.11',supplier:'示例'}
+    ],
+    quotes:[], orders:[], approvals:[], audit:[],
+    assets:ASSETS.map(function(a){return Object.assign({},a)})
+  };
+}
+
+/* ==================== 存储 ==================== */
+function canStore(){try{localStorage.setItem('_t','1');localStorage.removeItem('_t');return true}catch(e){return false}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){toast('本地存储不可用，请用「导出备份」保存数据');return false}}
+function load(){
+  var raw=null;try{raw=localStorage.getItem(KEY)}catch(e){}
+  if(raw){try{S=JSON.parse(raw)}catch(e){S=null}}
+  if(!S||!S.customers){S=demoState();save();audit('系统','载入示例数据')}
+  if(!S.assets||!S.assets.length)S.assets=ASSETS.map(function(a){return Object.assign({},a)});
+  ['quotes','orders','approvals','audit','customers','products'].forEach(function(k){if(!S[k])S[k]=[]});
+}
+function audit(actor,action,detail){
+  var prev=S.audit.length?S.audit[S.audit.length-1].hash:'GENESIS';
+  var rec={i:S.audit.length+1,t:now(),actor:actor,action:action,detail:detail||'',prev:prev};
+  rec.hash=sha256(rec.i+'|'+rec.t+'|'+rec.actor+'|'+rec.action+'|'+rec.detail+'|'+prev);
+  S.audit.push(rec);save();log(actor+' · '+action+(detail?' · '+detail:''));
+}
+
+/* ==================== 导航 ==================== */
+function go(t){
+  document.querySelectorAll('nav button').forEach(function(b){b.className=b.dataset.t===t?'on':''});
+  document.querySelectorAll('main section').forEach(function(s){s.className=s.id===t?'on':''});
+  if(t==='home')renderHome();if(t==='quote'){fillQuoteSelects();calcQuote();renderQuotes()}
+  if(t==='crm')renderCRM();if(t==='flow')renderFlow();if(t==='assets')renderAssets();
+  if(t==='price')renderPrice();if(t==='deliver'){fillDeliverSelects();genDeliver()}if(t==='io')renderIO();
+}
+document.getElementById('nav').addEventListener('click',function(e){if(e.target.dataset.t)go(e.target.dataset.t)});
+
+/* ==================== 报价引擎 ==================== */
+function quoteParams(){
+  return {qty:n(document.getElementById('qQty').value,1000),cost:n(document.getElementById('qCost').value),fx:n(document.getElementById('qFx').value,7.15),
+    term:document.getElementById('qTerm').value,domestic:n(document.getElementById('qDomestic').value),port:n(document.getElementById('qPort').value),
+    ocean:n(document.getElementById('qOcean').value),ins:n(document.getElementById('qIns').value),duty:n(document.getElementById('qDuty').value),
+    comm:n(document.getElementById('qComm').value),margin:n(document.getElementById('qMargin').value),rebate:n(document.getElementById('qRebate').value),vat:n(document.getElementById('qVat').value)};
+}
+/* 纯计算函数：可单测 */
+function compute(p){
+  var q=Math.max(1,p.qty);
+  var exw=(p.cost*p.qty+p.domestic)/q;                       // CNY/件
+  var fobCny=exw+p.port/q;                                    // CNY/件
+  var fob=fobCny/p.fx;                                        // USD/件
+  var freight=p.ocean/q;                                      // USD/件
+  // CIF 保险：(FOB+运费)×r/(1-r)
+  var ins=(fob+freight)*p.ins/(1-p.ins);
+  var cif=fob+freight+ins;
+  var dutyAmt=cif*p.duty;
+  var landed=cif+dutyAmt;                                     // 到岸完税成本 USD/件
+  var rebateCny=p.rebate>0?p.cost*p.rebate/(1+p.vat):0;      // 退税额 CNY/件
+  var rebateUsd=rebateCny/p.fx;
+  var net=landed-rebateUsd;                                   // 净成本 USD/件
+  var denom=1-p.comm-p.margin;
+  var price=denom>0?net/denom:NaN;                            // 含佣金售价
+  var be=1-p.comm>0?net/(1-p.comm):NaN;                      // 盈亏平衡售价
+  var profit=price*(1-p.comm)-net;
+  var marginReal=price>0?profit/price:0;
+  var exwTotal=exw*q, fobTotal=fob*q, cifTotal=cif*q;
+  var base=p.term==='EXW'?exw/p.fx:(p.term==='CIF'?cif:fob);
+  return {q:q,exw:exw,fobCny:fobCny,fob:fob,freight:freight,ins:ins,cif:cif,dutyAmt:dutyAmt,landed:landed,
+    rebateCny:rebateCny,rebateUsd:rebateUsd,net:net,price:price,be:be,profit:profit,marginReal:marginReal,
+    orderProfit:profit*q,orderRevenue:price*q,exwTotal:exwTotal,fobTotal:fobTotal,cifTotal:cifTotal,base:base,denom:denom};
+}
+function calcQuote(){
+  var p=quoteParams(),r=compute(p);window._Q={p:p,r:r};
+  var k=function(l,v,s){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+(s?' <small>'+s+'</small>':'')+'</div></div>'};
+  document.getElementById('qResult').innerHTML=
+    k('建议售价',isFinite(r.price)?'$'+money(r.price,2):'不可行','USD / 件')+
+    k('实际毛利率',pct(r.marginReal),'目标 '+pct(p.margin))+
+    k('单位毛利',isFinite(r.profit)?'$'+money(r.profit,2):'—','USD / 件')+
+    k('订单毛利',isFinite(r.orderProfit)?'$'+money(r.orderProfit,0):'—',money(p.qty)+' 件')+
+    k('盈亏平衡售价',isFinite(r.be)?'$'+money(r.be,2):'—','低于此价亏')+
+    k(p.term+' 成本价',isFinite(r.base)?'$'+money(r.base,2):'—','USD / 件')+
+    k('订单销售额',isFinite(r.orderRevenue)?'$'+money(r.orderRevenue,0):'—','USD')+
+    k('退税收入',money(r.rebateCny,2),'CNY / 件');
+  var warn='';
+  if(!(r.denom>0))warn='<div class="msg bad">目标毛利率 + 佣金率 ≥ 100%，无可行售价。请下调。</div>';
+  else if(p.margin>=0.5)warn='<div class="msg info">目标毛利率偏高，报价可能失去竞争力；下方敏感性可看波动影响。</div>';
+  else if(r.marginReal<0.05)warn='<div class="msg bad">实际毛利率低于 5%，接近亏本，建议复核成本或提价。</div>';
+  document.getElementById('qWarn').innerHTML=warn;
+  // 依据
+  var b=[
+   '数量 q            = '+money(p.qty,0)+' 件',
+   '采购成本          = CNY '+money(p.cost,2)+'/件 × '+money(p.qty,0)+' = CNY '+money(p.cost*p.qty,2),
+   '国内杂费          = CNY '+money(p.domestic,2)+'  →  '+money(p.domestic/p.qty,4)+'/件',
+   'EXW               = (采购 + 国内杂费)/q = CNY '+money(r.exw,4)+'/件 = $'+money(r.exw/p.fx,4),
+   '内陆拖车+港口费   = CNY '+money(p.port,2)+'  →  '+money(p.port/p.qty,4)+'/件',
+   'FOB               = EXW + 港口费/q = CNY '+money(r.fobCny,4)+' ÷ '+p.fx+' = $'+money(r.fob,4)+'/件',
+   '海运分摊          = $'+money(p.ocean,2)+' ÷ '+money(p.qty,0)+' = $'+money(r.freight,4)+'/件',
+   '保险 (CIF 公式)   = (FOB+运费)×r/(1-r) = ('+money(r.fob,4)+'+'+money(r.freight,4)+')×'+p.ins+'/(1-'+p.ins+') = $'+money(r.ins,4),
+   'CIF               = FOB + 运费 + 保险 = $'+money(r.cif,4)+'/件',
+   '关税              = CIF × '+pct(p.duty)+' = $'+money(r.dutyAmt,4)+'/件',
+   '到岸完税成本      = CIF + 关税 = $'+money(r.landed,4)+'/件',
+   '出口退税          = 采购成本 × 退税率/(1+增值税率) = '+money(p.cost,2)+'×'+p.rebate+'/(1+'+p.vat+') = CNY '+money(r.rebateCny,4)+' = $'+money(r.rebateUsd,4),
+   '净成本 net        = 到岸完税成本 − 退税 = $'+money(r.net,4)+'/件',
+   '售价公式          = net / (1 − 佣金率 − 目标毛利率) = '+money(r.net,4)+' / (1 − '+p.comm+' − '+p.margin+') = $'+money(r.price,4),
+   '校验              = 售价×(1−佣金) − net = 单位毛利 $'+money(r.profit,4)+'；毛利率 '+pct(r.marginReal,2),
+   '盈亏平衡价        = net / (1 − 佣金率) = $'+money(r.be,4),
+   '当前术语 '+p.term+' 成本基准 = $'+money(r.base,4)+'/件',
+   '',
+   '说明：关税按目的国税率计入到岸成本；退税为简化估算（未按开票口径分时点）；',
+   '佣金按售价计提，故售价公式的分母为 (1−佣金率−目标毛利率)。所有数值可用计算器逐项复核。'
+  ].join('\n');
+  document.getElementById('qBasis').textContent=b;
+  // 敏感性
+  var cases=[
+    ['基准','—',p],['汇率 +5%','fx×1.05',Object.assign({},p,{fx:p.fx*1.05})],['汇率 −5%','fx×0.95',Object.assign({},p,{fx:p.fx*0.95})],
+    ['采购成本 +10%','cost×1.1',Object.assign({},p,{cost:p.cost*1.1})],['采购成本 −10%','cost×0.9',Object.assign({},p,{cost:p.cost*0.9})],
+    ['海运 +20%','ocean×1.2',Object.assign({},p,{ocean:p.ocean*1.2})],['关税 +5pt','duty+0.05',Object.assign({},p,{duty:p.duty+0.05})],
+    ['数量减半','qty/2',Object.assign({},p,{qty:Math.max(1,Math.round(p.qty/2))})]
+  ];
+  var h='<tr><th>情景</th><th class="num">建议售价</th><th class="num">单位净成本</th><th class="num">毛利率</th><th class="num">订单毛利</th><th class="num">毛利变化</th></tr>';
+  var baseProfit=r.orderProfit;
+  cases.forEach(function(c){var x=compute(c[2]);var d=x.orderProfit-baseProfit;
+    h+='<tr><td>'+c[0]+' <span class="pill">'+c[1]+'</span></td><td class="num">$'+money(x.price,2)+'</td><td class="num">$'+money(x.net,2)+'</td><td class="num">'+pct(x.marginReal)+'</td><td class="num">$'+money(x.orderProfit,0)+'</td><td class="num" style="color:'+(d<0?'#b91c1c':(d>0?'#15803d':'#6b7280'))+'">'+(d>0?'+':'')+money(d,0)+'</td></tr>'});
+  document.getElementById('qSens').innerHTML=h;
+}
+function fillQuoteSelects(){
+  var c=document.getElementById('qCustomer'),p=document.getElementById('qProduct');
+  c.innerHTML=S.customers.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>'}).join('')||'<option value="">（先去添加客户）</option>';
+  p.innerHTML=S.products.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.sku)+' '+esc(x.name)+' · ¥'+x.cost+'</option>'}).join('')||'<option value="">（先去添加商品）</option>';
+  var sel=document.getElementById('qProduct');
+  if(sel.value){var pr=S.products.find(function(x){return x.id===sel.value});if(pr)document.getElementById('qCost').value=pr.cost}
+}
+function saveQuote(){
+  if(!window._Q||!isFinite(window._Q.r.price)){toast('当前参数无可行售价');return}
+  var cid=document.getElementById('qCustomer').value,pid=document.getElementById('qProduct').value;
+  var c=S.customers.find(function(x){return x.id===cid}),p0=S.products.find(function(x){return x.id===pid});
+  var q={id:uid('q'),no:'Q'+String(S.quotes.length+1).padStart(4,'0'),customerId:cid,customer:c?c.name:'—',productId:pid,
+    product:p0?p0.name:'—',sku:p0?p0.sku:'—',params:window._Q.p,result:window._Q.r,status:'待审批',created:now()};
+  S.quotes.push(q);
+  S.approvals.push({id:uid('ap'),type:'报价单',refId:q.id,title:q.no+' · '+q.customer+' · $'+money(q.result.price,2),status:'待审批',created:now()});
+  audit('本人','保存报价单',q.no+' 建议售价 $'+money(q.result.price,2));renderQuotes();toast('已存 '+q.no+'，并进入待办审批');
+}
+function renderQuotes(){
+  var e=document.getElementById('quoteList');
+  if(!S.quotes.length){e.innerHTML='<tr><td class="empty">暂无报价单。左侧填参数 →「存为报价单」。</td></tr>';return}
+  var h='<tr><th>单号</th><th>客户</th><th>商品</th><th class="num">数量</th><th class="num">售价</th><th class="num">毛利率</th><th class="num">订单毛利</th><th>状态</th><th class="noprint">操作</th></tr>';
+  S.quotes.slice().reverse().forEach(function(q){h+='<tr><td class="mono">'+esc(q.no)+'</td><td>'+esc(q.customer)+'</td><td>'+esc(q.product)+'</td><td class="num">'+money(q.params.qty,0)+'</td><td class="num">$'+money(q.result.price,2)+'</td><td class="num">'+pct(q.result.marginReal)+'</td><td class="num">$'+money(q.result.orderProfit,0)+'</td><td><span class="tag '+(q.status==='已批准'?'g':'w')+'">'+esc(q.status)+'</span></td><td class="noprint"><button class="sm sec" onclick="quoteToOrder(\''+q.id+'\')">转订单</button> <button class="sm danger" onclick="delQuote(\''+q.id+'\')">删</button></td></tr>'});
+  e.innerHTML=h;
+}
+function quoteToOrder(id){var q=S.quotes.find(function(x){return x.id===id});if(!q)return;
+  S.orders.push({id:uid('o'),no:'O'+String(S.orders.length+1).padStart(4,'0'),customerId:q.customerId,customer:q.customer,productId:q.productId,product:q.product,sku:q.sku,qty:q.params.qty,price:q.result.price,amount:q.result.orderRevenue,stage:'待审批',created:now(),history:[{s:'待审批',t:now(),by:'本人'}],note:'由 '+q.no+' 转入'});
+  S.approvals.push({id:uid('ap'),type:'订单',refId:S.orders[S.orders.length-1].id,title:S.orders[S.orders.length-1].no+' · '+q.customer+' · $'+money(q.result.orderRevenue,0),status:'待审批',created:now()});
+  audit('本人','报价转订单',q.no+' → 待审批');go('flow');toast('已生成订单并进入审批')
+}
+function delQuote(id){S.quotes=S.quotes.filter(function(x){return x.id!==id});audit('本人','删除报价单',id);save();renderQuotes();toast('已删除')}
+
+/* ==================== CRM ==================== */
+function addCustomer(){var name=document.getElementById('cName').value.trim();if(!name){toast('请填名称');return}
+  S.customers.push({id:uid('c'),name:name,country:document.getElementById('cCountry').value.trim()||'—',channel:document.getElementById('cChannel').value,tier:document.getElementById('cTier').value,note:document.getElementById('cNote').value.trim(),created:now()});
+  audit('本人','新增客户',name);save();document.getElementById('cName').value='';renderCRM();toast('已添加客户')}
+function addProduct(){var sku=document.getElementById('pSku').value.trim(),name=document.getElementById('pName').value.trim();if(!sku||!name){toast('请填 SKU 和品名');return}
+  S.products.push({id:uid('p'),sku:sku,name:name,cost:n(document.getElementById('pCost').value),weight:n(document.getElementById('pWeight').value),hs:document.getElementById('pHs').value.trim(),supplier:document.getElementById('pSupplier').value.trim()});
+  audit('本人','新增商品',sku+' '+name);save();['pSku','pName','pHs','pSupplier'].forEach(function(i){document.getElementById(i).value=''});renderCRM();toast('已添加商品')}
+function addOrder(){var c=S.customers.find(function(x){return x.id===document.getElementById('oCustomer').value}),p=S.products.find(function(x){return x.id===document.getElementById('oProduct').value});
+  if(!c||!p){toast('请先添加客户和商品');return}
+  var qty=n(document.getElementById('oQty').value,1),price=n(document.getElementById('oPrice').value);
+  var o={id:uid('o'),no:'O'+String(S.orders.length+1).padStart(4,'0'),customerId:c.id,customer:c.name,productId:p.id,product:p.name,sku:p.sku,qty:qty,price:price,amount:qty*price,stage:'待审批',created:now(),history:[{s:'待审批',t:now(),by:'本人'}],note:document.getElementById('oNote').value.trim()};
+  S.orders.push(o);S.approvals.push({id:uid('ap'),type:'订单',refId:o.id,title:o.no+' · '+c.name+' · $'+money(o.amount,0),status:'待审批',created:now()});
+  audit('本人','新建订单',o.no+' $'+money(o.amount,0));save();renderCRM();toast('已提交，去「审批与留痕」批准')}
+function renderCRM(){
+  var oc=document.getElementById('oCustomer'),op=document.getElementById('oProduct');
+  var cv=oc.value,pv=op.value;
+  oc.innerHTML=S.customers.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>'}).join('');
+  op.innerHTML=S.products.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.sku)+' '+esc(x.name)+'</option>'}).join('');
+  if(cv)oc.value=cv;if(pv)op.value=pv;
+  var ch='<tr><th>名称</th><th>国家/地区</th><th>渠道</th><th>档位</th><th>备注</th><th class="noprint">操作</th></tr>';
+  S.customers.forEach(function(x){ch+='<tr><td>'+esc(x.name)+'</td><td>'+esc(x.country)+'</td><td>'+esc(x.channel)+'</td><td><span class="tag b">'+esc(x.tier)+'</span></td><td>'+esc(x.note)+'</td><td class="noprint"><button class="sm danger" onclick="delRec(\'customers\',\''+x.id+'\')">删</button></td></tr>'});
+  document.getElementById('customerList').innerHTML=ch||'<tr><td class="empty">暂无</td></tr>';
+  var ph='<tr><th>SKU</th><th>品名</th><th class="num">成本</th><th class="num">毛重</th><th>HS</th><th>供应商</th><th class="noprint">操作</th></tr>';
+  S.products.forEach(function(x){ph+='<tr><td class="mono">'+esc(x.sku)+'</td><td>'+esc(x.name)+'</td><td class="num">¥'+money(x.cost,2)+'</td><td class="num">'+money(x.weight,2)+'</td><td class="mono">'+esc(x.hs)+'</td><td>'+esc(x.supplier)+'</td><td class="noprint"><button class="sm danger" onclick="delRec(\'products\',\''+x.id+'\')">删</button></td></tr>'});
+  document.getElementById('productList').innerHTML=ph;
+  var oh='<tr><th>单号</th><th>客户</th><th>商品</th><th class="num">数量</th><th class="num">单价</th><th class="num">金额</th><th>阶段</th><th class="noprint">操作</th></tr>';
+  S.orders.slice().reverse().forEach(function(x){oh+='<tr><td class="mono">'+esc(x.no)+'</td><td>'+esc(x.customer)+'</td><td>'+esc(x.product)+'</td><td class="num">'+money(x.qty,0)+'</td><td class="num">$'+money(x.price,2)+'</td><td class="num">$'+money(x.amount,0)+'</td><td><span class="tag '+stageTag(x.stage)+'">'+esc(x.stage)+'</span></td><td class="noprint"><button class="sm sec" onclick="nextStage(\''+x.id+'\')">推进</button> <button class="sm danger" onclick="delRec(\'orders\',\''+x.id+'\')">删</button></td></tr>'});
+  document.getElementById('orderList').innerHTML=oh||'<tr><td class="empty">暂无订单</td></tr>';
+  document.getElementById('cCnt').textContent=S.customers.length+' 条';document.getElementById('pCnt').textContent=S.products.length+' 条';document.getElementById('oCnt').textContent=S.orders.length+' 条';
+  fillQuoteSelects();fillDeliverSelects();
+}
+function stageTag(s){return s==='已交付'||s==='已回款'?'g':(s==='待审批'?'w':'b')}
+function delRec(k,id){S[k]=S[k].filter(function(x){return x.id!==id});audit('本人','删除记录',k+' / '+id);save();renderCRM();renderHome();toast('已删除')}
+
+/* ==================== 审批与留痕 ==================== */
+var STAGES=['待审批','已批准','执行中','已交付','已回款','已归档'];
+function nextStage(id){var o=S.orders.find(function(x){return x.id===id});if(!o)return;
+  if(o.stage==='待审批'){toast('待审批订单必须在「审批与留痕」里批准');go('flow');return}
+  var i=STAGES.indexOf(o.stage);if(i<0||i>=STAGES.length-1){toast('已是最后阶段');return}
+  o.stage=STAGES[i+1];o.history.push({s:o.stage,t:now(),by:'本人'});audit('本人','订单推进',o.no+' → '+o.stage);save();renderCRM();toast('已推进到 '+o.stage)}
+function decide(apId,ok){var ap=S.approvals.find(function(x){return x.id===apId});if(!ap||ap.status!=='待审批')return;
+  ap.status=ok?'已批准':'已驳回';ap.decidedBy='本人';ap.decidedAt=now();
+  if(ap.type==='订单'){var o=S.orders.find(function(x){return x.id===ap.refId});if(o&&ok){o.stage='已批准';o.history.push({s:'已批准',t:now(),by:'本人（审批）'})}}
+  if(ap.type==='报价单'){var q=S.quotes.find(function(x){return x.id===ap.refId});if(q)q.status=ok?'已批准':'已驳回'}
+  audit('本人',(ok?'批准':'驳回')+ap.type,ap.title);save();renderFlow();renderCRM();renderQuotes();toast(ok?'已批准':'已驳回')}
+function renderFlow(){
+  var pend=S.approvals.filter(function(x){return x.status==='待审批'});
+  document.getElementById('apCnt').textContent=pend.length+' 条待办';
+  var e=document.getElementById('approvalList');
+  if(!pend.length){e.innerHTML='<div class="empty">没有待办。去「客户 · 商品 · 订单」新建订单，或从报价单转入。</div>'}
+  else{e.innerHTML=pend.slice().reverse().map(function(a){return '<div class="asset"><div><div class="n">'+esc(a.title)+'</div><div class="m">'+esc(a.type)+' · '+esc(a.created.slice(0,16).replace('T',' '))+'</div></div><div class="row tight noprint" style="align-items:center"><button class="sm ok" onclick="decide(\''+a.id+'\',true)">批准</button><button class="sm danger" onclick="decide(\''+a.id+'\',false)">驳回</button></div></div>'}).join('')}
+  var h='<tr><th>#</th><th>时间</th><th>操作人</th><th>动作</th><th>摘要</th><th>哈希（前 12）</th><th>校验</th></tr>';
+  S.audit.slice().reverse().slice(0,80).forEach(function(a){var v=chainOne(a);h+='<tr><td class="num">'+a.i+'</td><td class="mono">'+esc(a.t.slice(0,19).replace('T',' '))+'</td><td>'+esc(a.actor)+'</td><td>'+esc(a.action)+'</td><td>'+esc(a.detail)+'</td><td class="mono">'+esc(a.hash.slice(0,12))+'…</td><td>'+(v?'<span class="tag g">OK</span>':'<span class="tag r">异常</span>')+'</td></tr>'});
+  document.getElementById('auditList').innerHTML=h||'<tr><td class="empty">暂无日志</td></tr>';
+  renderHome();
+}
+function chainOne(a){var expect=sha256(a.i+'|'+a.t+'|'+a.actor+'|'+a.action+'|'+a.detail+'|'+a.prev);return a.hash===expect}
+function verifyChain(){
+  var bad=[];
+  for(var k=0;k<S.audit.length;k++){var a=S.audit[k];
+    var expectPrev=k===0?'GENESIS':S.audit[k-1].hash;
+    var expect=sha256(a.i+'|'+a.t+'|'+a.actor+'|'+a.action+'|'+a.detail+'|'+expectPrev);
+    if(a.prev!==expectPrev||a.hash!==expect)bad.push(a.i);
+  }
+  var e=document.getElementById('chainMsg');
+  if(!bad.length){e.innerHTML='<div class="msg ok">链完整：'+S.audit.length+' 条记录全部通过，前序哈希与内容哈希一致，未发现改动。</div>'}
+  else{e.innerHTML='<div class="msg bad">发现 '+bad.length+' 条异常：#'+bad.join(', #')+'。历史记录可能被改动或导入数据不完整。</div>'}
+  audit('本人','校验审计链',bad.length?('异常 '+bad.length+' 条'):'全部通过');
+  toast(bad.length?'发现异常':'链完整');
+}
+function tamperTest(){
+  if(S.audit.length<2){toast('日志太少，先做几个操作');return}
+  var copy=JSON.parse(JSON.stringify(S.audit));copy[1].detail=copy[1].detail+'（模拟篡改）';
+  var expect=sha256(copy[1].i+'|'+copy[1].t+'|'+copy[1].actor+'|'+copy[1].action+'|'+copy[1].detail+'|'+copy[1].prev);
+  var detected=copy[1].hash!==expect;
+  document.getElementById('chainMsg').innerHTML='<div class="msg '+(detected?'ok':'bad')+'">模拟篡改检测：'+(detected?'成功识别。把第 2 条记录的摘要改一个字，重算哈希与原值不一致 → 判定为被改动。真实数据未被修改。':'未能识别（异常）')+'</div>';
+  toast(detected?'篡改检测通过（未改真实数据）':'检测异常');
+}
+
+/* ==================== 项目归位 ==================== */
+function renderAssets(){
+  var sel=document.getElementById('aLayer');
+  if(sel.options.length<=1){['感知层','运营层','决策层','结算层','交付层','主体合规','归档'].forEach(function(l){var o=document.createElement('option');o.textContent=l;sel.appendChild(o)})}
+  var q=(document.getElementById('aSearch').value||'').toLowerCase(),L=document.getElementById('aLayer').value,D=document.getElementById('aDisp').value;
+  var list=S.assets.filter(function(a){return (!q||(a.name+a.key+a.note).toLowerCase().indexOf(q)>=0)&&(!L||a.layer===L)&&(!D||a.disp===D)});
+  var sum={};S.assets.forEach(function(a){sum[a.layer]=(sum[a.layer]||0)+1});
+  document.getElementById('aSummary').innerHTML=Object.keys(sum).map(function(k){return '<div class="kpi"><div class="l">'+k+'</div><div class="v">'+sum[k]+' <small>个目录</small></div></div>'}).join('')+'<div class="kpi"><div class="l">合计</div><div class="v">'+S.assets.length+' <small>个 / '+S.assets.reduce(function(t,a){return t+a.files},0)+' 文件</small></div></div>';
+  document.getElementById('assetList').innerHTML=list.length?list.map(function(a,ix){var idx=S.assets.indexOf(a);return '<div class="asset"><div><div class="n">'+esc(a.name)+' <span class="tag '+(a.disp==='主线'?'g':(a.disp==='归档'||a.disp==='合并'?'w':'b'))+'">'+esc(a.disp)+'</span> <span class="tag">'+esc(a.layer)+'</span> <span class="pill">'+a.files+' 文件</span></div><div class="m">'+esc(a.key)+' · '+esc(a.note)+'</div></div><div class="noprint"><select class="sm" style="width:auto" onchange="setDisp('+idx+',this.value)"><option value="">改处置…</option><option>主线</option><option>保留</option><option>合并</option><option>归档</option><option>待确认</option></select></div></div>'}).join(''):'<div class="empty">没有匹配的目录</div>';
+}
+function setDisp(i,v){if(!v)return;S.assets[i].disp=v;audit('本人','调整项目归位',S.assets[i].name+' → '+v);save();renderAssets();toast('已标记')}
+
+/* ==================== 价目表 ==================== */
+function renderPrice(){
+  var groups={};PRICE.forEach(function(p){(groups[p[0]]=groups[p[0]]||[]).push(p)});
+  var h='';Object.keys(groups).forEach(function(g){h+='<div class="card" style="margin-bottom:12px"><h3>'+esc(g)+'</h3><table><tr><th>服务</th><th>交付什么</th><th>价格</th><th>周期</th></tr>'+groups[g].map(function(p){return '<tr><td><b>'+esc(p[1])+'</b></td><td>'+esc(p[2])+'</td><td class="mono">'+esc(p[3])+'</td><td>'+esc(p[4])+'</td></tr>'}).join('')+'</table></div>'});
+  h+='<div class="card"><h3>硬规矩</h3><div class="mono pre" style="max-height:none">按交付物收费，不按工时收。先定价、后开工；50% 定金启动，50% 验收付清。\n轻量档不接「按小时算」「先做再付」「做完看效果再决定给不给钱」。\n朋友引荐可给一次 9 折，仅限首次。报价有效期建议 3 个月。</div></div>';
+  document.getElementById('priceTables').innerHTML=h;
+}
+
+/* ==================== 交付物 ==================== */
+function fillDeliverSelects(){
+  var c=document.getElementById('dCustomer'),o=document.getElementById('dOrder');var cv=c.value,ov=o.value;
+  c.innerHTML='<option value="">（全部客户）</option>'+S.customers.map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>'}).join('');
+  o.innerHTML='<option value="">（自动取最新）</option>'+S.orders.slice().reverse().map(function(x){return '<option value="'+esc(x.id)+'">'+esc(x.no)+' · '+esc(x.customer)+' · $'+money(x.amount,0)+'</option>'}).join('');
+  if(cv)c.value=cv;if(ov)o.value=ov;
+}
+function genDeliver(){
+  var type=document.getElementById('dType').value,cid=document.getElementById('dCustomer').value,oid=document.getElementById('dOrder').value;
+  var c=S.customers.find(function(x){return x.id===cid});
+  var o=S.orders.find(function(x){return x.id===oid})||S.orders.slice().reverse()[0];
+  var q=S.quotes.slice().reverse()[0];
+  var d=new Date().toLocaleDateString('zh-CN');var out='';
+  var cname=c?c.name:'（未指定客户）';
+  if(type==='quote'){
+    var unit=q?q.result.price:(o?o.price:0),qty=q?q.params.qty:(o?o.qty:0);
+    var prod=q?q.product:(o?o.product:'—'),sku=q?q.sku:(o?o.sku:'—');
+    out='# 报价单 / QUOTATION\n\n'+
+      '日期：'+d+'\n客户：'+cname+'\n单号：'+(q?q.no:(o?o.no:'Q-DRAFT'))+'\n\n'+
+      '| 项目 | 内容 |\n|---|---|\n'+
+      '| 商品 | '+prod+'（'+sku+'） |\n| 数量 | '+money(qty,0)+' 件 |\n| 建议单价 | USD '+money(unit,2)+' / 件 |\n| 金额 | USD '+money(unit*qty,2)+' |\n'+
+      (q?'| 贸易术语 | '+q.params.term+' |\n| 目标毛利率 | '+pct(q.params.margin)+' |\n| 实际毛利率 | '+pct(q.result.marginReal)+' |\n| 单位净成本 | USD '+money(q.result.net,2)+' |\n| 盈亏平衡价 | USD '+money(q.result.be,2)+' |\n':'')+
+      '\n> 本报价由本地计算引擎生成，参数见「计算依据」。价格有效期建议 3 个月。\n'+
+      '\n## 商务条款\n- 50% 定金启动，50% 验收付清。\n- 按交付物收费，不按工时。\n- 交付前提供确认稿。\n\n'+
+      '## English Summary\nThis quotation is generated locally from the cost model (purchase cost, inland freight, ocean freight, insurance, duty, platform commission, export rebate, FX). Unit price = net cost / (1 − commission − target margin).';
+    var pa=document.getElementById('printArea');
+    pa.innerHTML='<div class="card"><h2 style="font-size:20px">报价单 / QUOTATION</h2><p>日期：'+esc(d)+'　客户：'+esc(cname)+'　单号：'+esc(q?q.no:(o?o.no:'Q-DRAFT'))+'</p><table><tr><th>商品</th><th>数量</th><th>单价 (USD)</th><th>金额 (USD)</th></tr><tr><td>'+esc(prod)+'（'+esc(sku)+'）</td><td>'+money(qty,0)+'</td><td>'+money(unit,2)+'</td><td>'+money(unit*qty,2)+'</td></tr></table><p style="margin-top:14px">50% 定金启动，50% 验收付清。按交付物收费，不按工时。</p></div>';
+  }else if(type==='followup'){
+    out='# 询盘跟进（中文）\n\n'+cname+' 您好：\n\n感谢此前的沟通。按您给的数量与要求，我把成本、运费、关税和退税都过了一遍，整理出一版可直接决策的报价：\n\n'+
+      (q?'- 建议单价 USD '+money(q.result.price,2)+'/件（'+q.params.term+'）\n- 数量 '+money(q.params.qty,0)+' 件，金额约 USD '+money(q.result.orderRevenue,0)+'\n- 该报价对应毛利率 '+pct(q.result.marginReal)+'\n':'（请先在报价引擎里存一版报价单）\n')+
+      '\n如果数量、目的港或贸易术语有变化，我可以即时重算。确认后我出正式报价单与交付排期。\n\n黄倩如 / CloudSail\n\n---\n\n# Follow-up (EN)\n\nDear '+cname+',\n\nThanks for the discussion. I ran the numbers on cost, freight, duty and export rebate and put together a decision-ready quote:\n\n'+
+      (q?'- Indicative unit price: USD '+money(q.result.price,2)+' ('+q.params.term+')\n- Qty '+money(q.params.qty,0)+', total approx. USD '+money(q.result.orderRevenue,0)+'\n':'')+
+      '\nIf qty, destination port or Incoterm changes, I can recalculate immediately. On confirmation I will issue the formal quotation and delivery schedule.\n\nQianru Huang / CloudSail';
+    document.getElementById('printArea').innerHTML='<div class="card">'+esc(out).replace(/\n/g,'<br>')+'</div>';
+  }else if(type==='weekly'){
+    var rev=S.orders.reduce(function(t,x){return t+x.amount},0),done=S.orders.filter(function(x){return x.stage==='已交付'||x.stage==='已回款'}).length;
+    out='# 周度经营简报 · '+d+'\n\n## 数据快照\n'+
+      '| 指标 | 数值 |\n|---|---|\n| 客户 | '+S.customers.length+' |\n| 商品 | '+S.products.length+' |\n| 报价单 | '+S.quotes.length+' |\n| 订单 | '+S.orders.length+' |\n| 订单总额 | USD '+money(rev,0)+' |\n| 已交付/回款 | '+done+' |\n| 待办审批 | '+S.approvals.filter(function(x){return x.status==='待审批'}).length+' |\n| 审计记录 | '+S.audit.length+' |\n\n'+
+      '## 订单明细\n'+(S.orders.length?S.orders.map(function(x){return '- '+x.no+'　'+x.customer+'　$'+money(x.amount,0)+'　'+x.stage}).join('\n'):'- 暂无订单')+
+      '\n\n## 本周动作\n1. 处理待办审批（人工关口，不自动放行）。\n2. 对未报价客户出一版报价单。\n3. 导出备份，校验审计链。\n';
+    document.getElementById('printArea').innerHTML='<div class="card"><h2>周度经营简报 · '+esc(d)+'</h2><div class="mono pre" style="border:none;max-height:none">'+esc(out)+'</div></div>';
+  }else{
+    out='# 交付验收清单 · '+d+'\n\n客户：'+cname+'\n订单：'+(o?o.no+'（$'+money(o.amount,0)+'）':'—')+'\n\n'+
+      '| # | 验收项 | 标准 | 状态 |\n|---|---|---|---|\n'+
+      '| 1 | 需求与范围确认 | 书面确认稿 | ☐ |\n| 2 | 报价与商务条款 | 50% 定金已收 | ☐ |\n| 3 | 功能/内容交付 | 可在客户后台直接查看 | ☐ |\n| 4 | 移动端适配 | 手机打开无溢出、无报错 | ☐ |\n| 5 | 数据与权限 | 最小权限子账号，可回收 | ☐ |\n| 6 | 操作说明 | 一页说明 + 一次培训 | ☐ |\n| 7 | 审计留痕 | 全程日志已导出 | ☐ |\n| 8 | 验收与尾款 | 50% 尾款结清 | ☐ |\n\n'+
+      '> 交付的是「你后台里已经变了」，不是一份文件。异常才推给客户审批。\n';
+    document.getElementById('printArea').innerHTML='<div class="card"><h2>交付验收清单</h2><div class="mono pre" style="border:none;max-height:none">'+esc(out)+'</div></div>';
+  }
+  DELIVER_TEXT=out;document.getElementById('deliverOut').textContent=out;
+}
+function downloadDeliver(){if(!DELIVER_TEXT){toast('先点生成');return}var t=document.getElementById('dType').value;dl(new Blob(['\ufeff'+DELIVER_TEXT],{type:'text/markdown;charset=utf-8'}),'CloudSail_'+t+'_'+new Date().toISOString().slice(0,10)+'.md');audit('本人','下载交付物',t);toast('已下载')}
+
+/* ==================== 导入 / 导出 ==================== */
+function dl(blob,name){var a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},500)}
+function csvCell(v){var s=String(v==null?'':v);return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function toCSV(rows){return '\ufeff'+rows.map(function(r){return r.map(csvCell).join(',')}).join('\r\n')}
+function parseCSV(text){
+  text=text.replace(/^\ufeff/,'');var rows=[],row=[],cur='',q=false;
+  for(var i=0;i<text.length;i++){var c=text[i];
+    if(q){if(c==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
+    else{if(c==='"')q=true;else if(c===','){row.push(cur);cur=''}else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur=''}else if(c==='\r'){}else cur+=c}
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row)}
+  return rows.filter(function(r){return r.some(function(c){return String(c).trim()!==''})});
+}
+var EXPORT_MAP={
+  customers:[['名称','name'],['国家/地区','country'],['渠道','channel'],['档位','tier'],['备注','note'],['创建时间','created']],
+  products:[['SKU','sku'],['品名','name'],['采购成本CNY','cost'],['毛重KG','weight'],['HS编码','hs'],['供应商','supplier']],
+  orders:[['单号','no'],['客户','customer'],['商品','product'],['SKU','sku'],['数量','qty'],['单价USD','price'],['金额USD','amount'],['阶段','stage'],['备注','note'],['创建时间','created']],
+  quotes:[['单号','no'],['客户','customer'],['商品','product'],['数量','qty'],['售价USD','price'],['毛利率','margin'],['订单毛利USD','profit'],['状态','status'],['创建时间','created']],
+  audit:[['序号','i'],['时间','t'],['操作人','actor'],['动作','action'],['摘要','detail'],['前序哈希','prev'],['哈希','hash']],
+  assets:[['目录','name'],['层级','layer'],['文件数','files'],['处置','disp'],['关键交付物','key'],['说明','note']]
+};
+function exportRows(kind){
+  var def=EXPORT_MAP[kind];if(!def)return [];
+  var rows=[def.map(function(d){return d[0]})];
+  S[kind].forEach(function(x){rows.push(def.map(function(d){
+    var v=x[d[1]];
+    if(kind==='quotes'&&d[1]==='qty')v=x.params?x.params.qty:'';
+    if(kind==='quotes'&&d[1]==='price')v=x.result?x.result.price:'';
+    if(kind==='quotes'&&d[1]==='margin')v=x.result?x.result.marginReal:'';
+    if(kind==='quotes'&&d[1]==='profit')v=x.result?x.result.orderProfit:'';
+    return v==null?'':v;
+  }))});
+  return rows;
+}
+function exportCSV(kind){var rows=exportRows(kind);dl(new Blob([toCSV(rows)],{type:'text/csv;charset=utf-8'}),'CloudSail_'+kind+'_'+new Date().toISOString().slice(0,10)+'.csv');audit('本人','导出 CSV',kind+' '+rows.length+' 行');toast('已导出 '+kind+'（'+(rows.length-1)+' 条）')}
+function exportBackup(){dl(new Blob([JSON.stringify(S,null,2)],{type:'application/json;charset=utf-8'}),'CloudSail_备份_'+new Date().toISOString().slice(0,10)+'.json');toast('备份已下载');log('导出全量备份')}
+function importAny(el){var f=el.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){var t=String(r.result);
+    if(/\.json$/i.test(f.name)||t.trim().charAt(0)==='{'){
+      try{var o=JSON.parse(t);if(!o.customers&&!o.orders&&!o.quotes){toast('不像 CloudSail 备份文件');return}
+        S=o;['quotes','orders','approvals','audit','customers','products','assets'].forEach(function(k){if(!S[k])S[k]=[]});
+        if(!S.assets.length)S.assets=ASSETS.map(function(a){return Object.assign({},a)});
+        audit('本人','导入全量备份',f.name);save();refreshAll();toast('备份已恢复');return
+      }catch(e){toast('JSON 解析失败：'+e.message);return}
+    }
+    // CSV 直接按当前 ioTarget 导入
+    doImportCSV(t,document.getElementById('ioTarget').value,f.name);
+  };r.readAsText(f,'UTF-8');el.value='';
+}
+function importTable(){var el=document.getElementById('ioFile'),f=el.files[0];if(!f){toast('先选文件');return}var r=new FileReader();r.onload=function(){doImportCSV(String(r.result),document.getElementById('ioTarget').value,f.name);el.value=''};r.readAsText(f,'UTF-8')}
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[\s_\/（）()]/g,'')}
+var ALIAS={name:['name','名称','客户','客户名称','品名','name2'],country:['country','国家','国家地区','地区'],channel:['channel','渠道'],tier:['tier','档位','等级'],note:['note','备注','说明','联系人'],
+  sku:['sku','货号','编码'],cost:['cost','采购成本','成本','采购成本cny','pricecny'],weight:['weight','毛重','重量','毛重kg'],hs:['hs','hs编码','海关编码'],supplier:['supplier','供应商'],
+  no:['no','单号','订单号'],customer:['customer','客户','客户名称'],product:['product','商品','品名'],qty:['qty','数量','件数'],price:['price','单价','成交单价','成交单价usd'],amount:['amount','金额','总额'],stage:['stage','阶段','状态']};
+function doImportCSV(text,target,fname){
+  var rows=parseCSV(text);if(rows.length<2){toast('文件没有数据行');return}
+  var head=rows[0].map(norm),map={};
+  Object.keys(ALIAS).forEach(function(k){ALIAS[k].forEach(function(a){if(map[k]===undefined){var i=head.indexOf(norm(a));if(i>=0)map[k]=i}})});
+  var added=0;
+  rows.slice(1).forEach(function(r){
+    var g=function(k,d){var i=map[k];return i===undefined?(d===undefined?'':d):(r[i]||'').trim()};
+    if(target==='customers'){var nm=g('name');if(!nm)return;S.customers.push({id:uid('c'),name:nm,country:g('country','—'),channel:g('channel','其他'),tier:g('tier','线索'),note:g('note'),created:now()});added++}
+    else if(target==='products'){var sk=g('sku'),pn=g('name');if(!sk&&!pn)return;S.products.push({id:uid('p'),sku:sk||uid('SKU'),name:pn||sk,cost:n(g('cost',0)),weight:n(g('weight',0)),hs:g('hs'),supplier:g('supplier')});added++}
+    else if(target==='orders'){var cn=g('customer'),pdn=g('product'),q=n(g('qty',1)),pr=n(g('price',0));if(!cn&&!pdn)return;
+      S.orders.push({id:uid('o'),no:g('no')||'O'+String(S.orders.length+1).padStart(4,'0'),customerId:'',customer:cn||'—',productId:'',product:pdn||'—',sku:g('sku'),qty:q,price:pr,amount:n(g('amount'),q*pr),stage:g('stage','待审批'),created:now(),history:[{s:'待审批',t:now(),by:'导入'}],note:g('note')});added++}
+  });
+  audit('本人','导入 CSV',fname+' → '+target+' +'+added+' 条');save();refreshAll();toast('已导入 '+added+' 条到 '+target);
+}
+
+/* ==================== 自检 ==================== */
+function runSelfTest(){
+  var out=[],pass=0,fail=0;
+  function t(name,fn){try{var r=fn();if(r===true||r===undefined){out.push('<div class="msg ok">PASS · '+name+'</div>');pass++}else{out.push('<div class="msg bad">FAIL · '+name+' → '+esc(String(r))+'</div>');fail++}}catch(e){out.push('<div class="msg bad">ERROR · '+name+' → '+esc(e.message)+'</div>');fail++}}
+  t('SHA-256 标准向量（abc）',function(){return sha256('abc')==='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'||'实测值='+sha256('abc')});
+  t('SHA-256 标准向量（空串）',function(){return sha256('')==='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'||'实测值='+sha256('')});
+  t('报价公式：售价×(1−佣金)−净成本 = 单位毛利',function(){var p={qty:1000,cost:38,fx:7.15,term:'FOB',domestic:2200,port:1800,ocean:950,ins:.003,duty:.12,comm:.05,margin:.28,rebate:.13,vat:.13};var r=compute(p);var lhs=r.price*(1-p.comm)-r.net;return Math.abs(lhs-r.profit)<1e-9||'差值 '+Math.abs(lhs-r.profit)});
+  t('报价公式：毛利率回到目标值',function(){var p={qty:500,cost:20,fx:7,term:'CIF',domestic:500,port:600,ocean:400,ins:.002,duty:.08,comm:.03,margin:.25,rebate:0,vat:.13};var r=compute(p);return Math.abs(r.marginReal-.25)<1e-9||'实际 '+r.marginReal});
+  t('盈亏平衡价：售价=be 时毛利为 0',function(){var p={qty:100,cost:10,fx:7,term:'FOB',domestic:0,port:0,ocean:0,ins:0,duty:0,comm:.05,margin:0,rebate:0,vat:.13};var r=compute(p);return Math.abs(r.profit)<1e-9||'毛利 '+r.profit});
+  t('数量翻倍：国内杂费分摊减半',function(){var p={qty:100,cost:10,fx:7,term:'FOB',domestic:100,port:0,ocean:0,ins:0,duty:0,comm:0,margin:.2,rebate:0,vat:.13};var a=compute(p),b=compute(Object.assign({},p,{qty:200}));return Math.abs(a.exw-11)<1e-9&&Math.abs(b.exw-10.5)<1e-9||'a='+a.exw+' b='+b.exw});
+  t('CSV 往返：含引号/逗号/换行',function(){var rows=[['名称','备注'],['A,公司','他说"好"\n换行'],['B','普通']];var s=toCSV(rows),back=parseCSV(s);return (back[1][0]==='A,公司'&&back[1][1].indexOf('换行')>=0)||JSON.stringify(back)});
+  t('审计链：全部记录自洽',function(){for(var k=0;k<S.audit.length;k++){var a=S.audit[k],ep=k===0?'GENESIS':S.audit[k-1].hash,ex=sha256(a.i+'|'+a.t+'|'+a.actor+'|'+a.action+'|'+a.detail+'|'+ep);if(a.prev!==ep||a.hash!==ex)return '第 '+a.i+' 条不一致'}return true});
+  t('审计链：改动摘要必被发现',function(){if(!S.audit.length)return true;var a=JSON.parse(JSON.stringify(S.audit[0]));a.detail+='X';var ex=sha256(a.i+'|'+a.t+'|'+a.actor+'|'+a.action+'|'+a.detail+'|'+a.prev);return a.hash!==ex||'未检出'});
+  t('持久化：写入后可回读',function(){if(!canStore())return '浏览器禁用了本地存储（可用导出备份替代）';var old=localStorage.getItem(KEY);localStorage.setItem(KEY,JSON.stringify(S));var ok=!!localStorage.getItem(KEY);if(old===null){}return ok||'回读失败'});
+  t('数据完整性：必需字段齐全',function(){return !!(S.customers&&S.products&&S.quotes&&S.orders&&S.approvals&&S.audit&&S.assets)||'缺字段'});
+  t('资产台账：目录数 = 63',function(){return S.assets.length===63||'实际 '+S.assets.length});
+  t('价目表：13 项服务已内置',function(){return PRICE.length===13||'实际 '+PRICE.length});
+  var html='<div class="msg info"><b>'+pass+' 通过 / '+fail+' 失败</b> · '+new Date().toLocaleString('zh-CN',{hour12:false})+'</div>'+out.join('');
+  document.getElementById('selfTestResult').innerHTML=html;
+  audit('本人','运行一键自检',pass+' 通过 / '+fail+' 失败');
+  go('home');toast('自检完成：'+pass+' 通过 / '+fail+' 失败');
+}
+
+/* ==================== 渲染 ==================== */
+function renderHome(){
+  var rev=S.orders.reduce(function(t,x){return t+x.amount},0),gp=S.quotes.reduce(function(t,x){return t+(x.result?x.result.orderProfit:0)},0);
+  var pend=S.approvals.filter(function(x){return x.status==='待审批'}).length;
+  document.getElementById('kpis').innerHTML=
+    '<div class="kpi"><div class="l">客户 / 商品</div><div class="v">'+S.customers.length+' <small>/ '+S.products.length+'</small></div></div>'+
+    '<div class="kpi"><div class="l">订单总额</div><div class="v">$'+money(rev,0)+' <small>USD</small></div></div>'+
+    '<div class="kpi"><div class="l">报价单累计毛利</div><div class="v">$'+money(gp,0)+' <small>USD</small></div></div>'+
+    '<div class="kpi"><div class="l">待办审批</div><div class="v">'+pend+' <small>条</small></div></div>'+
+    '<div class="kpi"><div class="l">审计记录</div><div class="v">'+S.audit.length+' <small>条</small></div></div>'+
+    '<div class="kpi"><div class="l">项目目录归位</div><div class="v">'+S.assets.length+' <small>个</small></div></div>'+
+    '<div class="kpi"><div class="l">已交付 / 回款</div><div class="v">'+S.orders.filter(function(x){return x.stage==='已交付'||x.stage==='已回款'}).length+' <small>单</small></div></div>'+
+    '<div class="kpi"><div class="l">数据存储</div><div class="v" style="font-size:15px">'+(canStore()?'本机可用':'需导出备份')+'</div></div>';
+  var pl=['感知（AI 眼镜 / 手机桥 OCR / 连接器）','运营（客户 → 报价 → 订单 → 交付）','决策（毛利模型 / 竞品 / 市场地图）','结算（存证 / 可验证收据 / 收款）'];
+  document.getElementById('pipeline').textContent=pl.map(function(x,i){return (i+1)+'. '+x}).join('\n')+'\n\n人工关口：报价单与订单必须经「审批与留痕」批准，程序不自动放行。\n每一步写入审计链，可用 SHA-256 前序哈希校验是否被改动。\n\n最近订单状态：\n'+(S.orders.length?S.orders.slice(-6).map(function(o){return '  '+o.no+'  '+o.customer+'  $'+money(o.amount,0)+'  ['+o.stage+']'}).join('\n'):'  （暂无订单）');
+  var ra='<tr><th>#</th><th>时间</th><th>动作</th><th>摘要</th></tr>'+S.audit.slice().reverse().slice(0,12).map(function(a){return '<tr><td>'+a.i+'</td><td class="mono">'+esc(a.t.slice(0,19).replace('T',' '))+'</td><td>'+esc(a.action)+'</td><td>'+esc(a.detail)+'</td></tr>'}).join('');
+  document.getElementById('recentAudit').innerHTML=ra;
+  document.getElementById('envInfo').textContent=
+    '运行方式：file:// 本地文件（无需服务器 / 无需联网）\n'+
+    '浏览器：'+(navigator.userAgent.slice(0,90))+'\n'+
+    '本地存储：'+(canStore()?'可用（key='+KEY+'）':'不可用 → 请用导出备份')+'\n'+
+    '当前数据：客户 '+S.customers.length+' / 商品 '+S.products.length+' / 报价 '+S.quotes.length+' / 订单 '+S.orders.length+' / 审批 '+S.approvals.length+' / 审计 '+S.audit.length+'\n'+
+    '外部依赖：0（SHA-256、CSV、计算引擎全部内置）';
+  document.getElementById('bCount').textContent=(S.customers.length+S.products.length+S.orders.length+S.quotes.length)+' 条记录';
+  document.getElementById('bStore').textContent=canStore()?'本地存储已启用':'本地存储不可用';
+}
+function renderIO(){
+  document.getElementById('dataStats').innerHTML=
+    '<div class="kpi"><div class="l">客户</div><div class="v">'+S.customers.length+'</div></div>'+
+    '<div class="kpi"><div class="l">商品</div><div class="v">'+S.products.length+'</div></div>'+
+    '<div class="kpi"><div class="l">报价单</div><div class="v">'+S.quotes.length+'</div></div>'+
+    '<div class="kpi"><div class="l">订单</div><div class="v">'+S.orders.length+'</div></div>'+
+    '<div class="kpi"><div class="l">审批</div><div class="v">'+S.approvals.length+'</div></div>'+
+    '<div class="kpi"><div class="l">审计</div><div class="v">'+S.audit.length+'</div></div>';
+  document.getElementById('ioLog').textContent=LOG.join('\n')||'（暂无操作）';
+}
+function refreshAll(){renderHome();renderCRM();renderFlow();renderQuotes();renderAssets();renderIO();fillQuoteSelects();fillDeliverSelects()}
+function loadDemo(){S=demoState();audit('本人','载入示例数据','');save();refreshAll();toast('示例数据已载入')}
+function clearAll(){if(!confirm('确定清空全部数据？建议先导出备份。'))return;S=demoState();S.customers=[];S.products=[];S.quotes=[];S.orders=[];S.approvals=[];S.audit=[];save();audit('本人','清空全部数据','');refreshAll();toast('已清空')}
+
+/* ==================== 启动 ==================== */
+load();refreshAll();go('home');
+document.querySelectorAll('#quote input,#quote select').forEach(function(e){e.addEventListener('input',function(){try{calcQuote()}catch(x){}});e.addEventListener('change',function(){try{calcQuote()}catch(x){}})});
+log('程序启动 · 本地运行版 v1.0 · 数据记录 '+(S.customers.length+S.orders.length)+' 条');
+</script>
+</body>
+</html>
