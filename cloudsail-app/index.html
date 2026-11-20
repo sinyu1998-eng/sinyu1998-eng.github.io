@@ -3,73 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CloudSail 本地运行版 · 下载</title>
+<title>CloudSail 运营控制台 · 下载</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f6f8;color:#1b2030;font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:720px;margin:0 auto;padding:40px 20px 60px}
-h1{font-size:24px;margin:0 0 6px}
-.sub{color:#6b7280;font-size:13px;margin:0 0 26px}
-.box{background:#fff;border:1px solid #d9dde3;border-radius:8px;padding:24px;margin-bottom:14px}
-.dl{display:block;background:#1f4e79;color:#fff;text-decoration:none;text-align:center;padding:15px;border-radius:6px;font-size:17px;font-weight:600}
-.dl:hover{background:#2a5f92}
+body{margin:0;background:#eef1f5;color:#161d2b;font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+.sub{color:#5d6878;font-size:13.5px;margin:0 0 24px}
+.box{background:#fff;border:1px solid #d7dce4;border-radius:10px;padding:22px;margin-bottom:13px}
+.dl{display:block;background:linear-gradient(180deg,#1f5e97,#173f6b);color:#fff;text-decoration:none;text-align:center;padding:15px;border-radius:7px;font-size:17px;font-weight:600;box-shadow:0 6px 18px rgba(23,63,107,.22)}
+.dl:hover{filter:brightness(1.08)}
 .dl small{display:block;font-weight:400;font-size:12px;opacity:.85;margin-top:3px}
-.dl2{display:block;text-align:center;padding:10px;margin-top:9px;border:1px solid #d9dde3;border-radius:6px;color:#1f4e79;text-decoration:none;font-size:13px;background:#fff}
-.dl2:hover{background:#f7f9fb}
-h2{font-size:14px;margin:0 0 10px;color:#1f4e79}
+.dl2{display:block;text-align:center;padding:11px;margin-top:9px;border:1px solid #d7dce4;border-radius:7px;color:#173f6b;text-decoration:none;font-size:13.5px;background:#fbfcfe}
+.dl2:hover{background:#f2f6fb}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{background:#f7f9fc;border:1px solid #e4e9f0;border-radius:7px;padding:11px 12px}
+.mini b{display:block;font-size:12.5px;color:#173f6b;margin-bottom:2px}
+.mini span{font-size:12px;color:#6a7686;line-height:1.5}
+h2{font-size:14px;margin:0 0 10px;color:#173f6b;letter-spacing:.2px}
 ol,ul{margin:0;padding-left:20px}
 li{margin:5px 0}
 table{border-collapse:collapse;width:100%;font-size:13px}
-td{border-bottom:1px solid #eef1f4;padding:6px 4px;vertical-align:top}
-td:first-child{color:#6b7280;width:110px;white-space:nowrap}
-code{background:#eef2f7;padding:1px 5px;border-radius:3px;font-size:12px}
-.note{background:#eaf1f8;border:1px solid #c3d6e8;color:#1f4e79;padding:10px 12px;border-radius:5px;font-size:13px;margin-top:12px}
-.foot{color:#9aa3ad;font-size:12px;text-align:center;margin-top:24px}
+td{border-bottom:1px solid #eef1f5;padding:7px 4px;vertical-align:top}
+td:first-child{color:#5d6878;width:112px;white-space:nowrap}
+code{background:#eaeff6;padding:1px 5px;border-radius:3px;font-size:12px}
+.note{background:#e9f1f9;border:1px solid #c3d6e8;color:#173f6b;padding:10px 12px;border-radius:6px;font-size:12.5px;margin-top:12px}
+.foot{color:#939dab;font-size:12px;text-align:center;margin-top:22px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>CloudSail 本地运行版</h1>
-  <p class="sub">单文件 · 离线运行 · 不用安装 · 不用联网 · 数据存在你自己电脑上</p>
+  <h1>CloudSail 运营控制台</h1>
+  <p class="sub">深色实时面板 · 单文件 · 离线运行 · 不用安装 · 不用联网 · 数据存在你自己电脑上</p>
 
   <div class="box">
-    <a class="dl" href="CloudSail-Desktop.html" download>下载（86 KB，单个文件）
-      <small>点这里下载 → 双击打开就能用</small></a>
-    <a class="dl2" href="CloudSail-Desktop-v1.0.zip" download>下载完整包（含 Windows / Mac 启动脚本 + 说明）· 28 KB</a>
+    <a class="dl" href="CloudSail-Console.html" target="_blank" rel="noopener">在浏览器里直接打开
+      <small>点这里马上看，不用下载</small></a>
+    <a class="dl2" href="CloudSail-Console.html" download>下载单文件（108 KB）</a>
+    <a class="dl2" href="CloudSail-Console-v1.1.zip" download>下载完整包（含 Windows / Mac 启动脚本 + 说明）· 37 KB</a>
+
+    <div class="grid">
+      <div class="mini"><b>12 个实时指标</b><span>报价耗时、审批响应、毛利区间、订单总额、完成率…全部从你的数据实时算</span></div>
+      <div class="mini"><b>资产热力图</b><span>63 个目录按 7 层能力归位，颜色越暖文件越集中</span></div>
+      <div class="mini"><b>实时事件流</b><span>每一步操作带时间戳滚动显示，可回溯</span></div>
+      <div class="mini"><b>13 项自检</b><span>启动自动校验计算、CSV、审计链，通过才显示 OK</span></div>
+    </div>
   </div>
 
   <div class="box">
     <h2>三步就能用</h2>
     <ol>
-      <li>点上面的按钮，文件会下载到你的「下载」文件夹。</li>
-      <li>双击 <code>CloudSail-Desktop.html</code>，用浏览器打开（Chrome / Edge / Safari 都行）。</li>
-      <li>开始用。关掉浏览器再打开，数据还在。</li>
+      <li>点上面的按钮，文件下载到「下载」文件夹。</li>
+      <li>双击 <code>CloudSail-Console.html</code>，用浏览器打开（Chrome / Edge / Safari 都行）。</li>
+      <li>直接开始用。关掉浏览器再打开，数据还在。</li>
     </ol>
-    <div class="note">手机上也能用：下载后点文件 →「用其他应用打开」→ 选浏览器。电脑上体验更完整。</div>
+    <div class="note">手机上也能用：下载后点文件 →「用其他应用打开」→ 选浏览器。左侧图标栏可切换模块，卡片单列排列。</div>
   </div>
 
   <div class="box">
-    <h2>里面是什么</h2>
+    <h2>面板上每一块是什么</h2>
     <table>
-      <tr><td>报价 / 毛利</td><td>按真实外贸成本结构算：采购、国内杂费、FOB/CIF、海运、保险、关税、退税、佣金、汇率。给出建议售价、实际毛利率、盈亏平衡价，外加 7 种波动情景的敏感性。每一步计算都列出来，能拿计算器复核。</td></tr>
-      <tr><td>客户 · 商品 · 订单</td><td>真实增删改，本地保存。订单从待审批开始，必须人工批准才推进。</td></tr>
-      <tr><td>审批与留痕</td><td>每步操作写进审计链，带前序哈希；能一键校验完整性，也能模拟篡改看它能不能发现。</td></tr>
-      <tr><td>交付物生成</td><td>报价单、询盘跟进邮件（中英）、周度经营简报、交付验收清单。可下载 .md，也可直接打印成 PDF。</td></tr>
-      <tr><td>项目归位</td><td>把散在 63 个目录里的东西按「感知 / 运营 / 决策 / 结算 / 交付 / 主体合规 / 归档」归到一条线上，可搜索、可改处置、可导出清单。</td></tr>
-      <tr><td>导入 / 导出</td><td>客户、商品、订单、审计日志都能导 CSV（Excel 直接打开）；全量数据可导出/导入 JSON 备份。</td></tr>
+      <tr><td>引擎 · 运行状态</td><td>报价计算实测耗时（微秒）、单笔报价金额区间、审批响应时长、报价毛利率区间。</td></tr>
+      <tr><td>业务 · 订单链路</td><td>客户与国家数、订单总额与单均、待办审批、交付完成率。</td></tr>
+      <tr><td>系统 · 完整性</td><td>审计链条数与校验状态、资产归位、数据记录总数、计算引擎采样。</td></tr>
+      <tr><td>能力矩阵</td><td>感知 / 运营 / 决策 / 结算 / 交付 / 主体合规 / 归档，7 层各自的目录数与文件数。</td></tr>
+      <tr><td>报价 / 毛利引擎</td><td>按真实外贸成本算：采购、国内杂费、FOB/CIF、海运、保险、关税、退税、佣金、汇率。给出售价、实际毛利率、盈亏平衡价 + 7 种波动敏感性，每步可核对。</td></tr>
+      <tr><td>审批与留痕</td><td>订单必须在这里人工批准才推进；每步写入审计链，带前序哈希，可校验、可模拟篡改检测。</td></tr>
+      <tr><td>交付物生成</td><td>报价单、询盘跟进邮件（中英）、周度简报、验收清单，可下载 .md 或打印 PDF，内容取自你的真实数据。</td></tr>
+      <tr><td>导入 / 导出</td><td>客户、商品、订单、审计日志导 CSV（Excel 直接开）；全量 JSON 备份可还原。</td></tr>
     </table>
   </div>
 
   <div class="box">
     <h2>它不做什么</h2>
     <ul>
-      <li>不联网、不上传、不收集数据——你可以断网后照常用。</li>
-      <li>不自动替客户发消息。需要人确认的地方就停在那里，等人批。</li>
-      <li>内置的几条客户和订单是<strong>示例数据</strong>，用来验证功能，可在「导入 / 导出」里一键清空。</li>
+      <li>不联网、不上传、不收集数据——断网照常用。</li>
+      <li>不自动替客户发消息。需要人判断的地方就停在那里，等人批。</li>
+      <li>内置的几条客户 / 报价 / 订单是<strong>示例数据</strong>，用来验证功能，可在「导入 / 导出」里一键清空。</li>
     </ul>
   </div>
 
-  <p class="foot">v1.0 · 2026-11-20 · 单文件 86 KB · 零外部依赖（SHA-256、CSV 解析、计算引擎全部内置）</p>
+  <p class="foot">v1.1 · 2026-11-20 · 单文件 108 KB · 零外部依赖（SHA-256、CSV 解析、Canvas、计算引擎全部内置）</p>
 </div>
 </body>
 </html>
