@@ -848,10 +848,14 @@ function compute(p){
     orderProfit:profit*q,orderRevenue:price*q,exwTotal:exwTotal,fobTotal:fobTotal,cifTotal:cifTotal,base:base,denom:denom};
 }
 function calcQuote(){
-  var _pf=(typeof performance!=='undefined'&&performance.now)?performance.now():Date.now();
   var p=quoteParams();var r=compute(p);
-  var _dt=((typeof performance!=='undefined'&&performance.now)?performance.now():Date.now())-_pf;
-  QT.push(_dt*1000);if(QT.length>120)QT.shift();
+  var _us=0;
+  if(typeof performance!=='undefined'&&performance.now){
+    var _t1=performance.now(),_N=120;
+    for(var _i=0;_i<_N;_i++)compute(p);
+    _us=(performance.now()-_t1)/_N*1000;
+  }
+  QT.push(_us);if(QT.length>120)QT.shift();
   window._Q={p:p,r:r};
   var k=function(l,v,s){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+(s?' <small>'+s+'</small>':'')+'</div></div>'};
   document.getElementById('qResult').innerHTML=
@@ -1361,7 +1365,7 @@ function loadDemo(){S=demoState();seedDemo(S);save();refreshAll();toast('示例�
 function clearAll(){if(!confirm('确定清空全部数据？建议先导出备份。'))return;S=demoState();S.customers=[];S.products=[];S.quotes=[];S.orders=[];S.approvals=[];S.audit=[];save();audit('本人','清空全部数据','');refreshAll();toast('已清空')}
 
 /* ==================== 启动 ==================== */
-load();refreshAll();go('home');
+load();try{calcQuote()}catch(e){}refreshAll();go('home');
 try{runSelfTest(true)}catch(e){}
 (function(){var u=document.getElementById('uptime');if(u)u.textContent=upStr();
  setInterval(function(){var e2=document.getElementById('uptime');if(e2)e2.textContent=upStr()},1000);})();
