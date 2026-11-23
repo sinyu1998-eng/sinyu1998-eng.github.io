@@ -11,6 +11,12 @@
 <meta property="og:description" content="义乌人，从小在商贸城长大。现在做 AI 出海系统，给工厂配眼镜，也做研究。欢迎来逛，也可以给我留言。">
 <meta property="og:site_name" content="小黄的主页">
 <meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://sinyu1998-eng.github.io/">
+<link rel="alternate" hreflang="zh-CN" href="https://sinyu1998-eng.github.io/">
+<link rel="alternate" hreflang="en" href="https://sinyu1998-eng.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://sinyu1998-eng.github.io/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060a13'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23d9b36a' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23d9b36a'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -30,7 +36,7 @@ canvas{display:block}
 #nav{position:fixed;top:0;left:0;right:0;z-index:98;display:flex;justify-content:space-between;align-items:center;
   padding:14px 28px;font-size:12px;letter-spacing:.14em;color:var(--dim);
   background:linear-gradient(to bottom,rgba(6,10,19,.9),rgba(6,10,19,0));backdrop-filter:blur(6px)}
-#nav b{color:var(--ink);letter-spacing:.2em;font-weight:600;cursor:pointer;user-select:none;transition:transform .2s}
+#nav b{color:var(--ink);letter-spacing:.2em;font-weight:600;cursor:pointer;user-select:none;transition:transform .2s;white-space:nowrap}
 #nav span a{margin-left:18px;transition:color .3s}
 #nav span a:hover{color:var(--gold)}
 
@@ -182,21 +188,73 @@ footer b{color:var(--dim)}
   .specline{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:480px){
-  #nav{padding:12px 14px}
-  #nav span a{margin-left:8px;letter-spacing:.04em}
-  #nav span a[href="papers.html"]{display:none}
+  #nav{padding:10px 12px}
+  #nav b{white-space:nowrap;font-size:11px;letter-spacing:.1em}
+  #nav b .lgx{display:none}
+  #nav span{display:flex;align-items:center;flex-wrap:nowrap}
+  #nav span a{margin-left:7px;letter-spacing:.02em;white-space:nowrap}
+  #nav span a[href="/papers.html"],#nav span a[href="#life"],#nav span a[href="#specs"],#nav span a[href="#work"]{display:none}
   .hero-kicker{letter-spacing:.28em}
+  .hero-id{letter-spacing:.08em;font-size:12px}
+  .scroll-hint{letter-spacing:.12em;font-size:10px;white-space:nowrap}
+}
+
+/* ---------- 语言切换 ---------- */
+.nt{white-space:nowrap}
+.langsw{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px;
+  margin-left:16px;background:rgba(10,18,32,.55);backdrop-filter:blur(8px);vertical-align:middle;flex:none}
+.langsw a{border:0;color:var(--faint);font-family:var(--sans);font-size:10px;letter-spacing:.14em;
+  padding:5px 11px;border-radius:999px;white-space:nowrap;line-height:1.25;
+  transition:color .3s,background .3s,box-shadow .3s}
+.langsw a:hover{color:var(--ink)}
+.langsw a[aria-current="page"]{background:var(--gold);color:#0a0a0a;font-weight:700;
+  box-shadow:0 0 14px rgba(217,179,106,.28);cursor:default}
+.langsw a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:860px){.langsw{margin-left:9px}}
+@media (max-width:480px){
+  .langsw{margin-left:7px;padding:1px}
+  .langsw a{padding:4px 7px;font-size:9px;letter-spacing:.02em}
+  #nav span a[href="#life"],#nav span a[href="#specs"]{display:none}
 }
 </style>
+<script>
+
+/* ============ 语言状态 + hreflang 自适应域名 ============ */
+var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 CloudSail 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the CloudSail work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
+var I18N_HOT={"cam": {"zh": "8MP 摄像头：拍照取证 + 1200p 视频记录，第一视角留证。", "en": "8MP camera: photo evidence and 1200p video, first-person proof."}, "led": {"zh": "拍摄指示灯：录制中亮起，让被拍摄方知情——合规是工厂版的前提。", "en": "Recording LED: lights up while recording so everyone being filmed knows — compliance is the premise of the factory edition."}, "touch": {"zh": "镜腿触控：长按录制 / 双击拍照 / 单击停止，戴手套也能操作。", "en": "Temple touch: long-press to record / double-tap for a photo / single-tap to stop — usable with gloves on."}};
+var I18N_TXT={"empty": {"zh": "留言墙还是空的，来写第一条吧。", "en": "No messages yet — be the first to say hi."}, "anon": {"zh": "匿名朋友", "en": "Anonymous"}, "mailBody": {"zh": "来自「{n}」的留言：\n\n{m}\n\n—— 来自小黄的主页", "en": "Message from {n}:\n\n{m}\n\n— via Xiaohuang's homepage"}, "mailSubj": {"zh": "主页留言 · {n}", "en": "Guestbook · {n}"}, "copied": {"zh": "已复制，去微信粘贴给小黄（workonly1998）", "en": "Copied — paste it into WeChat and send to workonly1998."}, "manual": {"zh": "手动复制这段话，微信发给 workonly1998：", "en": "Copy this and send it to workonly1998 on WeChat:"}, "copyBody": {"zh": "来自「{n}」的留言：\n{m}", "en": "Message from {n}:\n{m}"}, "part": {"zh": "部件 · ", "en": "Part · "}};
+(function(){
+  var q=new URLSearchParams(location.search).get('lang'),l=null;
+  if(q==='en'||q==='zh')l=q;
+  if(!l)l=(/^\/en(\/|$)/.test(location.pathname))?'en':'zh';
+  window.LANG=l;
+  /* 域名生效后，把 SEO 绝对地址改到当前 host，避免写死 github.io */
+  try{
+    var h=location.host,o=location.protocol+'//'+h;
+    document.querySelectorAll('link[rel="canonical"],link[rel="alternate"][hreflang]').forEach(function(e){
+      var u=new URL(e.getAttribute('href'),o);
+      e.setAttribute('href',o+u.pathname+u.search);
+    });
+  }catch(err){}
+})();
+function T(k){var o=I18N_TXT[k];return o?o[window.LANG]:k;}
+/* 按当前语言展开：原页面代码直接读 s.t / m[key]，故这里扁平化成同结构 */
+var SCEN_L=I18N_SCEN.map(function(x){return x[window.LANG];});
+var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
+
+</script>
 </head>
 <body>
 <div id="prog"></div>
 <nav id="nav">
-  <b id="logo">小黄 · XIAOHUANG</b>
+  <b id="logo">小黄<span class="lgx"> · XIAOHUANG</span></b>
   <span>
     <a href="#life">年轮</a><a href="#specs">眼镜</a><a href="#bases">总入口</a><a href="#work">作品</a><a href="#talk">留言</a>
-    <a href="papers.html">论文</a>
-    <a href="CV_QianruHuang.pdf" target="_blank">CV ↓</a>
+    <a href="/papers.html">论文</a>
+    <a href="/CV_QianruHuang.pdf" target="_blank">CV ↓</a>
+    <span class="langsw" role="group" aria-label="Language / 语言">
+      <a aria-current="page">中文</a><a href="/en/" hreflang="en" lang="en">EN</a>
+    </span>
   </span>
 </nav>
 
@@ -322,7 +380,7 @@ footer b{color:var(--dim)}
     <div class="bgroup rv">
       <div class="bgh"><i>03</i><b>研究 · 简历 · 存档</b><span>个人内容，与业务系统分开</span></div>
       <div class="bgrid">
-        <a class="bcard" href="papers.html">
+        <a class="bcard" href="/papers.html">
           <div class="bn">研究</div><h4>论文空间</h4>
           <p>政治传播与 AI 治理方向的研究、会议报告、在读计划。</p><div class="open always">进入 →</div>
         </a>
@@ -330,7 +388,7 @@ footer b{color:var(--dim)}
           <div class="bn">学术版</div><h4>学术主页</h4>
           <p>给学术场合看的版本：研究问题、方法、发表。</p><div class="open always">进入 →</div>
         </a>
-        <a class="bcard" href="CV_QianruHuang.pdf" target="_blank" rel="noopener">
+        <a class="bcard" href="/CV_QianruHuang.pdf" target="_blank" rel="noopener">
           <div class="bn">简历</div><h4>CV · 黄倩如</h4>
           <p>一页看清教育与经历，可直接下载。</p><div class="open always">下载 PDF ↓</div>
         </a>
@@ -517,7 +575,7 @@ footer b{color:var(--dim)}
   <div class="wrap">
     <div class="sec-kicker rv">SELECTED WORK · 作品</div>
     <h2 class="sec-h2 rv">一些做过的东西</h2>
-    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail 交付控制台 →</a> 五个工作台都能点。</p>
+    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail 交付控制台 →</a> 五个工作台都能点。</p>
     <div class="two rv">
       <div>
         <div class="item"><span class="k">PRODUCT · TO B</span><b>CloudSail 云帆出海</b><span>AI 全托管出口系统：询盘、报价、翻译、跟单、验货排程、物流——工厂只需要发货。</span></div>
@@ -673,12 +731,7 @@ document.querySelectorAll('.nnum').forEach(el=>nio.observe(el));
 })();
 
 /* ---------- 眼镜场景切换 ---------- */
-const SCEN=[
-  {t:'来料检验 · IQC',d:'QC 戴上眼镜，走进原材料堆放区。',o:'摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 CloudSail 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。'},
-  {t:'产线巡检',d:'产线负责人每 2 小时走一圈产线。',o:'长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。'},
-  {t:'远程客户验货',d:'海外客户无法到场，验货照样进行。',o:'第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。'},
-  {t:'新员工培训',d:'老师傅带新人的方式，从此不一样。',o:'新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。'}
-];
+const SCEN=SCEN_L;
 const gb=document.getElementById('scenBtns');
 gb.addEventListener('click',ev=>{
   const b=ev.target.closest('button');if(!b)return;
@@ -694,11 +747,9 @@ document.querySelectorAll('.hotspot').forEach(h=>{
   h.addEventListener('click',()=>{
     document.querySelectorAll('.hotspot').forEach(x=>x.classList.remove('on'));
     h.classList.add('on');
-    const m={cam:'8MP 摄像头：拍照取证 + 1200p 视频记录，第一视角留证。',
-      led:'拍摄指示灯：录制中亮起，让被拍摄方知情——合规是工厂版的前提。',
-      touch:'镜腿触控：长按录制 / 双击拍照 / 单击停止，戴手套也能操作。'};
+    const m=HOT_L||{};
     const out=document.getElementById('glOut');
-    out.innerHTML='<b>部件 · '+m[h.dataset.h]+'</b>';
+    out.innerHTML='<b>'+T('part')+(m[h.dataset.h]||'')+'</b>';
   });
 });
 
@@ -711,40 +762,68 @@ document.querySelectorAll('.hotspot').forEach(h=>{
   function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function render(){
     const a=load();
-    if(!a.length){list.innerHTML='<div class="tempty">留言墙还是空的，来写第一条吧。</div>';return;}
+    if(!a.length){list.innerHTML='<div class="tempty">'+T('empty')+'</div>';return;}
     list.innerHTML=a.map(m=>(
       '<div class="tmsg mine"><b>'+esc(m.n)+'</b><time>'+m.t+'</time><p>'+esc(m.m).replace(/\n/g,'<br>')+'</p></div>'
     )).join('');
   }
   function add(n,m){
-    const a=load();a.unshift({n:n,m:m,t:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})});
+    const a=load();a.unshift({n:n,m:m,t:new Date().toLocaleString(window.LANG==='en'?'en-US':'zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})});
     save(a);render();
   }
   document.getElementById('tSend').addEventListener('click',()=>{
-    const n=nameEl.value.trim()||'匿名朋友',m=msgEl.value.trim();
+    const n=nameEl.value.trim()||T('anon'),m=msgEl.value.trim();
     if(!m){msgEl.style.borderColor='var(--gold)';msgEl.focus();return;}
     add(n,m);
-    const body=encodeURIComponent('来自「'+n+'」的留言：\n\n'+m+'\n\n—— 来自小黄的主页');
-    location.href='mailto:sinyu1998@gmail.com?subject='+encodeURIComponent('主页留言 · '+n)+'&body='+body;
+    const body=encodeURIComponent(T('mailBody').replace('{n}',n).replace('{m}',m));
+    location.href='mailto:sinyu1998@gmail.com?subject='+encodeURIComponent(T('mailSubj').replace('{n}',n))+'&body='+body;
     msgEl.value='';
   });
   document.getElementById('tCopy').addEventListener('click',()=>{
-    const n=nameEl.value.trim()||'匿名朋友',m=msgEl.value.trim();
+    const n=nameEl.value.trim()||T('anon'),m=msgEl.value.trim();
     if(!m){msgEl.focus();return;}
-    const txt='来自「'+n+'」的留言：\n'+m;
+    const txt=T('copyBody').replace('{n}',n).replace('{m}',m);
     const done=()=>{add(n,m);msgEl.value='';};
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(
-        ()=>{done();alert('已复制，去微信粘贴给小黄（workonly1998）');},
-        ()=>{prompt('手动复制这段话，微信发给 workonly1998：',txt);done();}
+        ()=>{done();alert(T('copied'));},
+        ()=>{prompt(T('manual'),txt);done();}
       );
     }else{
-      prompt('手动复制这段话，微信发给 workonly1998：',txt);done();
+      prompt(T('manual'),txt);done();
     }
   });
   render();
 })();
 onScroll();
+</script>
+<script>
+
+/* ============ 术语保护：品牌 / 人名 / 型号不被浏览器机翻 ============ */
+(function(){
+  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "CloudSail", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function rx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+  var re=new RegExp('('+TERMS.slice().sort(function(a,b){return b.length-a.length;}).map(rx).join('|')+')','g');
+  var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,list=[];
+  while(w.nextNode()){
+    n=w.currentNode;var p=n.parentElement;
+    if(!p||!n.nodeValue.trim())continue;
+    if(/^(SCRIPT|STYLE|TITLE|TEXTAREA|INPUT)$/.test(p.tagName))continue;
+    if((p.namespaceURI||'').indexOf('svg')>=0)continue;
+    if(p.closest&&p.closest('.nt'))continue;
+    re.lastIndex=0;if(!re.test(n.nodeValue))continue;
+    list.push(n);
+  }
+  list.forEach(function(n){
+    var h=esc(n.nodeValue).replace(re,'<span class="nt notranslate" translate="no">$1</span>');
+    var box=document.createElement('span');box.innerHTML=h;
+    var frag=document.createDocumentFragment();
+    while(box.firstChild)frag.appendChild(box.firstChild);
+    if(n.parentNode)n.parentNode.replaceChild(frag,n);
+  });
+})();
+
 </script>
 </body>
 </html>
