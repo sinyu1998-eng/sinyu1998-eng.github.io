@@ -220,7 +220,7 @@ footer b{color:var(--dim)}
 <script>
 
 /* ============ 语言状态 + hreflang 自适应域名 ============ */
-var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 CloudSail 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the CloudSail work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
+var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 SellerPilot 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the SellerPilot work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
 var I18N_HOT={"cam": {"zh": "8MP 摄像头：拍照取证 + 1200p 视频记录，第一视角留证。", "en": "8MP camera: photo evidence and 1200p video, first-person proof."}, "led": {"zh": "拍摄指示灯：录制中亮起，让被拍摄方知情——合规是工厂版的前提。", "en": "Recording LED: lights up while recording so everyone being filmed knows — compliance is the premise of the factory edition."}, "touch": {"zh": "镜腿触控：长按录制 / 双击拍照 / 单击停止，戴手套也能操作。", "en": "Temple touch: long-press to record / double-tap for a photo / single-tap to stop — usable with gloves on."}};
 var I18N_TXT={"empty": {"zh": "留言墙还是空的，来写第一条吧。", "en": "No messages yet — be the first to say hi."}, "anon": {"zh": "匿名朋友", "en": "Anonymous"}, "mailBody": {"zh": "来自「{n}」的留言：\n\n{m}\n\n—— 来自小黄的主页", "en": "Message from {n}:\n\n{m}\n\n— via Xiaohuang's homepage"}, "mailSubj": {"zh": "主页留言 · {n}", "en": "Guestbook · {n}"}, "copied": {"zh": "已复制，去微信粘贴给小黄（workonly1998）", "en": "Copied — paste it into WeChat and send to workonly1998."}, "manual": {"zh": "手动复制这段话，微信发给 workonly1998：", "en": "Copy this and send it to workonly1998 on WeChat:"}, "copyBody": {"zh": "来自「{n}」的留言：\n{m}", "en": "Message from {n}:\n{m}"}, "part": {"zh": "部件 · ", "en": "Part · "}};
 (function(){
@@ -265,10 +265,10 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
     <div class="hero-kicker">YIWU → 全世界</div>
     <h1 class="hero-h1">你好，我是<em>小黄</em></h1>
     <div class="hero-sub">义乌人，从小在商贸城长大。现在做 AI 出海系统，给工厂配眼镜，也做研究。这是我自己搭的小站，欢迎来逛。</div>
-    <div class="hero-id"><b>黄倩如 Qianru (Carol) Huang</b> · CloudSail 发起人</div>
+    <div class="hero-id"><b>黄倩如 Qianru (Carol) Huang</b> · SellerPilot 发起人</div>
     <div class="hero-cta">
       <a class="hbtn g" href="#bases">所有系统 · 总入口 →</a>
-      <a class="hbtn" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener">进入操作台 →</a>
+      <a class="hbtn" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener">进入操作台 →</a>
     </div>
   </div>
   <div class="scroll-hint">往下滚 · 有我的时间轴</div>
@@ -292,21 +292,21 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">ONE PLACE · 总入口</div>
     <h2 class="sec-h2 rv">所有东西，都在这一页</h2>
-    <p class="sec-lead rv">以前散在十几个目录、好几台服务器上，现在收到一处，分三组：<b>我在做的 CloudSail</b>、<b>独立运行的操作台</b>、<b>朋友服务器上托管的系统</b>。点哪个都能直接打开。</p>
+    <p class="sec-lead rv">以前散在十几个目录、好几台服务器上，现在收到一处，分三组：<b>我在做的 SellerPilot</b>、<b>独立运行的操作台</b>、<b>朋友服务器上托管的系统</b>。点哪个都能直接打开。</p>
 
-    <!-- 组 01 · CloudSail 主业 -->
+    <!-- 组 01 · SellerPilot 主业 -->
     <div class="bgroup rv">
-      <div class="bgh"><i>01</i><b>CloudSail · 我在做的主业</b><span>对外门面 · 交付工具 · 技术路线</span></div>
+      <div class="bgh"><i>01</i><b>SellerPilot · 我在做的主业</b><span>对外门面 · 交付工具 · 技术路线</span></div>
       <div class="bgrid">
-        <a class="bcard key live" href="/cloudsail/" target="_blank" rel="noopener" style="grid-column:1/-1">
+        <a class="bcard key live" href="/sellerpilot/" target="_blank" rel="noopener" style="grid-column:1/-1">
           <div class="bn">企业官网 · 对外门面</div>
-          <h4>CloudSail 云帆出海</h4>
+          <h4>SellerPilot 卖家领航员</h4>
           <p>讲清我做什么、怎么收费、怎么联系。客户、工厂、资本都从这里进来。</p>
           <div class="open always">进入官网 →</div>
         </a>
-        <a class="bcard tool" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
+        <a class="bcard tool" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
           <div class="bn">独立操作台 · 与个人站分开</div>
-          <h4>CloudSail 运营控制台</h4>
+          <h4>SellerPilot 运营控制台</h4>
           <p>报价与毛利、客户订单、审批留痕、交付物生成。单文件程序，下载可离线用，数据存本机。这是干活的工具，不是介绍页——所以单独放在这里，不混进个人主页。</p>
           <div class="open always">打开操作台 →</div>
         </a>
@@ -315,17 +315,17 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
           <p>现实信号进来自动排队，人工批准才执行，每一步留痕可核验。</p>
           <div class="open always">打开 →</div>
         </a>
-        <a class="bcard" href="/cloudsail/console/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/console/" target="_blank" rel="noopener">
           <div class="bn">交付控制台</div><h4>五个工作台</h4>
           <p>询盘、报价、跟单、验货、物流，客户交付用的那一套。</p>
           <div class="open always">打开 →</div>
         </a>
-        <a class="bcard" href="/cloudsail/bridge/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/bridge/" target="_blank" rel="noopener">
           <div class="bn">手机桥 · 验货取证</div><h4>拍一张标签就能核</h4>
           <p>手机拍标签，识别 SKU 与批次，与工单核对，异常当场留证。</p>
           <div class="open always">试用 →</div>
         </a>
-        <a class="bcard" href="/cloudsail/glasses/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/glasses/" target="_blank" rel="noopener">
           <div class="bn">硬件 · 进行中</div><h4>AI 眼镜 · 工厂版</h4>
           <p>消费级眼镜重配为验货/巡检设备，第一视角留证，接进工单。</p>
           <div class="open always">看技术路线 →</div>
@@ -338,7 +338,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="bgh"><i>02</i><b>独立运行的系统</b><span>外部服务器托管 · 点开即用</span></div>
       <div class="bgrid">
         <a class="bcard live" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank" rel="noopener">
-          <div class="bn">BASE 01 · 聚合总站</div><h4>CloudSail 聚合总站</h4>
+          <div class="bn">BASE 01 · 聚合总站</div><h4>SellerPilot 聚合总站</h4>
           <p>整套系统的外部入口与门面。</p><div class="open always">打开 →</div>
         </a>
         <a class="bcard live" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank" rel="noopener">
@@ -462,9 +462,9 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="stage">
         <div class="dot"></div>
         <div class="year">2025<small>— · 马德里 · 创业</small></div>
-        <h3>MBA 满绩 · 做 CloudSail</h3>
-        <p>马德里欧洲大学 MBA，GPA 4.00/4.00。同时把研究直觉做成产品：CloudSail——AI 全托管出口系统。</p>
-        <div class="chips"><span class="chip">MBA 4.00/4.00</span><span class="chip">CloudSail 云帆出海</span><span class="chip">多智能体系统</span></div>
+        <h3>MBA 满绩 · 做 SellerPilot</h3>
+        <p>马德里欧洲大学 MBA，GPA 4.00/4.00。同时把研究直觉做成产品：SellerPilot——AI 全托管出口系统。</p>
+        <div class="chips"><span class="chip">MBA 4.00/4.00</span><span class="chip">SellerPilot 卖家领航员</span><span class="chip">多智能体系统</span></div>
       </div>
 
       <div class="stage">
@@ -495,7 +495,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">HARDWARE · AI 眼镜 · 工厂版</div>
     <h2 class="sec-h2 rv">同一台硬件，<br>重新定义为<span style="color:var(--gold)">工厂的眼睛</span></h2>
-    <p class="sec-lead rv">我手上这台 AI GLASSES（AiMB-G3）本来是消费级产品：8MP 摄像头、WiFi、1200p 录制、AI 识别、多语翻译。我把它重新配置成验货与巡检设备——接进 CloudSail 工单，让每一次验货都有第一视角、可回溯的证据。</p>
+    <p class="sec-lead rv">我手上这台 AI GLASSES（AiMB-G3）本来是消费级产品：8MP 摄像头、WiFi、1200p 录制、AI 识别、多语翻译。我把它重新配置成验货与巡检设备——接进 SellerPilot 工单，让每一次验货都有第一视角、可回溯的证据。</p>
 
     <div class="gl-grid">
       <div class="gl-visual rv">
@@ -534,7 +534,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
           <button data-i="2"><b>远程客户验货</b><i>REMOTE AUDIT</i></button>
           <button data-i="3"><b>新员工培训</b><i>WORKER ONBOARDING</i></button>
         </div>
-        <div class="scen-out" id="glOut">摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 CloudSail 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。</div>
+        <div class="scen-out" id="glOut">摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 SellerPilot 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。</div>
         <div class="specline">
           <div class="spec-c"><b>8MP</b><span>摄像头 · 拍照取证</span></div>
           <div class="spec-c"><b>1200p</b><span>30fps 视频记录</span></div>
@@ -555,7 +555,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="fx">
         <div class="fx-n">02</div>
         <h4>固件与企业管控</h4>
-        <p>刷成企业设备：关掉个人账号与社交分享，开机自检，录制强制落到 CloudSail 工单，画面烧入「时间 + 工单号」水印。工厂要的不是酷，是防篡改。</p>
+        <p>刷成企业设备：关掉个人账号与社交分享，开机自检，录制强制落到 SellerPilot 工单，画面烧入「时间 + 工单号」水印。工厂要的不是酷，是防篡改。</p>
       </div>
       <div class="fx">
         <div class="fx-n">03</div>
@@ -563,9 +563,9 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
         <p>眼镜拍的东西直接挂在订单/批次上，产出「验货报告 PDF + 带时间戳的视频」，可交给客户、平台、保险与采购方复核。这才是工厂愿意付钱的部分。</p>
       </div>
     </div>
-    <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="/cloudsail/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × CloudSail 技术路线 →</a>。</div>
+    <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="/sellerpilot/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × SellerPilot 技术路线 →</a>。</div>
     <div class="rv" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-      <a class="hbtn g" href="/cloudsail/bridge/">试手机桥原型（真识别一张标签）→</a>
+      <a class="hbtn g" href="/sellerpilot/bridge/">试手机桥原型（真识别一张标签）→</a>
     </div>
   </div>
 </section>
@@ -575,11 +575,11 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">SELECTED WORK · 作品</div>
     <h2 class="sec-h2 rv">一些做过的东西</h2>
-    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail 交付控制台 →</a> 五个工作台都能点。</p>
+    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/sellerpilot/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">SellerPilot 交付控制台 →</a> 五个工作台都能点。</p>
     <div class="two rv">
       <div>
-        <div class="item"><span class="k">PRODUCT · TO B</span><b>CloudSail 云帆出海</b><span>AI 全托管出口系统：询盘、报价、翻译、跟单、验货排程、物流——工厂只需要发货。</span></div>
-        <div class="item"><span class="k">HARDWARE · 进行中</span><b>AI 眼镜 · 工厂版</b><span>消费级 AiMB-G3 重配为验货/巡检设备，接入 CloudSail 工单，第一视角留证。</span></div>
+        <div class="item"><span class="k">PRODUCT · TO B</span><b>SellerPilot 卖家领航员</b><span>AI 全托管出口系统：询盘、报价、翻译、跟单、验货排程、物流——工厂只需要发货。</span></div>
+        <div class="item"><span class="k">HARDWARE · 进行中</span><b>AI 眼镜 · 工厂版</b><span>消费级 AiMB-G3 重配为验货/巡检设备，接入 SellerPilot 工单，第一视角留证。</span></div>
         <div class="item"><span class="k">OPEN RESEARCH</span><b>Verifiable Trade Events</b><span>让跨境贸易事件成为可验证的链上凭证。</span></div>
         <div class="item"><span class="k">FILM</span><b>纪录片《正在连接》</b><span>执行导演。5 条故事线 × 4 城市，100万+ 播放。</span></div>
       </div>
@@ -612,7 +612,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
 </section>
 
 <footer>
-  <b>sinyu1998@gmail.com</b> · 公众号 Marguerite&amp;Asbury · <a href="/cloudsail/" style="border-bottom:1px solid var(--faint)">CloudSail</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
+  <b>sinyu1998@gmail.com</b> · 公众号 Marguerite&amp;Asbury · <a href="/sellerpilot/" style="border-bottom:1px solid var(--faint)">SellerPilot</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
   <a href="/papers.html" style="border-bottom:1px solid var(--faint)">论文空间</a> · <a href="/index-academic.html" style="border-bottom:1px solid var(--faint)">旧版主页</a><br><br>
   © 2026 黄倩如 Qianru (Carol) Huang
 </footer>
@@ -801,7 +801,7 @@ onScroll();
 
 /* ============ 术语保护：品牌 / 人名 / 型号不被浏览器机翻 ============ */
 (function(){
-  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "CloudSail", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
+  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "SellerPilot", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function rx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
   var re=new RegExp('('+TERMS.slice().sort(function(a,b){return b.length-a.length;}).map(rx).join('|')+')','g');
