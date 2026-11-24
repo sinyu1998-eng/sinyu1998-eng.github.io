@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudCell · AI Native 生意托管与放大 | 说明</title>
+<meta name="description" content="CloudCell 是 AI Native 的生意托管服务：引导拆流程、AI 子代理托管日常、跑通后放大到多市场。交付系统为 CloudCell，源码可自托管。">
+<meta name="theme-color" content="#05090e">
+<meta property="og:title" content="CloudCell · 你的生意，我们帮你引导、托管、放大">
+<meta property="og:description" content="AI Native + AI 子代理托管。系统叫 CloudCell，源码能拿走，可以放在自己服务器上。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305090e'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23C9F95C' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23C9F95C'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#05090e;--panel:#0a1220;--line:#1c2a3a;--acid:#C9F95C;--blue:#4f8fd9;--text:#e8eef2;--mut:#8fa3b3;--faint:#5a6b7a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--acid);color:#0a0f14}
+.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(5,9,14,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:58px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.4px;white-space:nowrap}
+.logo .mark{width:14px;height:14px;border:3px solid var(--acid);border-radius:50%;position:relative;flex:none}
+.logo .mark::after{content:"";position:absolute;inset:2px;background:var(--acid);border-radius:50%}
+.logo small{color:var(--faint);font-weight:400;font-size:11px}
+nav a{color:var(--mut);text-decoration:none;font-size:13.5px;transition:color .2s;white-space:nowrap}
+nav a:hover{color:var(--acid)}
+nav .sp{flex:1}
+nav .cta{background:var(--acid);color:#0a0f14!important;padding:7px 15px;border-radius:8px;font-weight:700}
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:120px 0 70px;overflow:hidden}
+.hero .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.22;mask-image:radial-gradient(ellipse 85% 75% at 50% 42%,#000 20%,transparent 78%);-webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 42%,#000 20%,transparent 78%)}
+.hero .in{position:relative;z-index:2}
+.kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:99px;padding:6px 16px;font-size:12.5px;color:var(--mut);background:rgba(10,18,32,.65)}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--acid);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-size:clamp(38px,6.2vw,72px);line-height:1.14;letter-spacing:-1px;margin:26px 0 20px;font-weight:800}
+h1 em{font-style:normal;color:var(--acid)}
+.hero p.def{max-width:760px;color:var(--text);font-size:clamp(15px,1.8vw,19px);line-height:1.9}
+.hero p.def b{color:var(--acid)}
+.hero p.sub{max-width:720px;color:var(--mut);font-size:14.5px;line-height:1.9;margin-top:14px}
+.flowline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:34px 0 30px}
+.flowline .step{border:1px solid var(--line);background:rgba(10,18,32,.7);border-radius:12px;padding:12px 18px;min-width:150px}
+.flowline .step b{display:block;font-size:16px;color:var(--acid)}
+.flowline .step span{font-size:12px;color:var(--mut)}
+.flowline .arw{color:var(--faint);font-size:18px}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap}
+.hbtn{display:inline-block;padding:13px 26px;border-radius:10px;font-weight:700;font-size:14.5px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .2s,box-shadow .2s;font-family:inherit}
+.hbtn:hover{transform:translateY(-2px)}
+.hbtn.p{background:var(--acid);color:#0a0f14;box-shadow:0 6px 30px rgba(201,249,92,.22)}
+.hbtn.g{border-color:var(--line);color:var(--text);background:rgba(10,18,32,.6)}
+section{padding:78px 0;border-top:1px solid var(--line)}
+.sec-kicker{color:var(--acid);font-size:11.5px;letter-spacing:3px;font-weight:800;margin-bottom:14px}
+h2{font-size:clamp(27px,3.8vw,42px);letter-spacing:-.5px;line-height:1.25;margin-bottom:14px}
+.sec-lead{color:var(--mut);max-width:700px;line-height:1.9;margin-bottom:38px;font-size:14.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+.card h3{font-size:19px;margin-bottom:14px}
+.ynlist{list-style:none;font-size:14px;line-height:1.9}
+.ynlist li{padding:9px 0;border-bottom:1px solid var(--line);color:var(--mut)}
+.ynlist li:last-child{border-bottom:none}
+.ynlist li b{color:var(--text)}
+.ynlist li.yes::before{content:"是 ";color:var(--acid);font-weight:800}
+.ynlist li.no::before{content:"不是 ";color:var(--blue);font-weight:800}
+.stack{display:flex;flex-direction:column;gap:12px}
+.layer{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--panel);position:relative}
+.layer .tag{font-size:10.5px;letter-spacing:2px;color:var(--faint)}
+.layer b{display:block;font-size:17px;margin:5px 0 6px}
+.layer p{font-size:13px;color:var(--mut);line-height:1.75}
+.layer.hi{border-color:var(--acid);box-shadow:0 0 0 1px rgba(201,249,92,.12) inset}
+.layer.hi b{color:var(--acid)}
+.stack .down{text-align:center;color:var(--faint);font-size:16px;line-height:1}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+thead th{background:#0d1826;color:var(--mut);font-weight:600;font-size:12.5px;white-space:nowrap}
+thead th.us{color:var(--acid)}
+tbody td:first-child{color:var(--mut);white-space:nowrap;font-weight:600}
+tbody td.us{background:rgba(201,249,92,.045);color:var(--text)}
+tbody tr:last-child td{border-bottom:none}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.tab{border:1px solid var(--line);background:var(--panel);color:var(--mut);padding:11px 20px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;font-family:inherit;transition:.2s}
+.tab:hover{color:var(--text)}
+.tab.on{background:var(--acid);color:#0a0f14;border-color:var(--acid)}
+.panel{display:none}
+.panel.on{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.pbox .no{font-size:10.5px;letter-spacing:2px;color:var(--faint)}
+.pbox h4{font-size:15px;margin:8px 0 10px;color:var(--acid)}
+.pbox p{font-size:13px;color:var(--mut);line-height:1.8}
+.pbox .meta{margin-top:12px;font-size:12px;color:var(--text);border-top:1px solid var(--line);padding-top:10px}
+.agentgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
+.agents{display:flex;flex-direction:column;gap:10px}
+.agent{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color .2s,opacity .2s}
+.agent:hover{border-color:var(--blue)}
+.agent.off{opacity:.42}
+.agent .sw{width:42px;height:24px;border-radius:99px;background:var(--acid);position:relative;flex:none;transition:background .2s}
+.agent .sw::after{content:"";position:absolute;top:3px;left:21px;width:18px;height:18px;border-radius:50%;background:#0a0f14;transition:left .2s}
+.agent.off .sw{background:#2c3b4c}
+.agent.off .sw::after{left:3px;background:#8fa3b3}
+.agent .txt{flex:1;min-width:0}
+.agent .txt b{display:block;font-size:14.5px}
+.agent .txt span{font-size:12px;color:var(--mut);line-height:1.6}
+.agent .h{font-size:12px;color:var(--acid);white-space:nowrap;font-variant-numeric:tabular-nums}
+.readout{background:var(--panel);border:1px solid var(--acid);border-radius:16px;padding:26px;position:sticky;top:76px}
+.readout .lab{font-size:11.5px;letter-spacing:2px;color:var(--faint);margin-bottom:16px}
+.readout .big{font-size:clamp(30px,4.4vw,48px);font-weight:800;color:var(--acid);font-variant-numeric:tabular-nums;line-height:1.1}
+.readout .big small{font-size:15px;color:var(--mut);font-weight:500}
+.readout .rows{margin-top:20px;border-top:1px solid var(--line)}
+.readout .row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--mut)}
+.readout .row b{color:var(--text);font-variant-numeric:tabular-nums}
+.readout .note{font-size:12px;color:var(--faint);line-height:1.8;margin-top:16px}
+.amp{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--acid);height:28px}
+.ampctl{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+.ampctl .v{font-size:44px;font-weight:800;color:var(--acid);font-variant-numeric:tabular-nums}
+.ampctl .v small{font-size:15px;color:var(--mut);font-weight:500}
+.ampctl p{font-size:13px;color:var(--mut);line-height:1.8;margin-top:10px}
+.ampout{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ampout div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.ampout b{display:block;font-size:24px;color:var(--text);font-variant-numeric:tabular-nums}
+.ampout span{font-size:12px;color:var(--mut)}
+.links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.links a{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:8px;transition:.2s}
+.links a:hover{border-color:var(--acid);transform:translateY(-3px)}
+.links a b{font-size:15.5px}
+.links a span{font-size:12.5px;color:var(--mut);line-height:1.7}
+.links a i{font-style:normal;color:var(--acid);font-size:12px;margin-top:auto}
+.scripts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.script{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
+.script .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.script .hd b{font-size:15px;color:var(--acid)}
+.cp{background:transparent;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.cp:hover{border-color:var(--acid);color:var(--acid)}
+.cp.ok{background:var(--acid);color:#0a0f14;border-color:var(--acid)}
+.script .body{font-size:13.5px;line-height:1.95;color:var(--text);white-space:pre-wrap;flex:1}
+.script .use{font-size:11.5px;color:var(--faint);margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+footer{border-top:1px solid var(--line);padding:36px 0 46px;color:var(--faint);font-size:12.5px;line-height:2.1}
+footer a{color:var(--mut);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--acid)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}
+.rv.on{opacity:1;transform:none}
+.mbr{display:none}
+@media print{.rv{opacity:1!important;transform:none!important}}
+@media(max-width:880px){
+  .two,.agentgrid,.amp,.scripts{grid-template-columns:1fr}
+  .panel.on{grid-template-columns:1fr 1fr}
+  .links{grid-template-columns:1fr}
+  .readout{position:static}
+  nav a.toplink{display:none}
+  .flowline .step{min-width:0;flex:1 1 130px}
+  section{padding:58px 0}
+}
+@media(max-width:520px){
+  .panel.on{grid-template-columns:1fr}
+  .ampout{grid-template-columns:1fr 1fr}
+  h1{font-size:33px}
+  .mbr{display:inline}
+  .flowline{gap:6px}
+  .flowline .arw{display:none}
+  .agent .h{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="logo"><span class="mark"></span>CloudCell<small>／ AI Native 生意托管</small></div>
+  <a class="toplink" href="#what">是什么</a>
+  <a class="toplink" href="#native">AI Native</a>
+  <a class="toplink" href="#how">怎么跑</a>
+  <a class="toplink" href="#agents">子代理</a>
+  <a class="toplink" href="#scripts">话术</a>
+  <span class="sp"></span>
+  <a class="cta" href="../console/">打开控制台</a>
+</div></nav>
+
+<header class="hero">
+  <div class="grid-bg"></div>
+  <div class="wrap in">
+    <span class="kicker rv"><i></i>CLOUDCELL · AI NATIVE 生意托管与放大</span>
+    <h1 class="rv">你的生意，<br><em>我们帮你引导、<br class="mbr">托管、放大</em></h1>
+    <p class="def rv">CloudCell 是 <b>AI Native</b> 的生意托管服务：不是给你做同款、也不是只出方案和物料，而是<b>你把账号密码给我们，我们进到你的网站后台，直接把改动 push 上线</b>。流程我们拆清楚（<b>引导</b>），日常交给一组 <b>AI 子代理</b>在你的环境里替你跑（<b>托管</b>），跑通之后把站点、语言、渠道一层层复制出去（<b>放大</b>）。</p>
+    <p class="sub rv">落到你手里的，就是同一套 <b style="color:var(--text)">CloudCell</b> 系统：源码能拿走、可以放在你自己的服务器和域名下自托管。交付的定义是「你的网站上已经变了」，不是「我们发了一份文件」。人只做两件事 —— 审批例外、决定往哪个市场放大。</p>
+    <div class="flowline rv">
+      <div class="step"><b>01 引导</b><span>拆流程 · 落行业模板</span></div><span class="arw">→</span>
+      <div class="step"><b>02 托管</b><span>AI 子代理代跑 · 人审例外</span></div><span class="arw">→</span>
+      <div class="step"><b>03 放大</b><span>多语言 / 多渠道 / 多主体</span></div>
+    </div>
+    <div class="hbtns rv">
+      <a class="hbtn p" href="#how">看具体怎么跑 ↓</a>
+      <button class="hbtn g" id="copyTop">复制一句话介绍</button>
+    </div>
+  </div>
+</header>
+
+<section id="what"><div class="wrap">
+  <div class="sec-kicker rv">01 · WHAT IT IS</div>
+  <h2 class="rv">先把这句话说死</h2>
+  <p class="sec-lead rv">对外只需要记住一句：我们卖的不是工具，是「帮你把生意跑起来并放大」这件事。下面是它是什么、不是什么，以及它是怎么落地的。</p>
+  <div class="two">
+    <div class="card rv">
+      <h3>是 / 不是</h3>
+      <ul class="ynlist">
+        <li class="yes"><b>进后台直接 push</b>：你把网站 / 店铺 / ERP 的账号密码（或最小权限子账号）给我们，我们登录进去改模板、上产品、接表单、发布上线。</li>
+        <li class="yes"><b>AI Native</b>：单据 → 结构化 → 判断 → 执行，这条链本身由模型驱动，不是旧系统外面套一个聊天框。</li>
+        <li class="yes"><b>AI 子代理托管（Sub-Agent Hosting）</b>：询盘、验货、履约、内容、毛利、归档各是一个独立子代理，可单独开关、可审计、可交接。</li>
+        <li class="yes"><b>托管 + 自托管都行</b>：我们替你运运行；源码、模板、日志也能整套交回，放到你自己的服务器上。</li>
+        <li class="no">不是做同款、不是只出物料：不发一份演示站 / 方案 / 素材包让你自己上传配置，交付的是你网站上已经生效的改动。</li>
+        <li class="no">不是 SaaS 订阅：不按账号卖，不把你锁在别人的版本节奏里。</li>
+        <li class="no">不是定制外包：不交付一份没人维护的代码就结束。</li>
+        <li class="no">不是给程序员的 Agent 工具：业务人不需要会写代码，改模板或我们代改。</li>
+      </ul>
+    </div>
+    <div class="rv">
+      <div class="stack">
+        <div class="layer hi">
+          <span class="tag">SERVICE LAYER · 服务层</span>
+          <b>CloudCell</b>
+          <p>引导 / 托管 / 放大。对你生意的结果负责：流程跑不跑得起来、单子有没有人接、市场有没有铺开。</p>
+        </div>
+        <div class="down">↓ 落到</div>
+        <div class="layer">
+          <span class="tag">SYSTEM LAYER · 系统层</span>
+          <b>CloudCell OS</b>
+          <p>交付控制台、手机桥 OCR 验货、AI 眼镜路线、行业独立站、市场地图。源码可拿走、可私有化、可微调封装。</p>
+        </div>
+        <div class="down">↓ 服务于</div>
+        <div class="layer">
+          <span class="tag">BUSINESS LAYER · 生意层</span>
+          <b>你的生意</b>
+          <p>多肽 CDMO、义乌档口、眼镜验货、产业带工厂……一个行业一个包，先跑通一条线，再复制。</p>
+        </div>
+      </div>
+      <p style="font-size:12.5px;color:var(--faint);line-height:1.9;margin-top:16px">个人站是「小黄这个人」，CloudCell 既是能拿走的产品系统，也是替客户把生意跑起来的服务——一个品牌、两层作用，不混。</p>
+    </div>
+  </div>
+
+  <div class="card rv" style="margin-top:18px">
+    <h3>交付这一步，我们和别人不一样</h3>
+    <p style="font-size:13.5px;color:var(--mut);line-height:1.9;margin-bottom:4px">不是做同款，也不是发演示站和素材包让你自己传。你把账号密码（或子账号权限）给我们，我们登录你的网站 / 店铺 / ERP 后台，直接改、上产品、接询盘表单、配多语言并发布上线。改动前打快照与回滚点，每次发布留 SHA-256 指纹日志，交付后归还权限、提示改密，源码与日志整套交回 —— 客户敢给权限，是因为每一步都能查、能退、能拿走。</p>
+    <div class="flowline" style="margin:20px 0 0">
+      <div class="step"><b>01 给权限</b><span>账号 / 子账号 · 域名主机</span></div><span class="arw">→</span>
+      <div class="step"><b>02 进后台</b><span>Shopify / WP / 建站 / ERP</span></div><span class="arw">→</span>
+      <div class="step"><b>03 直接 push</b><span>改、上、接、发，在他环境里</span></div><span class="arw">→</span>
+      <div class="step"><b>04 留痕</b><span>回滚点 + SHA-256 日志</span></div><span class="arw">→</span>
+      <div class="step"><b>05 交接</b><span>归还 / 改密 · 源码交回</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="native"><div class="wrap">
+  <div class="sec-kicker rv">02 · AI NATIVE</div>
+  <h2 class="rv">「AI Native」在这里不是形容词</h2>
+  <p class="sec-lead rv">判断标准很简单：把 AI 关掉，这套东西还能不能跑？如果还能跑，那只是加了个聊天框。CloudCell 里关掉模型，询盘不会自己变成报价单、标签照不会自己变成验货报告。</p>
+  <div class="tblwrap rv">
+    <table>
+      <thead><tr><th>对比项</th><th>传统 SaaS</th><th>定制外包</th><th>通用 AI Agent<br><span style="font-weight:400;font-size:11px">(Claude / Cursor 一类)</span></th><th class="us">CloudCell</th></tr></thead>
+      <tbody>
+        <tr><td>谁在用</td><td>员工手工录入</td><td>交付后你自己养</td><td>程序员</td><td class="us">业务人 + 我们托管</td></tr>
+        <tr><td>流程谁跑</td><td>人</td><td>人</td><td>人写 prompt 一步步催</td><td class="us">AI 子代理自动跑，人审例外</td></tr>
+        <tr><td>改需求</td><td>提工单等版本</td><td>再付费、再排期</td><td>要会写代码</td><td class="us">改行业模板，或我们代改</td></tr>
+        <tr><td>源码 / 数据</td><td>拿不到</td><td>常拿不全、难维护</td><td>不适用</td><td class="us">整套交回，可自托管、私有化</td></tr>
+        <tr><td>行业模板</td><td>通用</td><td>一次一议</td><td>无</td><td class="us">多肽 / 眼镜验货 / 产业带包</td></tr>
+        <tr><td>上线周期</td><td>数月</td><td>数月</td><td>不确定</td><td class="us">一个行业包 1–2 周</td></tr>
+        <tr><td>商业关系</td><td>买账号</td><td>买项目</td><td>买工具</td><td class="us">买「生意被跑起来并放大」</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="sec-kicker rv">03 · GUIDE → HOST → AMPLIFY</div>
+  <h2 class="rv">三段，每段都有交付物</h2>
+  <p class="sec-lead rv">点下面三个标签，看每一步你给什么、我们做什么、你最后拿走什么。不是阶段汇报，是可以验收的东西。</p>
+  <div class="tabs rv">
+    <button class="tab on" data-t="g">01 引导 Guide</button>
+    <button class="tab" data-t="h">02 托管 Host</button>
+    <button class="tab" data-t="a">03 放大 Amplify</button>
+  </div>
+  <div class="panel on rv" id="p-g">
+    <div class="pbox"><span class="no">INPUT</span><h4>你给什么</h4><p>现有单据、报价方式、验货标准、常打交道的客户与渠道。不用整理成文档，拍照、录屏、把聊天记录丢过来就行。</p><div class="meta">0.5 天访谈 + 现场/线上跟单</div></div>
+    <div class="pbox"><span class="no">WE DO</span><h4>我们做什么</h4><p>把生意拆成「单据 → 决策 → 动作」三张表，标出哪些是重复劳动、哪些必须人拍板，再落进 CloudCell 的行业模板。</p><div class="meta">流程拆解 + 模板装配</div></div>
+    <div class="pbox"><span class="no">OUTPUT</span><h4>你拿走什么</h4><p>《流程拆解表》《行业模板》《上线清单》，以及一个已经能点开跑的控制台 —— 不是 PPT。</p><div class="meta">可验收、可签字</div></div>
+    <div class="pbox"><span class="no">TIME</span><h4>多久</h4><p>0–2 周。CASE 001（多肽独立站）从演示到上线用了一天。</p><div class="meta">域名首年 ¥21，其余为零</div></div>
+  </div>
+  <div class="panel rv" id="p-h">
+    <div class="pbox"><span class="no">INPUT</span><h4>你给什么</h4><p>网站 / 店铺 / ERP 的账号密码，或最小权限子账号。我们登进去干活，不让你自己上传配置。手机桥照片本机识别，原图不出设备。</p><div class="meta">给一次权限，不排期</div></div>
+    <div class="pbox"><span class="no">WE DO</span><h4>我们做什么</h4><p>在你的后台直接改模板、上产品、接询盘表单、配多语言并发布；六个 AI 子代理随后在这个环境里代跑日常，异常才推给你审批。</p><div class="meta">直接 push + 7×24 运行</div></div>
+    <div class="pbox"><span class="no">OUTPUT</span><h4>你拿走什么</h4><p>你网站上已经生效的改动、带 SHA-256 指纹的可核验日志、PASS / HOLD / REJECT 报告。交付后归还权限、提示改密，源码整套交回。</p><div class="meta">可审计、可回滚、可交接</div></div>
+    <div class="pbox"><span class="no">TIME</span><h4>多久</h4><p>持续。你不用招人养系统，也不用学后台；要改规则，说一句话我们代改。</p><div class="meta">按月托管，随时可转自托管</div></div>
+  </div>
+  <div class="panel rv" id="p-a">
+    <div class="pbox"><span class="no">INPUT</span><h4>你给什么</h4><p>一个跑通的市场、一个决定：下一个去哪儿（欧美、东南亚、中东……），以及要不要多开主体。</p><div class="meta">一个决策，不是一套新项目</div></div>
+    <div class="pbox"><span class="no">WE DO</span><h4>我们做什么</h4><p>把同一套模板复制成多语言独立站、多渠道内容日历、多主体核算；子代理按新市场语种和合规规则自动切换。</p><div class="meta">模板复制，不重写代码</div></div>
+    <div class="pbox"><span class="no">OUTPUT</span><h4>你拿走什么</h4><p>N 个站点 / N 套语言 / N 条渠道，共用一套后台与一套毛利口径。新增人力 0，边际成本只有域名与 CDN。</p><div class="meta">规模来自复制，不是加人</div></div>
+    <div class="pbox"><span class="no">TIME</span><h4>多久</h4><p>每加一个市场按天计。先导市场跑通之后，复制不再需要重新实施。</p><div class="meta">放大不与人力线性挂钩</div></div>
+  </div>
+</div></section>
+
+<section id="agents"><div class="wrap">
+  <div class="sec-kicker rv">04 · SUB-AGENT HOSTING</div>
+  <h2 class="rv">「子托管」= 每个环节一个能单独开关的 AI 子代理</h2>
+  <p class="sec-lead rv">点开关试试：关掉一个，那部分活就退回给人。右侧数字是估算，按每天 40 单、每月 22 个工作日算，用来讲清「托管」到底替你省了什么。</p>
+  <div class="agentgrid">
+    <div class="agents rv" id="agents">
+      <div class="agent" data-h="2.5" data-e="0.12"><span class="sw"></span><span class="txt"><b>询盘与报价 Agent</b><span>多语言询盘 → 结构化 → 报价单草稿</span></span><span class="h">2.5 人时/天</span></div>
+      <div class="agent" data-h="2.0" data-e="0.08"><span class="sw"></span><span class="txt"><b>验货取证 Agent</b><span>手机桥 OCR + PO 比对 + SHA-256 报告</span></span><span class="h">2.0 人时/天</span></div>
+      <div class="agent" data-h="2.0" data-e="0.10"><span class="sw"></span><span class="txt"><b>订单履约 Agent</b><span>PO / 批次 / 物流节点自动跟进</span></span><span class="h">2.0 人时/天</span></div>
+      <div class="agent" data-h="1.5" data-e="0.15"><span class="sw"></span><span class="txt"><b>渠道与内容 Agent</b><span>独立站多语言、内容日历、投放素材</span></span><span class="h">1.5 人时/天</span></div>
+      <div class="agent" data-h="1.0" data-e="0.06"><span class="sw"></span><span class="txt"><b>毛利核算 Agent</b><span>渠道 ROI、毛利瀑布、异常价格提醒</span></span><span class="h">1.0 人时/天</span></div>
+      <div class="agent" data-h="1.0" data-e="0.05"><span class="sw"></span><span class="txt"><b>合规与归档 Agent</b><span>单据留痕、审计包导出、版本可回溯</span></span><span class="h">1.0 人时/天</span></div>
+    </div>
+    <div class="readout rv">
+      <div class="lab">LIVE ESTIMATE · 当前托管状态</div>
+      <div class="big"><span id="hoursOut">220</span> <small>人时 / 月</small></div>
+      <div style="font-size:13px;color:var(--mut);margin-top:6px">≈ <b id="fteOut" style="color:var(--text)">1.3</b> 个全职人力，从重复劳动里释放出来</div>
+      <div class="rows">
+        <div class="row"><span>已托管子代理</span><b id="onOut">6 / 6</b></div>
+        <div class="row"><span>每天自动处理</span><b id="autoOut">40 单</b></div>
+        <div class="row"><span>需要你审批的例外</span><b id="excOut">≈ 4 次 / 天</b></div>
+        <div class="row"><span>退回人工的部分</span><b id="manOut">0 人时 / 天</b></div>
+        <div class="row"><span>源码归属</span><b>客户可自托管</b></div>
+      </div>
+      <p class="note">算法：开启的子代理按各自人时累加 × 22 天；例外 = 40 单 × 各代理例外率均值；关闭代理对应的单量退回人工。数字用于说明结构，不是承诺值。</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="amplify"><div class="wrap">
+  <div class="sec-kicker rv">05 · AMPLIFY</div>
+  <h2 class="rv">放大靠复制，不靠加人</h2>
+  <p class="sec-lead rv">拖一下：把一个跑通的流程复制到更多市场。看清楚了 —— 站数、语种、渠道在涨，需要新增的人不变。</p>
+  <div class="amp">
+    <div class="ampctl rv">
+      <div class="v"><span id="mOut">3</span> <small>个市场</small></div>
+      <input type="range" id="mRange" min="1" max="8" value="3" aria-label="市场数量">
+      <p>同一套流程、同一套后台、同一套毛利口径。每加一个市场只做语种与合规规则的切换，不重新实施一遍。</p>
+    </div>
+    <div class="ampout rv">
+      <div><b id="siteOut">3</b><span>个多语言独立站</span></div>
+      <div><b id="langOut">3</b><span>套语言 / 合规规则</span></div>
+      <div><b id="chanOut">6</b><span>条渠道内容线</span></div>
+      <div><b>0</b><span>需新增的全职人力</span></div>
+      <div><b id="costOut">¥63</b><span>首年域名边际成本（≈¥21/个）</span></div>
+      <div><b>¥0</b><span>额外托管 / 服务器费用</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="system"><div class="wrap">
+  <div class="sec-kicker rv">06 · ALREADY RUNNING</div>
+  <h2 class="rv">不是概念，下面这些已经在线上跑</h2>
+  <p class="sec-lead rv">定位页说的每一件事，都有对应的、现在就能点开的东西。CASE 001 是第一个行业包。</p>
+  <div class="links rv">
+    <a href="../console/"><b>交付控制台</b><span>锚 / 舵手 / 船长 / 帆选 / 灯塔五个工作台，凭证链与指纹防篡改。</span><i>打开 →</i></a>
+    <a href="../bridge/"><b>手机桥 · 验货取证</b><span>浏览器内 OCR，标签照变验货报告，原图不出本机。</span><i>打开 →</i></a>
+    <a href="../glasses/"><b>AI 眼镜技术路线</b><span>第一人称现场 → 手机桥 → VLM → 报告上链，含 90 天试点。</span><i>打开 →</i></a>
+    <a href="../peptide-demo/"><b>CASE 001 · 多肽独立站</b><span>中英双语、质控图谱、询价表单，询盘直进客户邮箱。</span><i>打开 →</i></a>
+    <a href="../market/"><b>市场地图与 TAM / SAM / SOM</b><span>28 个竞品定位、缺口判断、ACM 获客测算器。</span><i>打开 →</i></a>
+    <a href="../"><b>CloudCell 系统首页</b><span>模块总览、微信扫码入口、CASE 001 预览。</span><i>打开 →</i></a>
+  </div>
+</div></section>
+
+<section id="scripts"><div class="wrap">
+  <div class="sec-kicker rv">07 · READY TO SEND</div>
+  <h2 class="rv">直接复制发出去的话</h2>
+  <p class="sec-lead rv">四段按场景写好，点右上角复制。别再重写一遍。</p>
+  <div class="scripts">
+    <div class="script rv">
+      <div class="hd"><b>一句话（微信 / 签名 / 群介绍）</b><button class="cp">复制</button></div>
+      <div class="body" id="s1">CloudCell 是 AI Native 的生意托管：你把网站/店铺/ERP 的账号密码（或子账号权限）给我们，我们直接进你的后台把改动 push 上线——不是给你做同款，也不是发方案和物料。流程我们拆清楚（引导），一组 AI 子代理在你的环境里每天替你跑（托管），跑通后把站点、语言、渠道一层层复制出去（放大）。系统就是 CloudCell，源码给你，可自托管。人只管审批例外和决定往哪个市场放大。</div>
+      <div class="use">用在：加微信后的自我介绍、群名片备注、朋友圈文案首句</div>
+    </div>
+    <div class="script rv">
+      <div class="hd"><b>30 秒电梯版（当面 / 语音）</b><button class="cp">复制</button></div>
+      <div class="body" id="s2">我们不是卖软件，也不是给你做同款、发物料，更不是在旧系统外面加个聊天框。你只要把网站后台的账号密码（或子账号）给我们，我们直接登进去把改动改好、发布上线，不用你自己传文件、不用学后台。然后我们把你的生意拆成单据、决策、动作三张表，让六个 AI 子代理替你跑询盘、验货、履约、内容、毛利和归档，只有异常才推给你点一下。跑通一个市场后，同一套模板复制成多语言站点和多条渠道，不加人。系统源码也给你，愿意自己托管也行。你要做的只有两件事：审批例外，以及决定下一个去哪个市场。</div>
+      <div class="use">用在：路演开场、校友见面、投资人初次接触</div>
+    </div>
+    <div class="script rv">
+      <div class="hd"><b>给客户（多肽 / 工厂 / 产业带）</b><button class="cp">复制</button></div>
+      <div class="body" id="s3">你不用学系统，也不用招人养网站，更不用我们自己发个演示站让你找人上传。你把网站后台的账号密码（或子账号）给我们，我们直接进去把双语站、产品、询价表单、质控图谱改好并发布上线，你的网站上当天就变了。之后我们把你怎么接询盘、怎么报价、怎么验货摸清楚，让 AI 子代理按你的规则每天跑，你把不准的那一两单点一下就行。改动前打回滚点、每次发布留指纹日志，做完归还权限、提示改密，源码整套也在你名下，哪天不想托管了自己放服务器上也能用。首批客户从演示到上线一天完成，域名首年 21 块，其余零成本。</div>
+      <div class="use">用在：发给多肽客户、义乌档口、东莞 / 深圳 / 山东 / 内蒙古产业带老板</div>
+    </div>
+    <div class="script rv">
+      <div class="hd"><b>给投资人 / 浙大校友资源</b><button class="cp">复制</button></div>
+      <div class="body" id="s4">面向非程序员的模块化企业管理软件，真正的空位是「业务人能改 + 源码能拿走 + 可私有化 + 有行业模板」——通用 SaaS 不给源码，定制外包不持续，Claude / Cursor 一类工具只服务程序员。CloudCell 用 AI 子代理托管把交付从「卖账号 / 出物料」变成「客户授权后我们进他的后台直接发布上线」：客户零实施，交付即已生效，收入因此是实施费 + 托管年费 + 分成，而不是一次性物料费。系统可自托管，源码给你。我们不做通用平台，先做行业包：多肽、眼镜验货、产业带出海。国内 TAM ¥1,100 亿、可服务 SAM ¥25–40 亿、SOM ¥180–800 万/年；按 ¥8 万客单、142 条线索转化 23 个付费客户测算，首年可签约 ¥181 万；默认不做大规模投放，靠浙大校友、投资人和产业带资源做先导。</div>
+      <div class="use">用在：融资沟通、校友会对接、写在 BP 首页</div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <b style="color:var(--text)">CloudCell</b> · AI Native 生意托管与放大 · 系统源码 <a href="../">可拿走</a> · 由 <a href="https://sinyu1998-eng.github.io">小黄</a> 设计与构建<br>
+  相关页面：<a href="../console/">交付控制台</a> · <a href="../bridge/">手机桥</a> · <a href="../glasses/">眼镜路线</a> · <a href="../peptide-demo/">CASE 001</a> · <a href="../market/">市场地图</a><br>
+  © 2026 CloudCell · 本页为对外定位说明，可直接转发
+</div></footer>
+
+<script>
+// 滚动显现
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// 兜底：截图 / 打印 / 不支持 IO 时也不会出现整页空白
+setTimeout(()=>document.querySelectorAll('.rv:not(.on)').forEach(el=>el.classList.add('on')),1200);
+
+// 三段标签
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const p=document.getElementById('p-'+b.dataset.t);
+  p.classList.add('on');
+}));
+
+// 子代理开关与实时估算
+const ORDERS=40,DAYS=22;
+const ags=[...document.querySelectorAll('.agent')];
+function calc(){
+  const on=ags.filter(a=>!a.classList.contains('off'));
+  const off=ags.filter(a=>a.classList.contains('off'));
+  const savedH=on.reduce((s,a)=>s+ +a.dataset.h,0);
+  const manH=off.reduce((s,a)=>s+ +a.dataset.h,0);
+  const auto=Math.round(ORDERS*on.length/ags.length);
+  const manual=ORDERS-auto;
+  const exc=on.length? Math.round(auto*(on.reduce((s,a)=>s+ +a.dataset.e,0)/on.length)) : 0;
+  const need=manual+exc;
+  document.getElementById('hoursOut').textContent=Math.round(savedH*DAYS);
+  document.getElementById('fteOut').textContent=(savedH*DAYS/168).toFixed(1);
+  document.getElementById('onOut').textContent=on.length+' / '+ags.length;
+  document.getElementById('autoOut').textContent=auto+' 单';
+  document.getElementById('excOut').textContent='≈ '+need+' 次 / 天';
+  document.getElementById('manOut').textContent=manH.toFixed(1)+' 人时 / 天';
+}
+ags.forEach(a=>a.addEventListener('click',()=>{a.classList.toggle('off');calc()}));
+calc();
+
+// 放大滑块
+const r=document.getElementById('mRange');
+function amp(){
+  const n=+r.value;
+  document.getElementById('mOut').textContent=n;
+  document.getElementById('siteOut').textContent=n;
+  document.getElementById('langOut').textContent=n;
+  document.getElementById('chanOut').textContent=n*2;
+  document.getElementById('costOut').textContent='¥'+(n*21);
+}
+r.addEventListener('input',amp);amp();
+
+// 复制（含 fallback）
+async function cp(text,btn){
+  try{await navigator.clipboard.writeText(text)}
+  catch(e){
+    const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';
+    document.body.appendChild(t);t.select();
+    try{document.execCommand('copy')}catch(_){}
+    t.remove();
+  }
+  const old=btn.textContent;btn.textContent='已复制 ✓';btn.classList.add('ok');
+  setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok')},1600);
+}
+document.querySelectorAll('.script').forEach(s=>{
+  s.querySelector('.cp').addEventListener('click',e=>cp(s.querySelector('.body').innerText.trim(),e.currentTarget));
+});
+document.getElementById('copyTop').addEventListener('click',e=>cp(document.getElementById('s1').innerText.trim(),e.currentTarget));
+</script>
+</body>
+</html>
