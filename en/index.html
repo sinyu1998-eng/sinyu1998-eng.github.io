@@ -220,7 +220,7 @@ footer b{color:var(--dim)}
 <script>
 
 /* ============ 语言状态 + hreflang 自适应域名 ============ */
-var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 CloudSail 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the CloudSail work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
+var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 SellerPilot 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the SellerPilot work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
 var I18N_HOT={"cam": {"zh": "8MP 摄像头：拍照取证 + 1200p 视频记录，第一视角留证。", "en": "8MP camera: photo evidence and 1200p video, first-person proof."}, "led": {"zh": "拍摄指示灯：录制中亮起，让被拍摄方知情——合规是工厂版的前提。", "en": "Recording LED: lights up while recording so everyone being filmed knows — compliance is the premise of the factory edition."}, "touch": {"zh": "镜腿触控：长按录制 / 双击拍照 / 单击停止，戴手套也能操作。", "en": "Temple touch: long-press to record / double-tap for a photo / single-tap to stop — usable with gloves on."}};
 var I18N_TXT={"empty": {"zh": "留言墙还是空的，来写第一条吧。", "en": "No messages yet — be the first to say hi."}, "anon": {"zh": "匿名朋友", "en": "Anonymous"}, "mailBody": {"zh": "来自「{n}」的留言：\n\n{m}\n\n—— 来自小黄的主页", "en": "Message from {n}:\n\n{m}\n\n— via Xiaohuang's homepage"}, "mailSubj": {"zh": "主页留言 · {n}", "en": "Guestbook · {n}"}, "copied": {"zh": "已复制，去微信粘贴给小黄（workonly1998）", "en": "Copied — paste it into WeChat and send to workonly1998."}, "manual": {"zh": "手动复制这段话，微信发给 workonly1998：", "en": "Copy this and send it to workonly1998 on WeChat:"}, "copyBody": {"zh": "来自「{n}」的留言：\n{m}", "en": "Message from {n}:\n{m}"}, "part": {"zh": "部件 · ", "en": "Part · "}};
 (function(){
@@ -265,10 +265,10 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
     <div class="hero-kicker">YIWU → THE WORLD</div>
     <h1 class="hero-h1">Hi, I'm <em>Xiaohuang</em></h1>
     <div class="hero-sub">Born in Yiwu, I grew up inside the world's largest wholesale market. Now I build AI systems for cross-border trade, put smart glasses on factory floors, and do research on the side. This is a little site I built myself — have a look around.</div>
-    <div class="hero-id"><b>Qianru (Carol) Huang</b> · Founder of CloudSail</div>
+    <div class="hero-id"><b>Qianru (Carol) Huang</b> · Founder of SellerPilot</div>
     <div class="hero-cta">
       <a class="hbtn g" href="#bases">All systems · one page →</a>
-      <a class="hbtn" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener">Open the console →</a>
+      <a class="hbtn" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener">Open the console →</a>
     </div>
   </div>
   <div class="scroll-hint">Scroll down · my timeline</div>
@@ -292,21 +292,21 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">ONE PLACE · EVERYTHING</div>
     <h2 class="sec-h2 rv">Everything, on this one page</h2>
-    <p class="sec-lead rv">It used to be scattered across a dozen folders and several servers. Now it all lives here, in three groups: <b>CloudSail, what I'm building</b>, <b>standalone consoles that actually run</b>, <b>systems hosted on a partner's server</b>. Every card opens something real.</p>
+    <p class="sec-lead rv">It used to be scattered across a dozen folders and several servers. Now it all lives here, in three groups: <b>SellerPilot, what I'm building</b>, <b>standalone consoles that actually run</b>, <b>systems hosted on a partner's server</b>. Every card opens something real.</p>
 
-    <!-- 组 01 · CloudSail 主业 -->
+    <!-- 组 01 · SellerPilot 主业 -->
     <div class="bgroup rv">
-      <div class="bgh"><i>01</i><b>CloudSail · the main business</b><span>Public face · delivery tools · technical roadmap</span></div>
+      <div class="bgh"><i>01</i><b>SellerPilot · the main business</b><span>Public face · delivery tools · technical roadmap</span></div>
       <div class="bgrid">
-        <a class="bcard key live" href="/cloudsail/" target="_blank" rel="noopener" style="grid-column:1/-1">
+        <a class="bcard key live" href="/sellerpilot/" target="_blank" rel="noopener" style="grid-column:1/-1">
           <div class="bn">Company site · public face</div>
-          <h4>CloudSail</h4>
+          <h4>SellerPilot</h4>
           <p>What I do, what it costs, how to reach me. Customers, factories and investors all start here.</p>
           <div class="open always">Open the site →</div>
         </a>
-        <a class="bcard tool" href="/cloudsail-app/CloudSail-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
+        <a class="bcard tool" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
           <div class="bn">Standalone console · separate from this site</div>
-          <h4>CloudSail Operations Console</h4>
+          <h4>SellerPilot Operations Console</h4>
           <p>Quotes and margins, customer orders, approval trails, deliverable generation. A single file you can download and run offline, with data stored on your own machine. It's a working tool, not a brochure — that's why it lives here, not on my homepage.</p>
           <div class="open always">Open console →</div>
         </a>
@@ -315,17 +315,17 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
           <p>Real-world signals queue up automatically; nothing executes until a human approves it, and every step is logged and verifiable.</p>
           <div class="open always">Open →</div>
         </a>
-        <a class="bcard" href="/cloudsail/console/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/console/" target="_blank" rel="noopener">
           <div class="bn">Delivery console</div><h4>Five workbenches</h4>
           <p>Inquiries, quotes, order tracking, inspection, logistics — the full client delivery workflow.</p>
           <div class="open always">Open →</div>
         </a>
-        <a class="bcard" href="/cloudsail/bridge/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/bridge/" target="_blank" rel="noopener">
           <div class="bn">Phone bridge · inspection evidence</div><h4>One photo of a label, verified</h4>
           <p>Snap a label on your phone: SKU and batch are recognised, checked against the work order, and any discrepancy is captured on the spot.</p>
           <div class="open always">Try it →</div>
         </a>
-        <a class="bcard" href="/cloudsail/glasses/" target="_blank" rel="noopener">
+        <a class="bcard" href="/sellerpilot/glasses/" target="_blank" rel="noopener">
           <div class="bn">Hardware · in progress</div><h4>AI Glasses · Factory Edition</h4>
           <p>Consumer glasses reconfigured for inspection and line patrols — first-person evidence tied straight into work orders.</p>
           <div class="open always">Technical roadmap →</div>
@@ -338,7 +338,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="bgh"><i>02</i><b>Standalone systems</b><span>Hosted on partner servers · click and use</span></div>
       <div class="bgrid">
         <a class="bcard live" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank" rel="noopener">
-          <div class="bn">BASE 01 · Hub</div><h4>CloudSail Hub</h4>
+          <div class="bn">BASE 01 · Hub</div><h4>SellerPilot Hub</h4>
           <p>The external front door to the whole system.</p><div class="open always">Open →</div>
         </a>
         <a class="bcard live" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank" rel="noopener">
@@ -462,9 +462,9 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="stage">
         <div class="dot"></div>
         <div class="year">2025<small>— · Madrid · building a company</small></div>
-        <h3>MBA, perfect GPA · building CloudSail</h3>
-        <p>MBA at Universidad Europea de Madrid, GPA 4.00/4.00. At the same time I turned research instinct into a product: CloudSail, a fully managed AI export system.</p>
-        <div class="chips"><span class="chip">MBA 4.00/4.00</span><span class="chip">CloudSail</span><span class="chip">Multi-agent system</span></div>
+        <h3>MBA, perfect GPA · building SellerPilot</h3>
+        <p>MBA at Universidad Europea de Madrid, GPA 4.00/4.00. At the same time I turned research instinct into a product: SellerPilot, a fully managed AI export system.</p>
+        <div class="chips"><span class="chip">MBA 4.00/4.00</span><span class="chip">SellerPilot</span><span class="chip">Multi-agent system</span></div>
       </div>
 
       <div class="stage">
@@ -495,7 +495,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">HARDWARE · AI GLASSES · FACTORY EDITION</div>
     <h2 class="sec-h2 rv">Same hardware,<br>redefined as<span style="color:var(--gold)">the factory's eyes</span></h2>
-    <p class="sec-lead rv">The AI GLASSES (AiMB-G3) I have here started as a consumer product: 8MP camera, WiFi, 1200p recording, AI recognition, multilingual translation. I reconfigured it as an inspection and patrol device — wired into CloudSail work orders so every inspection leaves first-person, traceable evidence.</p>
+    <p class="sec-lead rv">The AI GLASSES (AiMB-G3) I have here started as a consumer product: 8MP camera, WiFi, 1200p recording, AI recognition, multilingual translation. I reconfigured it as an inspection and patrol device — wired into SellerPilot work orders so every inspection leaves first-person, traceable evidence.</p>
 
     <div class="gl-grid">
       <div class="gl-visual rv">
@@ -534,7 +534,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
           <button data-i="2"><b>Remote client audit</b><i>REMOTE AUDIT</i></button>
           <button data-i="3"><b>Worker onboarding</b><i>WORKER ONBOARDING</i></button>
         </div>
-        <div class="scen-out" id="glOut">Camera on incoming goods →  <b>AI reads SKU and batch labels</b>  → quantities and specs are checked against the CloudSail work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks.</div>
+        <div class="scen-out" id="glOut">Camera on incoming goods →  <b>AI reads SKU and batch labels</b>  → quantities and specs are checked against the SellerPilot work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks.</div>
         <div class="specline">
           <div class="spec-c"><b>8MP</b><span>camera · photo evidence</span></div>
           <div class="spec-c"><b>1200p</b><span>30fps video</span></div>
@@ -555,7 +555,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
       <div class="fx">
         <div class="fx-n">02</div>
         <h4>Firmware and device management</h4>
-        <p>Flashed as a managed enterprise device: personal accounts and social sharing disabled, self-check on boot, recordings forced into CloudSail work orders, with a time + work-order watermark burned into the frame. Factories don't want cool, they want tamper-proof.</p>
+        <p>Flashed as a managed enterprise device: personal accounts and social sharing disabled, self-check on boot, recordings forced into SellerPilot work orders, with a time + work-order watermark burned into the frame. Factories don't want cool, they want tamper-proof.</p>
       </div>
       <div class="fx">
         <div class="fx-n">03</div>
@@ -563,9 +563,9 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
         <p>Anything the glasses capture is attached to the order or batch, producing an inspection-report PDF plus timestamped video that clients, platforms, insurers and buyers can re-check. This is the part factories will actually pay for.</p>
       </div>
     </div>
-    <div class="fixnote rv">Cost basis: consumer retail $199 → factory-edition target BOM ¥1,200–1,500 per unit, pilots from 10 units, one line and one product category first. The full plan (hardware/software inventory, three rollout routes, 90-day schedule) is in the  <a href="/cloudsail/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">Glasses × CloudSail roadmap →</a>。</div>
+    <div class="fixnote rv">Cost basis: consumer retail $199 → factory-edition target BOM ¥1,200–1,500 per unit, pilots from 10 units, one line and one product category first. The full plan (hardware/software inventory, three rollout routes, 90-day schedule) is in the  <a href="/sellerpilot/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">Glasses × SellerPilot roadmap →</a>。</div>
     <div class="rv" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-      <a class="hbtn g" href="/cloudsail/bridge/">Try the phone-bridge prototype (real label recognition) →</a>
+      <a class="hbtn g" href="/sellerpilot/bridge/">Try the phone-bridge prototype (real label recognition) →</a>
     </div>
   </div>
 </section>
@@ -575,11 +575,11 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
   <div class="wrap">
     <div class="sec-kicker rv">SELECTED WORK</div>
     <h2 class="sec-h2 rv">A few things I've made</h2>
-    <p class="sec-lead rv">More full papers and research plans in  <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Papers →</a> . The system I built,  <a href="/cloudsail/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">CloudSail Delivery Console →</a>  has five working workbenches.</p>
+    <p class="sec-lead rv">More full papers and research plans in  <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Papers →</a> . The system I built,  <a href="/sellerpilot/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">SellerPilot Delivery Console →</a>  has five working workbenches.</p>
     <div class="two rv">
       <div>
-        <div class="item"><span class="k">PRODUCT · TO B</span><b>CloudSail</b><span>A fully managed AI export system: inquiries, quoting, translation, order tracking, inspection scheduling, logistics. The factory only has to ship.</span></div>
-        <div class="item"><span class="k">HARDWARE · IN PROGRESS</span><b>AI Glasses · Factory Edition</b><span>Consumer AiMB-G3 reconfigured for inspection and patrols, wired into CloudSail work orders with first-person evidence.</span></div>
+        <div class="item"><span class="k">PRODUCT · TO B</span><b>SellerPilot</b><span>A fully managed AI export system: inquiries, quoting, translation, order tracking, inspection scheduling, logistics. The factory only has to ship.</span></div>
+        <div class="item"><span class="k">HARDWARE · IN PROGRESS</span><b>AI Glasses · Factory Edition</b><span>Consumer AiMB-G3 reconfigured for inspection and patrols, wired into SellerPilot work orders with first-person evidence.</span></div>
         <div class="item"><span class="k">OPEN RESEARCH</span><b>Verifiable Trade Events</b><span>Turning cross-border trade events into verifiable on-chain records.</span></div>
         <div class="item"><span class="k">FILM</span><b>Documentary · Connecting</b><span>Executive director. 5 storylines × 4 cities, 1M+ views.</span></div>
       </div>
@@ -612,7 +612,7 @@ var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
 </section>
 
 <footer>
-  <b>sinyu1998@gmail.com</b> · WeChat: Marguerite&amp;Asbury · <a href="/cloudsail/" style="border-bottom:1px solid var(--faint)">CloudSail</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
+  <b>sinyu1998@gmail.com</b> · WeChat: Marguerite&amp;Asbury · <a href="/sellerpilot/" style="border-bottom:1px solid var(--faint)">SellerPilot</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
   <a href="/papers.html" style="border-bottom:1px solid var(--faint)">Papers &amp; research</a> · <a href="/index-academic.html" style="border-bottom:1px solid var(--faint)">Older homepage</a><br><br>
   © 2026 Qianru (Carol) Huang
 </footer>
@@ -801,7 +801,7 @@ onScroll();
 
 /* ============ 术语保护：品牌 / 人名 / 型号不被浏览器机翻 ============ */
 (function(){
-  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "CloudSail", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
+  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "SellerPilot", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function rx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
   var re=new RegExp('('+TERMS.slice().sort(function(a,b){return b.length-a.length;}).map(rx).join('|')+')','g');
