@@ -3,64 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SellerPilot — 电商与外贸的出海生意助手</title>
-<meta name="description" content="SellerPilot：一套给工厂用的 AI 出海生意自动化系统。产品、可运行的软件、战略愿景与创始人介绍。">
+<title>SellerPilot — 让每个人在外贸里承担一个角色</title>
+<meta name="description" content="义乌的本质不是卖货市场，而是让每个人在外贸里承担一个角色、互相联系。SellerPilot 把这张角色网络搬进一个系统：margueritesbury 官网、Singles Way 旅游入口、SellerPilot OS 自动化调度、AI 视觉识别。">
 <meta name="theme-color" content="#0f1620">
-<link rel="canonical" href="https://sinyu1998-eng.github.io/">
-<link rel="alternate" hreflang="zh-CN" href="https://sinyu1998-eng.github.io/">
-<link rel="alternate" hreflang="en" href="https://sinyu1998-eng.github.io/en/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1620'/%3E%3Cpath d='M18 22h28M18 32h28M18 42h18' stroke='%23e8b96a' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://sinyu1998-eng.github.io/en/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f1620'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Georgia,serif' fill='%23e8b96a' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+.net{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.role{border:1px solid var(--line);border-radius:14px;padding:22px 20px;background:var(--bg2);position:relative;transition:transform .25s,border-color .25s}
+.role:hover{transform:translateY(-4px);border-color:rgba(232,185,106,.4)}
+.role .rn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--gold)}
+.role h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:12px 0 8px}
+.role p{font-size:12.8px;color:var(--dim);line-height:1.7}
+.role.center{background:linear-gradient(145deg,rgba(232,185,106,.1),var(--bg2));border-color:rgba(232,185,106,.35)}
+.flow{counter-reset:step;display:grid;gap:0;margin-top:38px}
+.step{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .n{counter-increment:step;width:40px;height:40px;border-radius:50%;border:1px solid rgba(232,185,106,.4);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px}
+.step .n:before{content:counter(step,decimal-leading-zero)}
+.step b{display:block;font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:6px}
+.step p{font-size:13.5px;color:var(--dim);line-height:1.75}
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px}
+.pil{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--bg2)}
+.pil .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;padding:4px 9px;border-radius:999px;display:inline-block;margin-bottom:14px}
+.tag.live{color:#7fd1a8;border:1px solid rgba(127,209,168,.35)}
+.tag.build{color:var(--gold);border:1px solid rgba(232,185,106,.35)}
+.tag.ref{color:var(--dim);border:1px solid var(--line)}
+.pil h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:9px}
+.pil p{font-size:13px;color:var(--dim);line-height:1.75}
+.pil .roleline{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:14px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:24px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.tile{position:relative}
+@media(max-width:760px){.net,.pillars{grid-template-columns:1fr}.step{grid-template-columns:44px 1fr;gap:14px}}
+</style>
 </head>
 <body data-lang="en">
-<nav><div class="nav-in">
-  <a class="brand" href="index.html">Seller<i>Pilot</i></a>
-  <div class="nav-links">
-    <a class="home on" href="index.html" data-zh="首页" data-en="Home">首页</a>
+
+<nav id="nav">
+  <a class="logo" href="/">Seller<i>Pilot</i></a>
+  <div class="nav-r">
     <a href="/sellerpilot/" data-zh="产品" data-en="Product">产品</a>
     <a href="/os/" data-zh="软件" data-en="Software">软件</a>
     <a href="/vision/" data-zh="愿景" data-en="Vision">愿景</a>
-    <a href="/qianruhuang/" data-zh="关于我" data-en="About me">关于我</a>
+    <a href="/qianruhuang/" data-zh="关于我" data-en="About">关于我</a>
     <div class="lang"><button class="on" data-l="zh">中文</button><button data-l="en">EN</button></div>
   </div>
-</div></nav>
+</nav>
 
-<header><div class="wrap">
-  <div class="hero-tag"><b></b><span data-zh="给工厂用的 AI 出海自动化系统" data-en="AI-powered overseas growth automation for factories">给工厂用的 AI 出海自动化系统</span></div>
-  <h1 data-zh="把中国工厂，<br>直接接到<em>海外买家</em>" data-en="Connecting Chinese factories<br>straight to <em>overseas buyers</em>">把中国工厂，<br>直接接到<em>海外买家</em></h1>
-  <p class="h1sub"><b>SellerPilot</b><span data-zh=" 是电商与外贸的出海生意助手。客户开发、报价、跟单、验货、物流、交付——串成一条自动跑起来的链条，人只在例外时介入，工厂只管发货。" data-en=" is an overseas-growth assistant for e-commerce and trade. Lead generation, quoting, follow-up, inspection, logistics, delivery — one self-running chain where humans only handle exceptions and factories just ship."> 是电商与外贸的出海生意助手。客户开发、报价、跟单、验货、物流、交付——串成一条自动跑起来的链条，人只在例外时介入，工厂只管发货。</span></p>
-  <div class="cta">
-    <a class="btn gold" href="/os/" data-zh="打开自动化软件 →" data-en="Open the software →">打开自动化软件 →</a>
-    <a class="btn" href="/sellerpilot/" data-zh="看产品主站 ↗" data-en="Product site ↗">看产品主站 ↗</a>
+<header>
+  <div class="wrap">
+    <div class="hero-tag"><b></b><span data-zh="商业模式 · BUSINESS MODEL" data-en="BUSINESS MODEL">商业模式 · BUSINESS MODEL</span></div>
+    <h1 data-zh="外贸不是一家公司的事，<br>是<em>一群人的角色网络</em>" data-en="Foreign trade isn't one company's job —<br>it's a <em>network of roles</em>">外贸不是一家公司的事，<br>是<em>一群人的角色网络</em></h1>
+    <p class="h1sub" data-zh="义乌真正的发明，不是小商品，而是让每个人都能在外贸里承担一个角色、互相联系。SellerPilot 要做的，是把这张网络搬进一个系统——让每个角色都找得到活、算得清账、对得上人。" data-en="Yiwu's real invention isn't small goods — it's letting everyone take a role in foreign trade and connect with each other. SellerPilot moves that network into one system, so every role finds work, knows the numbers, and meets the right people.">义乌真正的发明，不是小商品，而是让每个人都能在外贸里承担一个角色、互相联系。SellerPilot 要做的，是把这张网络搬进一个系统——让每个角色都找得到活、算得清账、对得上人。</p>
   </div>
-</div></header>
+</header>
 
-<section class="sec"><div class="wrap">
-  <div class="kicker" data-zh="一站式入口" data-en="ONE ENTRY POINT">一站式入口</div>
-  <h2 data-zh="从这里，去任何地方" data-en="Everything starts here">从这里，去任何地方</h2>
-  <p class="lead" data-zh="SellerPilot 的产品、软件、战略与创始人，都在下面。每个入口都做好并连好了。" data-en="SellerPilot's product, software, strategy and founder — all below. Every entry is built and connected.">SellerPilot 的产品、软件、战略与创始人，都在下面。每个入口都做好并连好了。</p>
-  <div class="tiles">
-    <a class="tile" href="/sellerpilot/"><div class="k" data-zh="01 · PRODUCT" data-en="01 · PRODUCT">01 · PRODUCT</div><h3 data-zh="产品主站" data-en="Product site">产品主站</h3><p data-zh="SellerPilot.ai：引导、托管、放大。讲清做什么、怎么收费、怎么合作。" data-en="SellerPilot.ai: guide, manage, scale. What we do, how we charge, how to work together.">SellerPilot.ai：引导、托管、放大。讲清做什么、怎么收费、怎么合作。</p><span class="go" data-zh="进入产品站 ↗" data-en="Open product site ↗">进入产品站 ↗</span></a>
-    <a class="tile" href="/os/"><div class="k" data-zh="02 · SOFTWARE" data-en="02 · SOFTWARE">02 · SOFTWARE</div><h3 data-zh="自动化软件 SellerPilot OS" data-en="SellerPilot OS software">自动化软件 SellerPilot OS</h3><p data-zh="九段状态机、保本报价、异常预警、成本账本。可在线演示，可下载完整系统自己跑。" data-en="Nine-stage state machine, break-even quoting, anomaly alerts, cost ledger. Demo online or run the full system yourself.">九段状态机、保本报价、异常预警、成本账本。可在线演示，可下载完整系统自己跑。</p><span class="go" data-zh="打开软件 ↗" data-en="Open software ↗">打开软件 ↗</span></a>
-    <a class="tile" href="/vision/"><div class="k" data-zh="03 · VISION" data-en="03 · VISION">03 · VISION</div><h3 data-zh="战略愿景" data-en="Strategic vision">战略愿景</h3><p data-zh="六类出海资源整合、京东式集团结构、少人打法——把这件事为什么这么做大讲清楚。" data-en="Six resources, a JD-style group structure, and a lean model — why we're building it this way.">六类出海资源整合、京东式集团结构、少人打法——把这件事为什么这么做大讲清楚。</p><span class="go" data-zh="看愿景 ↗" data-en="See the vision ↗">看愿景 ↗</span></a>
-    <a class="tile" href="/qianruhuang/"><div class="k" data-zh="04 · FOUNDER" data-en="04 · FOUNDER">04 · FOUNDER</div><h3 data-zh="关于我 · 小黄" data-en="About me · Xiao Huang">关于我 · 小黄</h3><p data-zh="黄倩如 Qianru Huang：义乌、浙大、亚利桑那州立，做研究、拍纪录片、也创业。个人与创业分开。" data-en="Qianru Huang: Yiwu, ZJU, Arizona State — research, documentaries and entrepreneurship. Personal and venture kept separate.">黄倩如 Qianru Huang：义乌、浙大、亚利桑那州立，做研究、拍纪录片、也创业。个人与创业分开。</p><span class="go" data-zh="去个人主页 ↗" data-en="Go to personal site ↗">去个人主页 ↗</span></a>
+<section class="sec">
+  <div class="wrap">
+    <div class="kicker" data-zh="01 — INSIGHT" data-en="01 — INSIGHT">01 — INSIGHT</div>
+    <h2 data-zh="一张网络，不是一个软件" data-en="A network, not a piece of software">一张网络，不是一个软件</h2>
+    <p class="lead" data-zh="一笔外贸从工厂到海外买家，中间要经过找货、询盘、报价、验货、报关、货代、海外仓、收款。今天这些角色散落在微信群里，靠人情和运气对接。SellerPilot 把它们接进同一个系统——每个人注册进来，领一个角色，网络自己把活派下去。" data-en="A trade from factory to overseas buyer passes through sourcing, inquiries, quotes, inspection, customs, freight, overseas warehousing and payment. Today these roles sit scattered in chat groups, connected by favor and luck. SellerPilot brings them into one system — everyone registers, takes a role, and the network routes the work.">一笔外贸从工厂到海外买家，中间要经过找货、询盘、报价、验货、报关、货代、海外仓、收款。今天这些角色散落在微信群里，靠人情和运气对接。SellerPilot 把它们接进同一个系统——每个人注册进来，领一个角色，网络自己把活派下去。</p>
+    <div class="net">
+      <div class="role"><div class="rn">ROLE 01</div><h3 data-zh="工厂 / 供应商" data-en="Factory / supplier">工厂 / 供应商</h3><p data-zh="发货、报价、被验货。系统帮它把货挂到海外买家面前。" data-en="Ships, quotes, gets inspected. The system puts its goods in front of overseas buyers.">发货、报价、被验货。系统帮它把货挂到海外买家面前。</p></div>
+      <div class="role"><div class="rn">ROLE 02</div><h3 data-zh="外贸员 / 买手" data-en="Trader / buyer">外贸员 / 买手</h3><p data-zh="接询盘、跟订单。系统替它算清 CIF 保本价和每一步进度。" data-en="Takes inquiries, follows orders. The system calculates CIF break-even and tracks every step.">接询盘、跟订单。系统替它算清 CIF 保本价和每一步进度。</p></div>
+      <div class="role"><div class="rn">ROLE 03</div><h3 data-zh="海外买家 / 侨社群" data-en="Overseas buyer / diaspora">海外买家 / 侨社群</h3><p data-zh="找货、验货、来中国。官网和旅游入口把它们带进来。" data-en="Sources, inspects, visits China. The site and travel entry bring them in.">找货、验货、来中国。官网和旅游入口把它们带进来。</p></div>
+      <div class="role"><div class="rn">ROLE 04</div><h3 data-zh="货代 / 海外仓" data-en="Freight / overseas warehouse">货代 / 海外仓</h3><p data-zh="履约、仓储、配送。系统把履约做成可追踪的一段段责任。" data-en="Fulfilment, storage, delivery. The system turns fulfilment into trackable responsibilities.">履约、仓储、配送。系统把履约做成可追踪的一段段责任。</p></div>
+      <div class="role center"><div class="rn">ROLE 05 · CORE</div><h3 data-zh="导游 / 地接" data-en="Guide / local host">导游 / 地接</h3><p data-zh="老外来中国旅游，注册进来当导游或地接——旅游是获客，注册是入网。" data-en="Foreigners visit China, register as a guide or host — travel is acquisition, registration is joining the network.">老外来中国旅游，注册进来当导游或地接——旅游是获客，注册是入网。</p></div>
+      <div class="role"><div class="rn">SYSTEM</div><h3 data-zh="SellerPilot OS" data-en="SellerPilot OS">SellerPilot OS</h3><p data-zh="九段状态机、保本报价、成本账本、异常预警——把重复活干掉，人只处理异常。" data-en="Nine-stage state machine, break-even quotes, cost ledger, exception alerts — automation does the routine, people handle exceptions.">九段状态机、保本报价、成本账本、异常预警——把重复活干掉，人只处理异常。</p></div>
+    </div>
   </div>
-</div></section>
+</section>
 
-<section class="sec gray"><div class="wrap">
-  <div class="kicker" data-zh="这不是 PPT" data-en="NOT A DECK">这不是 PPT</div>
-  <h2 data-zh="一套能跑起来的系统" data-en="A system that actually runs">一套能跑起来的系统</h2>
-  <div class="feat">
-    <div class="f"><div class="n">01</div><b data-zh="确定性流程" data-en="Deterministic flow">确定性流程</b><p data-zh="九段状态机把询单从进入到交付自动推进，不靠临时 coordination。" data-en="A nine-stage state machine advances each inquiry from intake to delivery — no ad-hoc coordination.">九段状态机把询单从进入到交付自动推进，不靠临时 coordination。</p></div>
-    <div class="f"><div class="n">02</div><b data-zh="先把钱算清" data-en="Know the numbers first">先把钱算清</b><p data-zh="CIF 保本报价与六项成本账本，让每一单在报价时就知道赚不赚钱。" data-en="CIF break-even quoting and a six-item cost ledger show if an order makes money before you quote it.">CIF 保本报价与六项成本账本，让每一单在报价时就知道赚不赚钱。</p></div>
-    <div class="f"><div class="n">03</div><b data-zh="异常才需要人" data-en="People only for anomalies">异常才需要人</b><p data-zh="系统盯住断点并主动预警，把有限的人手用在真正需要判断的地方。" data-en="The system watches for breakpoints and alerts early, so people focus where judgment matters.">系统盯住断点并主动预警，把有限的人手用在真正需要判断的地方。</p></div>
+<section class="sec gray">
+  <div class="wrap">
+    <div class="kicker" data-zh="02 — HOW IT FLOWS" data-en="02 — HOW IT FLOWS">02 — HOW IT FLOWS</div>
+    <h2 data-zh="一个老外，怎么变成网络里的一个角色" data-en="How an outsider becomes a role in the network">一个老外，怎么变成网络里的一个角色</h2>
+    <div class="flow">
+      <div class="step"><div class="n"></div><div><b data-zh="在官网看见中国货和中国行" data-en="Sees Chinese goods and a China trip on the site">在官网看见中国货和中国行</b><p data-zh="margueritesbury.com 是对外官网：老外来这里做 sourcing，也了解来中国旅游。这是流量入口，也是信任入口。" data-en="margueritesbury.com is the public site: foreigners come here to source and to learn about traveling to China — the entry for both traffic and trust.">margueritesbury.com 是对外官网：老外来这里做 sourcing，也了解来中国旅游。这是流量入口，也是信任入口。</p></div></div>
+      <div class="step"><div class="n"></div><div><b data-zh="Singles Way：来中国，注册一个角色" data-en="Singles Way: come to China, register a role">Singles Way：来中国，注册一个角色</b><p data-zh="看中国旅游、联系当地人，想做导游、地接、买手都可以——只要注册一个账号，就在整个系统里承担一个角色。" data-en="Explore China travel, connect with locals — want to be a guide, host or buyer? One account, one role in the whole system.">看中国旅游、联系当地人，想做导游、地接、买手都可以——只要注册一个账号，就在整个系统里承担一个角色。</p></div></div>
+      <div class="step"><div class="n"></div><div><b data-zh="系统把他和需要的角色匹配起来" data-en="The system matches him with the roles needed">系统把他和需要的角色匹配起来</b><p data-zh="SellerPilot OS 按订单和任务，把买家、工厂、外贸员、货代、导游连成一条可执行的工作流。" data-en="SellerPilot OS connects buyers, factories, traders, freight forwarders and guides into an executable workflow, based on orders and tasks.">SellerPilot OS 按订单和任务，把买家、工厂、外贸员、货代、导游连成一条可执行的工作流。</p></div></div>
+      <div class="step"><div class="n"></div><div><b data-zh="AI 视觉看图认货、验货" data-en="AI vision recognizes and inspects goods">AI 视觉看图认货、验货</b><p data-zh="参考 DeepLab / YOLO 一类的视觉模型做图像识别与目标检测——看图认款、以图搜货、现场验货，把线下实物变成系统里的结构化信息（技术参考方向）。" data-en="Referencing vision models like DeepLab / YOLO for image recognition and object detection — recognizing styles, searching goods by image, on-site inspection, turning physical goods into structured data (technical reference direction).">参考 DeepLab / YOLO 一类的视觉模型做图像识别与目标检测——看图认款、以图搜货、现场验货，把线下实物变成系统里的结构化信息（技术参考方向）。</p></div></div>
+      <div class="step"><div class="n"></div><div><b data-zh="报价、履约、结算在系统里闭环" data-en="Quote, fulfilment and settlement close the loop">报价、履约、结算在系统里闭环</b><p data-zh="CIF 保本报价先算清，九段状态机盯进度，六项成本账本记明细，异常才需要人介入。每个人分到自己那一段收益。" data-en="CIF break-even first, a nine-stage state machine watches progress, a six-item cost ledger tracks details, and people step in only on exceptions. Each role earns its share.">CIF 保本报价先算清，九段状态机盯进度，六项成本账本记明细，异常才需要人介入。每个人分到自己那一段收益。</p></div></div>
+    </div>
   </div>
-  <div class="cta" style="margin-top:36px"><a class="btn gold" href="/os/" data-zh="立即体验软件 →" data-en="Try the software →">立即体验软件 →</a></div>
-</div></section>
+</section>
 
-<footer><div class="fin">
-  <div>© 2026 Qianru (Carol) Huang · <a href="/qianruhuang/" data-zh="个人主页" data-en="Personal site">个人主页</a></div>
-  <div><a href="mailto:sinyu1998@gmail.com">sinyu1998@gmail.com</a></div>
-</div></footer>
+<section class="sec">
+  <div class="wrap">
+    <div class="kicker" data-zh="03 — THE PIECES" data-en="03 — THE PIECES">03 — THE PIECES</div>
+    <h2 data-zh="几个项目，其实是一个系统的几块" data-en="The projects are pieces of one system">几个项目，其实是一个系统的几块</h2>
+    <p class="lead" data-zh="它们不是并排的链接，而是同一张网络里各司其职的部分。" data-en="They aren't side-by-side links — each is a part of the same network doing its own job.">它们不是并排的链接，而是同一张网络里各司其职的部分。</p>
+    <div class="pillars">
+      <div class="pil"><span class="tag live" data-zh="已跑通 · LIVE" data-en="LIVE">已跑通 · LIVE</span><h3 data-zh="SellerPilot OS · 自动化系统" data-en="SellerPilot OS · automation">SellerPilot OS · 自动化系统</h3><p data-zh="九段外贸状态机、CIF 保本报价、六项成本账本、异常预警、CRM——可运行的软件，把网络里的重复活自动化。" data-en="Nine-stage trade state machine, CIF break-even quotes, a six-item cost ledger, exception alerts and CRM — runnable software that automates the routine work of the network.">九段外贸状态机、CIF 保本报价、六项成本账本、异常预警、CRM——可运行的软件，把网络里的重复活自动化。</p><div class="roleline">→ /os/</div></div>
+      <div class="pil"><span class="tag live" data-zh="已有入口 · LIVE" data-en="LIVE ENTRY">已有入口 · LIVE</span><h3 data-zh="margueritesbury.com · 对外官网" data-en="margueritesbury.com · public site">margueritesbury.com · 对外官网</h3><p data-zh="带老外做 sourcing、了解来中国旅游的官网入口——把外部的人引进这张网络。" data-en="The public site that leads foreigners to source and learn about traveling to China — bringing outsiders into the network.">带老外做 sourcing、了解来中国旅游的官网入口——把外部的人引进这张网络。</p><div class="roleline">→ 官网入口</div></div>
+      <div class="pil"><span class="tag build" data-zh="整合中 · INTEGRATING" data-en="INTEGRATING">整合中 · INTEGRATING</span><h3 data-zh="Singles Way · 旅游与角色入口" data-en="Singles Way · travel &amp; roles">Singles Way · 旅游与角色入口</h3><p data-zh="给老外看中国旅游、联系当地人；注册一个账号就在系统里当导游、地接或其他角色。旅游是获客，注册是入网。" data-en="Show China travel to foreigners, connect them with locals; one account makes them a guide, host or another role. Travel acquires, registration onboards.">给老外看中国旅游、联系当地人；注册一个账号就在系统里当导游、地接或其他角色。旅游是获客，注册是入网。</p><div class="roleline">→ 规划 / 整合中</div></div>
+      <div class="pil"><span class="tag ref" data-zh="技术参考 · REFERENCE" data-en="TECH REFERENCE">技术参考 · REFERENCE</span><h3 data-zh="DeepLab / YOLO · 视觉识别" data-en="DeepLab / YOLO · vision">DeepLab / YOLO · 视觉识别</h3><p data-zh="用图像识别与目标检测的思路做看图认款、以图搜货、现场验货——让线下货品变成系统能处理的信息。作为技术参考方向，不夸大为已上线能力。" data-en="Using image recognition and object detection for style recognition, image-based search and on-site inspection — turning physical goods into data the system can handle. A technical reference direction, not claimed as a shipped feature.">用图像识别与目标检测的思路做看图认款、以图搜货、现场验货——让线下货品变成系统能处理的信息。作为技术参考方向，不夸大为已上线能力。</p><div class="roleline">→ 技术参考</div></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:#7fd1a8"></i><span data-zh="已跑通 / 已有" data-en="Live / existing">已跑通 / 已有</span></span>
+      <span><i style="background:var(--gold)"></i><span data-zh="整合中" data-en="Integrating">整合中</span></span>
+      <span><i style="background:var(--faint)"></i><span data-zh="技术参考 / 规划" data-en="Reference / planned">技术参考 / 规划</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="sec gray">
+  <div class="wrap">
+    <div class="kicker" data-zh="04 — WHY ME" data-en="04 — WHY ME">04 — WHY ME</div>
+    <h2 data-zh="为什么是我来整合这张网" data-en="Why I'm the one to connect it">为什么是我来整合这张网</h2>
+    <p class="lead" data-zh="这不是从零想象出来的模式，而是我从义乌的田野里长出来的——我用我真实的经历去理解每个角色。" data-en="This isn't a model imagined from scratch — it grew out of fieldwork in Yiwu. I understand each role from real experience.">这不是从零想象出来的模式，而是我从义乌的田野里长出来的——我用我真实的经历去理解每个角色。</p>
+    <div class="tiles">
+      <div class="tile"><div class="k">YIWU ROOTS</div><h3 data-zh="在义乌商贸城长大" data-en="Raised around Yiwu market">在义乌商贸城长大</h3><p data-zh="本科论文以义乌两座电商村为田野，深度访谈 12 位不同阶段的主播；后续延伸到工厂主、外贸员、海外买家与侨社群这些出海利益相关者。" data-en="My bachelor's thesis took two Yiwu e-commerce villages as field sites, interviewing 12 livestream hosts; later extended to factory owners, traders, overseas buyers and diaspora communities.">本科论文以义乌两座电商村为田野，深度访谈 12 位不同阶段的主播；后续延伸到工厂主、外贸员、海外买家与侨社群这些出海利益相关者。</p></div>
+      <div class="tile"><div class="k">REAL OPERATIONS</div><h3 data-zh="一线跑过真实生意" data-en="Ran real operations">一线跑过真实生意</h3><p data-zh="从国内电商到跨境电商，带团队管理 90+ 店铺，上一年度自有体系约 1 亿元 GMV——系统里的每一步都先在真实订单里验证过。" data-en="From domestic to cross-border e-commerce, managing 90+ stores and about ¥100M GMV last year — every step was validated in real orders before going into the system.">从国内电商到跨境电商，带团队管理 90+ 店铺，上一年度自有体系约 1 亿元 GMV——系统里的每一步都先在真实订单里验证过。</p></div>
+      <div class="tile"><div class="k">BUILD + RESEARCH</div><h3 data-zh="既懂人，也能写代码" data-en="Understands people and code">既懂人，也能写代码</h3><p data-zh="浙大本硕、德州农工、亚利桑那州立计算机硕士；用质化+量化的方法研究人与平台，再亲手把研究直觉做成能跑的系统。" data-en="ZJU, Texas A&amp;M, and an MEng in CS at Arizona State — studying people and platforms with mixed methods, then turning research intuition into a working system.">浙大本硕、德州农工、亚利桑那州立计算机硕士；用质化+量化的方法研究人与平台，再亲手把研究直觉做成能跑的系统。</p></div>
+      <div class="tile"><div class="k">LEAN BY DESIGN</div><h3 data-zh="人少，就更要让系统干活" data-en="Few people? Let the system work">人少，就更要让系统干活</h3><p data-zh="现在团队人少，所以不靠堆人：状态机干重复活、先把钱算清、异常才需要人；资源用接的，不靠买的。" data-en="The team is small, so we don't add headcount: state machines do the routine, numbers come first, people handle exceptions, and resources are connected rather than owned.">现在团队人少，所以不靠堆人：状态机干重复活、先把钱算清、异常才需要人；资源用接的，不靠买的。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="kicker" data-zh="05 — GO DEEPER" data-en="05 — GO DEEPER">05 — GO DEEPER</div>
+    <h2 data-zh="从这张网，去任何地方" data-en="From this network, go anywhere">从这张网，去任何地方</h2>
+    <div class="tiles">
+      <a class="tile" href="/sellerpilot/"><div class="k">PRODUCT</div><h3 data-zh="产品主站" data-en="Product site">产品主站</h3><p data-zh="SellerPilot 产品定位、能力与收费逻辑。" data-en="SellerPilot positioning, capabilities and pricing logic.">SellerPilot 产品定位、能力与收费逻辑。</p><span class="go" data-zh="进入产品站 →" data-en="Open product site →">进入产品站 →</span></a>
+      <a class="tile" href="/os/"><div class="k">SOFTWARE</div><h3 data-zh="自动化软件 OS" data-en="OS software">自动化软件 OS</h3><p data-zh="九段状态机、保本报价、账本与预警——在线演示和一键启动。" data-en="State machine, break-even quotes, ledger and alerts — live demo and one-click start.">九段状态机、保本报价、账本与预警——在线演示和一键启动。</p><span class="go" data-zh="打开软件入口 →" data-en="Open software →">打开软件入口 →</span></a>
+      <a class="tile" href="/vision/"><div class="k">VISION</div><h3 data-zh="战略愿景" data-en="Strategic vision">战略愿景</h3><p data-zh="六类资源、京东式履约、少人打法的完整推演。" data-en="Six resources, JD-style fulfilment, and the lean-team playbook.">六类资源、京东式履约、少人打法的完整推演。</p><span class="go" data-zh="查看愿景 →" data-en="See vision →">查看愿景 →</span></a>
+      <a class="tile" href="/qianruhuang/"><div class="k">PERSON</div><h3 data-zh="关于我 · 小黄" data-en="About me · Xiao Huang">关于我 · 小黄</h3><p data-zh="研究、纪录片、创作与个人社交；论文空间可点开全文。" data-en="Research, documentaries, creative work and socials; full papers are one click away.">研究、纪录片、创作与个人社交；论文空间可点开全文。</p><span class="go" data-zh="访问个人站 →" data-en="Visit personal site →">访问个人站 →</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="cta">
+  <div class="wrap">
+    <div class="kicker" data-zh="LET'S TALK" data-en="LET'S TALK">LET'S TALK</div>
+    <h2 data-zh="这张网，从一个人的一个角色开始" data-en="This network starts with one person taking one role">这张网，从一个人的一个角色开始</h2>
+    <p class="lead" data-zh="想做 sourcing、来中国旅游、当导游，或者只是想跑一单看看——告诉我你想承担哪个角色。" data-en="Want to source, visit China, be a guide, or just run one trial order — tell me which role you want.">想做 sourcing、来中国旅游、当导游，或者只是想跑一单看看——告诉我你想承担哪个角色。</p>
+    <div style="margin-top:30px;display:flex;gap:14px;flex-wrap:wrap">
+      <a class="btn" href="/qianruhuang/connect.html" data-zh="联系我 →" data-en="Get in touch →">联系我 →</a>
+      <a class="btn ghost" href="mailto:sinyu1998@gmail.com">sinyu1998@gmail.com</a>
+    </div>
+    <p style="margin-top:40px;font-family:var(--mono);font-size:11px;color:var(--faint)">© 2026 SellerPilot · Qianru (Carol) Huang</p>
+  </div>
+</footer>
+
 <script src="assets/site.js"></script>
-</body></html>
+</body>
+</html>

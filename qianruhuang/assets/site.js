@@ -8,7 +8,8 @@
       'index.html':[ '小黄 · Qianru (Carol) Huang — 个人主页','Xiao Huang · Qianru (Carol) Huang — Personal Website' ],
       'profile.html':[ '档案 · Qianru (Carol) Huang','Profile · Qianru (Carol) Huang' ],
       'creative.html':[ '创作 · Qianru (Carol) Huang','Creative · Qianru (Carol) Huang' ],
-      'connect.html':[ '联系 · Qianru (Carol) Huang','Contact · Qianru (Carol) Huang' ]
+      'connect.html':[ '联系 · Qianru (Carol) Huang','Contact · Qianru (Carol) Huang' ],
+      'papers.html':[ '论文空间 · Qianru (Carol) Huang','Papers &amp; Research · Qianru (Carol) Huang' ]
     };
     var file=location.pathname.split('/').pop()||'index.html';
     if(titleMap[file]) doc.title=titleMap[file][en?1:0];
