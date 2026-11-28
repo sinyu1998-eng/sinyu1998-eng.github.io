@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title data-zh="找到你的角色 · SellerPilot" data-en="Find your role · SellerPilot">找到你的角色 · SellerPilot</title>
+<meta name="description" content="每个人都能在外贸的角色网络里找到自己的位置：工厂、外贸员、海外买家、导游、货代、主播、商会、开发者……选一个角色，看看系统怎么帮你。">
+<link rel="canonical" href="https://sinyu1998-eng.github.io/roles/">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
+.filters button{font-family:var(--sans);font-size:12.5px;color:var(--dim);background:transparent;border:1px solid var(--line);
+  border-radius:999px;padding:8px 16px;cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--ink);border-color:var(--faint)}
+.filters button.on{background:var(--gold);color:#0f1620;border-color:var(--gold);font-weight:600}
+.rolegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
+.rcard{border:1px solid var(--line);border-radius:15px;background:var(--bg2);overflow:hidden;transition:border-color .25s,transform .25s}
+.rcard:hover{border-color:rgba(232,185,106,.4);transform:translateY(-3px)}
+.rcard.open{border-color:rgba(232,185,106,.55)}
+.rhead{display:flex;align-items:flex-start;gap:16px;padding:22px 22px;cursor:pointer;user-select:none}
+.rnum{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;padding-top:3px;min-width:26px}
+.rbody{flex:1;min-width:0}
+.rbody h3{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.3}
+.rbody .rsub{font-size:12.5px;color:var(--dim);margin-top:5px;line-height:1.6}
+.rmeta{display:flex;align-items:center;gap:10px;margin-top:11px;flex-wrap:wrap}
+.rstatus{font-family:var(--mono);font-size:10px;letter-spacing:.05em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+.rstatus.live{color:#7ee0b0;border-color:rgba(126,224,176,.35)}
+.rexpand{font-family:var(--mono);font-size:11px;color:var(--gold);margin-left:auto;transition:transform .25s}
+.rcard.open .rexpand{transform:rotate(45deg)}
+.rdetail{display:none;padding:0 22px 24px;border-top:1px solid var(--line)}
+.rcard.open .rdetail{display:block}
+.rd{padding-top:16px}
+.rd .lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.rd p{font-size:13.4px;color:var(--dim);line-height:1.8;margin-top:5px}
+.rd p b{color:var(--ink);font-weight:600}
+.joinbar{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.joinbar span{font-size:12.5px;color:var(--dim)}
+.joinbar a.jbtn{font-family:var(--sans);font-size:12.5px;color:#0f1620;background:var(--gold);border-radius:8px;padding:8px 16px;font-weight:600;white-space:nowrap}
+.note{font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:14px}
+@media(max-width:760px){.rolegrid{grid-template-columns:1fr}.rhead{gap:12px;padding:18px}.rdetail{padding:0 18px 20px}}
+</style>
+</head>
+<body data-lang="zh">
+
+<nav id="nav">
+  <a class="logo" href="/">Seller<i>Pilot</i></a>
+  <div class="nav-r">
+    <a href="/sellerpilot/" data-zh="产品" data-en="Product">产品</a>
+    <a href="/os/" data-zh="软件" data-en="Software">软件</a>
+    <a href="/roles/" data-zh="角色" data-en="Roles">角色</a>
+    <a href="/vision/" data-zh="愿景" data-en="Vision">愿景</a>
+    <a href="/qianruhuang/" data-zh="关于我" data-en="About">关于我</a>
+    <div class="lang"><button class="on" data-l="zh">中文</button><button data-l="en">EN</button></div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="hero-tag"><b></b><span data-zh="角色网络 · ROLE NETWORK" data-en="ROLE NETWORK">角色网络 · ROLE NETWORK</span></div>
+    <h1 data-zh="这张网里，<br><em>有你的位置</em>" data-en="There's a place for you<br><em>in this network</em>">这张网里，<br><em>有你的位置</em></h1>
+    <p class="h1sub" data-zh="外贸不是一家公司的事，是一群人的角色网络。不管你有工厂、懂外语、会开车、能直播、做支付，还是只想来中国看看——在这里选一个你能承担的角色，看看系统怎么帮你把活干起来。" data-en="Foreign trade isn't one company's job — it's a network of roles. Whether you have a factory, speak a language, drive, stream, do payments, or just want to visit China — pick a role you can play and see how the system helps you do the work.">外贸不是一家公司的事，是一群人的角色网络。不管你有工厂、懂外语、会开车、能直播、做支付，还是只想来中国看看——在这里选一个你能承担的角色，看看系统怎么帮你把活干起来。</p>
+    <div class="filters" id="filters"></div>
+  </div>
+</header>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="rolegrid" id="rolegrid"></div>
+    <p class="note" data-zh="说明：角色与收益规则仍在搭建中。标注「整合中」「生态合作」的为规划或对接方向，不代表已上线功能。报名通过邮件发送，不涉及任何费用。" data-en="Note: roles and earning rules are still being built. Items marked 'Integrating' or 'Ecosystem' are plans or partnership directions, not shipped features. Sign-up opens an email — no fees involved.">说明：角色与收益规则仍在搭建中。标注「整合中」「生态合作」的为规划或对接方向，不代表已上线功能。报名通过邮件发送，不涉及任何费用。</p>
+  </div>
+</section>
+
+<section class="sec gray">
+  <div class="wrap">
+    <div class="kicker" data-zh="10 — JOIN THE NETWORK" data-en="10 — JOIN THE NETWORK">10 — JOIN THE NETWORK</div>
+    <h2 data-zh="你擅长的，正是这张网缺的" data-en="What you're good at is what this network needs">你擅长的，正是这张网缺的</h2>
+    <p class="lead" data-zh="没找到刚好匹配的角色？直接告诉我们你是谁、有什么资源，我们帮你定位你在网络里的位置。" data-en="Didn't find an exact match? Tell us who you are and what resources you have — we'll help place you in the network.">没找到刚好匹配的角色？直接告诉我们你是谁、有什么资源，我们帮你定位你在网络里的位置。</p>
+    <div class="joinbar" style="margin-top:30px">
+      <span data-zh="把你熟悉的角色、城市和资源发给我们。" data-en="Send us your role, city and resources.">把你熟悉的角色、城市和资源发给我们。</span>
+      <a class="jbtn" id="joinBtn" href="mailto:sinyu1998@gmail.com?subject=%E6%88%91%E6%83%B3%E5%8A%A0%E5%85%A5%20SellerPilot%20%E8%A7%92%E8%89%B2%E7%BD%91%E7%BB%9C" data-zh="发送报名邮件 →" data-en="Send sign-up email →">发送报名邮件 →</a>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--faint);font-size:12px">
+  <div class="wrap">
+    <span data-zh="SellerPilot · 让每个人在外贸里承担一个角色" data-en="SellerPilot · Everyone takes a role in foreign trade">SellerPilot · 让每个人在外贸里承担一个角色</span> ·
+    <a href="/" style="border-bottom:1px solid var(--faint)" data-zh="返回首页" data-en="Back home">返回首页</a>
+  </div>
+</footer>
+
+<script src="/roles/roles-data.js"></script>
+<script>
+(function(){
+  var doc=document, body=doc.body;
+  var en=(body.getAttribute('data-lang')||'zh')==='en';
+  var CATS=window.ROLES_CATS, DATA=window.ROLES_DATA;
+  var grid=doc.getElementById('rolegrid'), filters=doc.getElementById('filters');
+  var current='all';
+
+  function L(o){return en?o.en:o.zh;}
+
+  function statusClass(s){
+    if(s==='Open'||s==='可加入'||s==='官网入口'||s==='Site entry'||s==='开源可见'||s==='Open source') return 'live';
+    return '';
+  }
+
+  function renderFilters(){
+    filters.innerHTML='';
+    CATS.forEach(function(c){
+      var b=doc.createElement('button');
+      b.textContent=L(c);
+      b.className=(c.id===current)?'on':'';
+      b.addEventListener('click',function(){current=c.id;renderFilters();renderRoles();});
+      filters.appendChild(b);
+    });
+  }
+
+  function renderRoles(){
+    grid.innerHTML='';
+    DATA.filter(function(r){return current==='all'||r.cat===current;}).forEach(function(r){
+      var d=L(r);
+      var card=doc.createElement('div');card.className='rcard';
+      var head=doc.createElement('div');head.className='rhead';
+      head.innerHTML='<div class="rnum">'+r.num+'</div>'+
+        '<div class="rbody"><h3>'+d.name+'</h3><div class="rsub">'+d.sub+'</div>'+
+        '<div class="rmeta"><span class="rstatus '+statusClass(d.status)+'">'+d.status+'</span><span class="rexpand">+</span></div></div>';
+      head.addEventListener('click',function(){card.classList.toggle('open');});
+      var det=doc.createElement('div');det.className='rdetail';
+      det.innerHTML=
+        '<div class="rd"><div class="lab">'+(en?'01 / WHO':'01 / 你是谁')+'</div><p>'+d.who+'</p></div>'+
+        '<div class="rd"><div class="lab">'+(en?'02 / WHAT YOU DO':'02 / 你做什么')+'</div><p>'+d.does+'</p></div>'+
+        '<div class="rd"><div class="lab">'+(en?'03 / HOW THE SYSTEM HELPS':'03 / 系统怎么帮你')+'</div><p>'+d.system+'</p></div>'+
+        '<div class="rd"><div class="lab">'+(en?'04 / HOW YOU EARN':'04 / 收益从哪来')+'</div><p>'+d.earn+'</p></div>'+
+        '<div class="rd"><div class="lab">'+(en?'05 / HOW TO JOIN':'05 / 怎么加入')+'</div><p>'+d.join+'</p></div>';
+      card.appendChild(head);card.appendChild(det);grid.appendChild(card);
+    });
+  }
+
+  function applyText(){
+    doc.documentElement.lang=en?'en':'zh-CN';
+    doc.querySelectorAll('[data-zh]').forEach(function(el){
+      var t=el.getAttribute(en?'data-en':'data-zh');if(t!==null)el.innerHTML=t;
+    });
+    doc.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',(b.getAttribute('data-l')==='en')===en);});
+  }
+
+  doc.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click',function(){en=(b.getAttribute('data-l')==='en');applyText();renderFilters();renderRoles();});
+  });
+  var nav=doc.getElementById('nav');
+  function sc(){nav.classList.toggle('scrolled',window.scrollY>10);}
+  window.addEventListener('scroll',sc,{passive:true});sc();
+  applyText();renderFilters();renderRoles();
+})();
+</script>
+</body>
+</html>
