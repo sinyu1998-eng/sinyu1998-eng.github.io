@@ -3,269 +3,828 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>小黄 · Qianru (Carol) Huang — 个人主页</title>
-<meta name="description" content="小黄（黄倩如 Qianru Carol Huang）的个人主页：关于我、我的社交账号（X / LinkedIn / Bilibili）与创作。创业项目请见 SellerPilot。">
-<meta name="theme-color" content="#faf8f4">
+<title>小黄的主页 · 黄倩如 Qianru Huang</title>
+<meta name="description" content="义乌人小黄的主页：时间轴、AI 眼镜工厂版、站点矩阵和留言墙。欢迎来逛。">
+<meta name="theme-color" content="#060a13">
 <meta property="og:type" content="website">
-<meta property="og:title" content="小黄 · Qianru (Carol) Huang — 个人主页">
-<meta property="og:description" content="义乌人，浙大 vs 亚利桑那州立，做研究、拍纪录片、写东西。这里只放关于我个人的事。">
-<meta property="og:site_name" content="小黄的个人主页">
+<meta property="og:title" content="你好，我是小黄 · 黄倩如 Qianru Huang">
+<meta property="og:description" content="义乌人，从小在商贸城长大。现在做 AI 出海系统，给工厂配眼镜，也做研究。欢迎来逛，也可以给我留言。">
+<meta property="og:site_name" content="小黄的主页">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://sinyu1998-eng.github.io/">
 <link rel="alternate" hreflang="zh-CN" href="https://sinyu1998-eng.github.io/">
 <link rel="alternate" hreflang="en" href="https://sinyu1998-eng.github.io/en/">
 <link rel="alternate" hreflang="x-default" href="https://sinyu1998-eng.github.io/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231A1A18'/%3E%3Ctext x='32' y='43' font-size='36' font-family='Georgia,serif' fill='%23faf8f4' text-anchor='middle'%3EQ%3C/text%3E%3C/svg%3E">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060a13'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23d9b36a' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23d9b36a'/%3E%3C/svg%3E">
 <style>
 :root{
-  --paper:#faf8f4; --paper2:#f3efe7; --ink:#1a1a18; --muted:#7c766c; --faint:#a9a296;
-  --accent:#b4472f; --line:#e2ddd2;
-  --serif:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --bg:#060a13; --bg2:#0a1220; --ink:#e8eef7; --dim:#8fa0b8; --faint:#54627a;
+  --gold:#d9b36a; --blue:#4f8fd9; --line:rgba(143,160,184,.18);
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
-::selection{background:var(--accent);color:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;line-height:1.7}
+::selection{background:var(--gold);color:#0a0a0a}
 a{color:inherit;text-decoration:none}
+canvas{display:block}
 
-/* ---------- nav ---------- */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-  padding:20px clamp(20px,5vw,64px);background:rgba(250,248,244,.86);backdrop-filter:blur(12px);
-  border-bottom:1px solid transparent;transition:border-color .3s}
-nav.scrolled{border-bottom-color:var(--line)}
-.brand{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:.02em}
-.brand small{font-family:var(--sans);font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.08em;margin-left:8px}
-.nav-r{display:flex;align-items:center;gap:clamp(16px,3vw,34px)}
-.nav-r a{font-size:13px;color:var(--muted);transition:color .2s}
-.nav-r a:hover{color:var(--ink)}
-.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px}
-.lang button{border:0;background:none;font-family:var(--sans);font-size:11px;color:var(--muted);
-  padding:5px 12px;border-radius:999px;cursor:pointer;transition:all .2s}
-.lang button.on{background:var(--ink);color:var(--paper)}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold);z-index:99;transition:width .1s linear}
+#nav{position:fixed;top:0;left:0;right:0;z-index:98;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;font-size:12px;letter-spacing:.14em;color:var(--dim);
+  background:linear-gradient(to bottom,rgba(6,10,19,.9),rgba(6,10,19,0));backdrop-filter:blur(6px)}
+#nav b{color:var(--ink);letter-spacing:.2em;font-weight:600;cursor:pointer;user-select:none;transition:transform .2s;white-space:nowrap}
+#nav span a{margin-left:18px;transition:color .3s}
+#nav span a:hover{color:var(--gold)}
 
-/* ---------- shared ---------- */
-.wrap{max-width:920px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
-.sec{padding:clamp(72px,11vw,124px) 0;border-top:1px solid var(--line)}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
-h2{font-family:var(--serif);font-size:clamp(26px,4.4vw,40px);font-weight:600;line-height:1.3;letter-spacing:.01em}
-.lead{color:var(--muted);font-size:clamp(14px,1.8vw,16px);max-width:620px;margin-top:18px}
+#hero{position:relative;height:100vh;min-height:640px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+#globe{position:absolute;inset:0;width:100%;height:100%}
+.hero-in{position:relative;z-index:2;padding:0 20px}
+.hero-kicker{font-size:12px;letter-spacing:.5em;color:var(--gold);margin-bottom:26px;text-transform:uppercase}
+.hero-h1{font-family:var(--serif);font-weight:600;font-size:clamp(36px,6.4vw,76px);letter-spacing:.06em;line-height:1.25}
+.hero-h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{margin-top:26px;color:var(--dim);font-size:clamp(14px,1.7vw,17px);letter-spacing:.08em;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-id{margin-top:40px;font-size:13px;color:var(--faint);letter-spacing:.18em}
+.hero-id b{color:var(--ink);font-weight:500}
+.hero-cta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hbtn{border:1px solid var(--faint);color:var(--dim);padding:11px 26px;font-size:13px;letter-spacing:.16em;transition:all .3s;display:inline-block}
+.hbtn:hover{border-color:var(--ink);color:var(--ink)}
+.hbtn.g{border-color:var(--gold);color:var(--gold)}
+.hbtn.g:hover{background:var(--gold);color:#0a0a0a}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:var(--faint);font-size:11px;letter-spacing:.3em;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.5}50%{transform:translate(-50%,8px);opacity:1}}
 
-/* ---------- hero ---------- */
-header{padding:clamp(120px,20vh,180px) 0 clamp(64px,9vw,96px)}
-.hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:24px}
-h1{font-family:var(--serif);font-size:clamp(46px,9vw,88px);font-weight:600;line-height:1.06;letter-spacing:-.01em}
-h1 .en-name{display:block;font-size:clamp(18px,2.6vw,27px);color:var(--muted);font-weight:400;margin-top:14px;letter-spacing:.01em}
-.tagline{margin-top:28px;font-size:clamp(15px,2vw,18px);color:var(--ink);max-width:540px}
-.tagline em{font-style:normal;color:var(--accent);border-bottom:1px solid var(--accent)}
-.avatar{width:clamp(120px,17vw,168px);height:clamp(120px,17vw,168px);border-radius:50%;object-fit:cover;
-  background:var(--paper2);border:1px solid var(--line);filter:grayscale(.08)}
-.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
-.pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);
-  border:1px solid var(--line);border-radius:999px;padding:8px 15px;background:#fff}
-.pill b{color:var(--ink);font-weight:600}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+section{position:relative}
+.wrap{max-width:1080px;margin:0 auto;padding:110px 24px}
+.sec-kicker{font-size:12px;letter-spacing:.45em;color:var(--gold);margin-bottom:16px}
+.sec-h2{font-family:var(--serif);font-size:clamp(26px,4vw,44px);letter-spacing:.06em;font-weight:600;line-height:1.35}
+.sec-lead{margin-top:18px;color:var(--dim);max-width:640px;font-size:15px}
 
-/* ---------- socials ---------- */
-.socials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-.card{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:14px;background:#fff;
-  padding:26px 24px;transition:transform .25s,box-shadow .25s,border-color .25s}
-.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(26,26,24,.08);border-color:var(--faint)}
-.card .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.card .ico{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
-.card .arrow{color:var(--faint);font-size:18px;transition:transform .2s,color .2s}
-.card:hover .arrow{transform:translate(3px,-3px);color:var(--accent)}
-.card h3{font-family:var(--serif);font-size:21px;font-weight:600}
-.card .handle{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:4px}
-.card .desc{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.65;flex:1}
-.card .stat{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+#nums{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ngrid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.ncell{background:var(--bg2);padding:34px 18px;text-align:center}
+.nnum{font-family:var(--serif);font-size:clamp(26px,3.4vw,44px);color:var(--ink);font-weight:600}
+.nnum small{font-size:.5em;color:var(--gold);margin-left:2px}
+.nlab{margin-top:8px;font-size:12px;color:var(--dim);letter-spacing:.12em}
 
-/* ---------- about ---------- */
-.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;margin-top:38px}
-.fact{padding:18px 0;border-bottom:1px solid var(--line)}
-.fact .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.fact .v{font-size:15px;margin-top:6px}
+#life .tl{position:relative;margin-top:70px}
+.tl-line{position:absolute;left:24px;top:0;bottom:0;width:1px;background:var(--line)}
+.tl-line i{position:absolute;left:0;top:0;width:1px;height:0;background:linear-gradient(to bottom,var(--gold),rgba(217,179,106,.15));display:block}
+.stage{position:relative;padding:0 0 96px 76px;opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+.stage.show{opacity:1;transform:none}
+.dot{position:absolute;left:24px;top:10px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1px solid var(--faint);transform:translateX(-50%);transition:all .6s}
+.stage.show .dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 6px rgba(217,179,106,.12),0 0 18px rgba(217,179,106,.5)}
+.year{font-family:var(--serif);font-size:clamp(30px,4.4vw,52px);color:var(--ink);font-weight:600;letter-spacing:.04em;line-height:1}
+.year small{font-size:.42em;color:var(--faint);letter-spacing:.2em;margin-left:14px;font-family:var(--sans);font-weight:400}
+.stage h3{margin-top:14px;font-size:clamp(17px,2.2vw,21px);font-weight:600;letter-spacing:.05em}
+.stage p{margin-top:10px;color:var(--dim);font-size:14.5px;max-width:620px}
+.chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12px;color:var(--gold);border:1px solid rgba(217,179,106,.35);padding:5px 12px;border-radius:100px;letter-spacing:.06em}
+.chip.blue{color:var(--blue);border-color:rgba(79,143,217,.4)}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.fcard{border:1px solid var(--line);background:var(--bg2);padding:26px 22px;position:relative;overflow:hidden;transition:border-color .4s,transform .4s}
+.fcard:hover{border-color:var(--gold);transform:translateY(-4px)}
+.fcard::before{content:"";position:absolute;top:0;left:0;height:2px;width:0;background:var(--gold);transition:width .8s ease}
+.fcard:hover::before{width:100%}
+.fcard h4{font-size:16px;letter-spacing:.08em;font-weight:600}
+.fcard .tag{font-size:11px;color:var(--gold);letter-spacing:.3em;margin-bottom:10px}
+.fcard p{font-size:13px;color:var(--dim);margin-top:10px}
 
-/* ---------- creative ---------- */
-.work{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
-.work .t{font-family:var(--serif);font-size:19px;font-weight:600}
-.work .t span{font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:400;margin-left:12px}
-.work .n{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+#specs{background:var(--bg2);border-top:1px solid var(--line)}
+.gl-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;margin-top:56px;align-items:start}
+.gl-visual{position:relative;border:1px solid var(--line);background:#080d17;padding:34px 24px}
+.gl-visual svg{width:100%;height:auto;display:block}
+.hotspot{cursor:pointer}
+.hotspot circle{transition:all .3s}
+.hotspot.on circle{fill:var(--gold)}
+.gl-cam-pulse{animation:pulse 2.2s ease-out infinite;transform-origin:center}
+@keyframes pulse{0%{opacity:.9;r:5}70%{opacity:0;r:16}100%{opacity:0}}
+.gl-caption{margin-top:16px;font-size:12px;color:var(--faint);text-align:center;letter-spacing:.12em}
+.gl-panel h3{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);font-weight:600;letter-spacing:.06em}
+.gl-panel .sub{color:var(--dim);font-size:14px;margin-top:10px}
+.scen{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:24px}
+.scen button{background:none;border:1px solid var(--line);color:var(--dim);padding:13px 10px;font-size:13.5px;letter-spacing:.06em;cursor:pointer;font-family:var(--sans);transition:all .3s;text-align:left;padding-left:14px}
+.scen button:hover{color:var(--ink);border-color:var(--faint)}
+.scen button.act{border-color:var(--gold);color:var(--gold);background:rgba(217,179,106,.06)}
+.scen button i{font-style:normal;display:block;font-size:11px;color:var(--faint);margin-top:3px;letter-spacing:.14em}
+.scen button.act i{color:rgba(217,179,106,.7)}
+.scen-out{margin-top:22px;border-left:2px solid var(--gold);padding:16px 20px;background:rgba(217,179,106,.05);font-size:14px;color:var(--ink);min-height:96px;transition:opacity .3s}
+.scen-out b{color:var(--gold)}
+.specline{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.spec-c{background:var(--bg2);padding:14px 12px;text-align:center}
+.spec-c b{display:block;font-family:var(--serif);font-size:17px;color:var(--ink)}
+.spec-c span{font-size:11px;color:var(--faint);letter-spacing:.1em}
+.fixes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px}
+.fx{background:var(--bg2);padding:30px 24px}
+.fx-n{font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:.3em}
+.fx h4{margin-top:12px;font-size:17px;letter-spacing:.06em}
+.fx p{margin-top:10px;font-size:13px;color:var(--dim)}
+.fixnote{margin-top:14px;font-size:12px;color:var(--faint);letter-spacing:.08em}
 
-/* ---------- ventures (separated) ---------- */
-.ventures{background:var(--paper2)}
-.vbox{border:1px solid var(--line);border-radius:14px;background:#fff;padding:clamp(24px,4vw,38px);
-  display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
-.vbox h3{font-family:var(--serif);font-size:clamp(20px,3vw,27px);font-weight:600}
-.vbox p{color:var(--muted);font-size:14px;margin-top:10px;max-width:520px}
-.vbtn{display:inline-flex;align-items:center;gap:10px;font-size:13px;border:1px solid var(--ink);
-  border-radius:999px;padding:12px 22px;transition:all .2s;white-space:nowrap}
-.vbtn:hover{background:var(--ink);color:var(--paper)}
-.sep-note{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em;margin-top:16px}
+#bases .bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:50px}
+.bcard{border:1px solid var(--line);background:var(--bg2);padding:24px 22px;display:flex;flex-direction:column;gap:8px;transition:all .35s;position:relative;overflow:hidden}
+.bcard:hover{border-color:var(--gold);transform:translateY(-3px)}
+.bcard .bn{font-size:11px;color:var(--gold);letter-spacing:.3em}
+.bcard h4{font-size:17px;letter-spacing:.05em;font-weight:600}
+.bcard p{font-size:13px;color:var(--dim)}
+.bcard .open{margin-top:auto;font-size:12px;color:var(--gold);letter-spacing:.14em;opacity:0;transform:translateY(4px);transition:all .35s}
+.bcard:hover .open{opacity:1;transform:none}
+.bcard.live::after{content:"";position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:#7ee08a;box-shadow:0 0 8px #7ee08a;animation:blink 2s infinite}
+.bgroup{margin-top:52px}
+.bgh{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.bgh i{font-style:normal;font-size:11px;letter-spacing:.3em;color:var(--gold);font-weight:600}
+.bgh b{font-size:18px;letter-spacing:.04em;font-weight:600}
+.bgh span{margin-left:auto;font-size:11px;color:var(--faint);letter-spacing:.1em;text-align:right}
+.bcard .open.always{opacity:1!important;transform:none!important}
+.bcard .bn b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.bcard.key{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,179,106,.07),var(--bg2))}
+.bcard.tool{border-color:rgba(79,143,217,.55)}
+.bcard.tool .bn{color:#7fb2e8}
+.bcard .sep{height:1px;background:var(--line);margin:4px 0}
+@media(max-width:760px){.bgh span{display:none}.bgh b{font-size:16px}}
 
-/* ---------- footer ---------- */
-footer{padding:44px clamp(20px,5vw,64px);border-top:1px solid var(--line);color:var(--muted);font-size:12px}
-.foot-in{max-width:920px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
-footer a{border-bottom:1px solid var(--faint)}
-footer a:hover{color:var(--ink);border-color:var(--ink)}
+@keyframes blink{50%{opacity:.35}}
 
-[data-en]{transition:opacity .15s}
-@media(max-width:720px){
-  .hero{grid-template-columns:1fr;gap:26px}
-  .avatar{order:-1}
-  .socials{grid-template-columns:1fr}
-  .facts{grid-template-columns:1fr}
-  .vbox{grid-template-columns:1fr}
-  .nav-r a{display:none}
+#talk{background:var(--bg2);border-top:1px solid var(--line)}
+.talk-box{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:44px;margin-top:50px;align-items:start}
+.tform{border:1px solid var(--line);background:#080d17;padding:28px}
+.tform input,.tform textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:12px 14px;font-size:14px;font-family:var(--sans);letter-spacing:.03em;margin-bottom:12px;transition:border-color .3s;resize:vertical}
+.tform input:focus,.tform textarea:focus{outline:none;border-color:var(--gold)}
+.tform button{width:100%;background:var(--gold);color:#0a0a0a;border:none;padding:13px;font-size:13px;letter-spacing:.3em;cursor:pointer;font-weight:600;transition:opacity .3s}
+.tform button:hover{opacity:.85}
+.tform .hint{font-size:12px;color:var(--faint);margin-top:12px;line-height:1.8}
+.tlist{display:flex;flex-direction:column;gap:12px}
+.tmsg{border:1px solid var(--line);background:var(--bg);padding:16px 18px;animation:pop .4s ease}
+.tmsg b{color:var(--gold);font-size:14px}
+.tmsg time{float:right;font-size:11px;color:var(--faint)}
+.tmsg p{margin-top:6px;font-size:14px;color:var(--ink)}
+.tmsg.mine{border-color:rgba(217,179,106,.5)}
+.tempty{border:1px dashed var(--line);padding:28px;text-align:center;color:var(--faint);font-size:13px}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:50px}
+.item{border-bottom:1px solid var(--line);padding:18px 0}
+.item b{display:block;font-size:15px;letter-spacing:.04em}
+.item span{display:block;color:var(--dim);font-size:13px;margin-top:5px}
+.item .k{color:var(--gold);font-size:11px;letter-spacing:.28em}
+
+footer{border-top:1px solid var(--line);padding:34px 24px;text-align:center;color:var(--faint);font-size:12px;letter-spacing:.14em}
+footer b{color:var(--dim)}
+
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.rv.show{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .ngrid{grid-template-columns:repeat(2,1fr)}
+  .ngrid .ncell:last-child{grid-column:1/-1}
+  .gl-grid,.two,.fixes,.talk-box{grid-template-columns:1fr}
+  #bases .bgrid{grid-template-columns:1fr}
+  .stage{padding-left:56px}
+  .tl-line,.dot{left:12px}
+  #nav span a{margin-left:10px}
+  .specline{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:480px){
+  #nav{padding:10px 12px}
+  #nav b{white-space:nowrap;font-size:11px;letter-spacing:.1em}
+  #nav b .lgx{display:none}
+  #nav span{display:flex;align-items:center;flex-wrap:nowrap}
+  #nav span a{margin-left:7px;letter-spacing:.02em;white-space:nowrap}
+  #nav span a[href="/papers.html"],#nav span a[href="#life"],#nav span a[href="#specs"],#nav span a[href="#work"]{display:none}
+  .hero-kicker{letter-spacing:.28em}
+  .hero-id{letter-spacing:.08em;font-size:12px}
+  .scroll-hint{letter-spacing:.12em;font-size:10px;white-space:nowrap}
+}
+
+/* ---------- 语言切换 ---------- */
+.nt{white-space:nowrap}
+.langsw{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px;
+  margin-left:16px;background:rgba(10,18,32,.55);backdrop-filter:blur(8px);vertical-align:middle;flex:none}
+.langsw a{border:0;color:var(--faint);font-family:var(--sans);font-size:10px;letter-spacing:.14em;
+  padding:5px 11px;border-radius:999px;white-space:nowrap;line-height:1.25;
+  transition:color .3s,background .3s,box-shadow .3s}
+.langsw a:hover{color:var(--ink)}
+.langsw a[aria-current="page"]{background:var(--gold);color:#0a0a0a;font-weight:700;
+  box-shadow:0 0 14px rgba(217,179,106,.28);cursor:default}
+.langsw a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:860px){.langsw{margin-left:9px}}
+@media (max-width:480px){
+  .langsw{margin-left:7px;padding:1px}
+  .langsw a{padding:4px 7px;font-size:9px;letter-spacing:.02em}
+  #nav span a[href="#life"],#nav span a[href="#specs"]{display:none}
 }
 </style>
+<script>
+
+/* ============ 语言状态 + hreflang 自适应域名 ============ */
+var I18N_SCEN=[{"zh": {"t": "来料检验 · IQC", "d": "QC 戴上眼镜，走进原材料堆放区。", "o": "摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 SellerPilot 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。"}, "en": {"t": "Incoming inspection · IQC", "d": "QC puts on the glasses and walks into the raw-material area.", "o": "Camera on incoming goods → <b>AI reads SKU and batch labels</b> → quantities and specs are checked against the SellerPilot work order → discrepancies (wrong item, damage, colour drift) flag up on the spot, with a photo logged into the inspection record. An 8MP still is plenty for label and appearance checks."}}, {"zh": {"t": "产线巡检", "d": "产线负责人每 2 小时走一圈产线。", "o": "长按镜腿开始录制 <b>1200p/30fps</b> → 工位、设备状态、在制品一路入镜 → 视频按工单归档，形成时间戳连续的巡检链 → 下一次巡检自动对比上次画面差异。"}, "en": {"t": "Line patrol", "d": "The line lead walks the floor every two hours.", "o": "Long-press the temple to start <b>1200p/30fps</b> recording → workstations, equipment status and WIP all in frame → videos archived by work order, forming a continuous timestamped patrol chain → the next patrol automatically compares against the previous footage."}}, {"zh": {"t": "远程客户验货", "d": "海外客户无法到场，验货照样进行。", "o": "第一视角画面经 <b>WiFi 实时回传</b>，客户在另一端看 QC 眼睛里的一切 → <b>多语翻译</b>让 QC 与客户沟通零障碍 → 关键节点截帧存证，与订单凭证打包成一份验货报告。"}, "en": {"t": "Remote client audit", "d": "The overseas client can't be on site; the inspection still happens.", "o": "The first-person view is <b>streamed back over WiFi</b> so the client sees exactly what QC sees → <b>multilingual translation</b> removes the language gap → key frames are captured as evidence and packaged with the order records into one inspection report."}}, {"zh": {"t": "新员工培训", "d": "老师傅带新人的方式，从此不一样。", "o": "新人第一视角操作，老师傅远程观看并<b>语音指导</b> → 标准动作片段录成培训素材库 → <b>AI 识别</b>比对动作与 SOP，偏差即时提示 → 3 组镜片适配产线/仓库/户外不同光线。"}, "en": {"t": "Worker onboarding", "d": "The way a veteran trains a newcomer changes for good.", "o": "The newcomer works from a first-person view while the veteran watches remotely and <b>guides by voice</b> → standard motions are recorded into a training library → <b>AI recognition</b> compares motions against the SOP and flags deviations instantly → 3 lens sets cover line, warehouse and outdoor lighting."}}];
+var I18N_HOT={"cam": {"zh": "8MP 摄像头：拍照取证 + 1200p 视频记录，第一视角留证。", "en": "8MP camera: photo evidence and 1200p video, first-person proof."}, "led": {"zh": "拍摄指示灯：录制中亮起，让被拍摄方知情——合规是工厂版的前提。", "en": "Recording LED: lights up while recording so everyone being filmed knows — compliance is the premise of the factory edition."}, "touch": {"zh": "镜腿触控：长按录制 / 双击拍照 / 单击停止，戴手套也能操作。", "en": "Temple touch: long-press to record / double-tap for a photo / single-tap to stop — usable with gloves on."}};
+var I18N_TXT={"empty": {"zh": "留言墙还是空的，来写第一条吧。", "en": "No messages yet — be the first to say hi."}, "anon": {"zh": "匿名朋友", "en": "Anonymous"}, "mailBody": {"zh": "来自「{n}」的留言：\n\n{m}\n\n—— 来自小黄的主页", "en": "Message from {n}:\n\n{m}\n\n— via Xiaohuang's homepage"}, "mailSubj": {"zh": "主页留言 · {n}", "en": "Guestbook · {n}"}, "copied": {"zh": "已复制，去微信粘贴给小黄（workonly1998）", "en": "Copied — paste it into WeChat and send to workonly1998."}, "manual": {"zh": "手动复制这段话，微信发给 workonly1998：", "en": "Copy this and send it to workonly1998 on WeChat:"}, "copyBody": {"zh": "来自「{n}」的留言：\n{m}", "en": "Message from {n}:\n{m}"}, "part": {"zh": "部件 · ", "en": "Part · "}};
+(function(){
+  var q=new URLSearchParams(location.search).get('lang'),l=null;
+  if(q==='en'||q==='zh')l=q;
+  if(!l)l=(/^\/en(\/|$)/.test(location.pathname))?'en':'zh';
+  window.LANG=l;
+  /* 域名生效后，把 SEO 绝对地址改到当前 host，避免写死 github.io */
+  try{
+    var h=location.host,o=location.protocol+'//'+h;
+    document.querySelectorAll('link[rel="canonical"],link[rel="alternate"][hreflang]').forEach(function(e){
+      var u=new URL(e.getAttribute('href'),o);
+      e.setAttribute('href',o+u.pathname+u.search);
+    });
+  }catch(err){}
+})();
+function T(k){var o=I18N_TXT[k];return o?o[window.LANG]:k;}
+/* 按当前语言展开：原页面代码直接读 s.t / m[key]，故这里扁平化成同结构 */
+var SCEN_L=I18N_SCEN.map(function(x){return x[window.LANG];});
+var HOT_L={};for(var _k in I18N_HOT){HOT_L[_k]=I18N_HOT[_k][window.LANG];}
+
+</script>
 </head>
 <body>
-
+<div id="prog"></div>
 <nav id="nav">
-  <div class="brand">小黄 <small>QIANRU HUANG</small></div>
-  <div class="nav-r">
-    <a href="#about" data-zh="关于" data-en="About">关于</a>
-    <a href="#social" data-zh="社交" data-en="Elsewhere">社交</a>
-    <a href="#creative" data-zh="创作" data-en="Creative">创作</a>
-    <a href="#ventures" data-zh="创业 ↗" data-en="Ventures ↗">创业 ↗</a>
-    <div class="lang" role="group" aria-label="Language">
-      <button id="btnZh" class="on">中文</button><button id="btnEn">EN</button>
-    </div>
-  </div>
+  <b id="logo">小黄<span class="lgx"> · XIAOHUANG</span></b>
+  <span>
+    <a href="#life">年轮</a><a href="#specs">眼镜</a><a href="#bases">总入口</a><a href="#work">作品</a><a href="#talk">留言</a>
+    <a href="/papers.html">论文</a>
+    <a href="/CV_QianruHuang.pdf" target="_blank">CV ↓</a>
+    <span class="langsw" role="group" aria-label="Language / 语言">
+      <a aria-current="page">中文</a><a href="/en/" hreflang="en" lang="en">EN</a>
+    </span>
+  </span>
 </nav>
 
-<header>
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="globe"></canvas>
+  <div class="hero-in">
+    <div class="hero-kicker">YIWU → 全世界</div>
+    <h1 class="hero-h1">你好，我是<em>小黄</em></h1>
+    <div class="hero-sub">义乌人，从小在商贸城长大。现在做 AI 出海系统，给工厂配眼镜，也做研究。这是我自己搭的小站，欢迎来逛。</div>
+    <div class="hero-id"><b>黄倩如 Qianru (Carol) Huang</b> · SellerPilot 发起人</div>
+    <div class="hero-cta">
+      <a class="hbtn g" href="#bases">所有系统 · 总入口 →</a>
+      <a class="hbtn" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener">进入操作台 →</a>
+    </div>
+  </div>
+  <div class="scroll-hint">往下滚 · 有我的时间轴</div>
+</section>
+
+<!-- ============ 数字 ============ -->
+<section id="nums">
+  <div class="wrap" style="padding:80px 24px">
+    <div class="ngrid rv">
+      <div class="ncell"><div class="nnum" data-to="100" data-suffix="万+">0</div><div class="nlab">纪录片《正在连接》播放</div></div>
+      <div class="ncell"><div class="nnum" data-to="4" data-suffix="">0</div><div class="nlab">国际会议报告</div></div>
+      <div class="ncell"><div class="nnum" data-to="90" data-suffix="+">0</div><div class="nlab">跨境电商店铺运营</div></div>
+      <div class="ncell"><div class="nnum" data-to="3000" data-suffix="㎡">0</div><div class="nlab">美国展厅与仓储</div></div>
+      <div class="ncell"><div class="nnum" data-to="2" data-suffix="次">0</div><div class="nlab">国家奖学金（前 1%）</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 总入口：所有系统收在一页 ============ -->
+<section id="bases">
   <div class="wrap">
-    <div class="hero">
-      <div>
-        <div class="eyebrow" data-zh="你好 · 我是" data-en="HELLO · I'M">你好 · 我是</div>
-        <h1 data-zh="小黄" data-en="Xiao Huang">小黄
-          <span class="en-name">Qianru (Carol) Huang</span>
-        </h1>
-        <p class="tagline" data-zh="义乌长大，浙大与亚利桑那州立。做研究、拍纪录片、也写点东西——<em>这里只放关于「我」的事</em>。" data-en="Grew up in Yiwu, studied at ZJU and Arizona State. I do research, make documentaries, and write — <em>this page is only about me.</em>">义乌长大，浙大与亚利桑那州立。做研究、拍纪录片、也写点东西——<em>这里只放关于「我」的事</em>。</p>
-        <div class="hero-meta">
-          <span class="pill"><span class="dot"></span><span data-zh="传播与计算社会科学" data-en="Comm &amp; Computational Social Science">传播与计算社会科学</span></span>
-          <span class="pill"><b data-zh="纪录片《正在连接》" data-en="Doc film “Connecting”">纪录片《正在连接》</b></span>
-          <span class="pill"><span data-zh="上海 · 义乌" data-en="Shanghai · Yiwu">上海 · 义乌</span></span>
+    <div class="sec-kicker rv">ONE PLACE · 总入口</div>
+    <h2 class="sec-h2 rv">所有东西，都在这一页</h2>
+    <p class="sec-lead rv">以前散在十几个目录、好几台服务器上，现在收到一处，分三组：<b>我在做的 SellerPilot</b>、<b>独立运行的操作台</b>、<b>朋友服务器上托管的系统</b>。点哪个都能直接打开。</p>
+
+    <!-- 组 01 · SellerPilot 主业 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>01</i><b>SellerPilot · 我在做的主业</b><span>对外门面 · 交付工具 · 技术路线</span></div>
+      <div class="bgrid">
+        <a class="bcard key live" href="/sellerpilot/" target="_blank" rel="noopener" style="grid-column:1/-1">
+          <div class="bn">企业官网 · 对外门面</div>
+          <h4>SellerPilot 卖家领航员</h4>
+          <p>讲清我做什么、怎么收费、怎么联系。客户、工厂、资本都从这里进来。</p>
+          <div class="open always">进入官网 →</div>
+        </a>
+        <a class="bcard tool" href="/cloudsail-app/SellerPilot-Console.html" target="_blank" rel="noopener" style="grid-column:1/-1">
+          <div class="bn">独立操作台 · 与个人站分开</div>
+          <h4>SellerPilot 运营控制台</h4>
+          <p>报价与毛利、客户订单、审批留痕、交付物生成。单文件程序，下载可离线用，数据存本机。这是干活的工具，不是介绍页——所以单独放在这里，不混进个人主页。</p>
+          <div class="open always">打开操作台 →</div>
+        </a>
+        <a class="bcard" href="/cloudsail-os/" target="_blank" rel="noopener">
+          <div class="bn">运营台 v2</div><h4>信号 · 审批 · 审计</h4>
+          <p>现实信号进来自动排队，人工批准才执行，每一步留痕可核验。</p>
+          <div class="open always">打开 →</div>
+        </a>
+        <a class="bcard" href="/sellerpilot/console/" target="_blank" rel="noopener">
+          <div class="bn">交付控制台</div><h4>五个工作台</h4>
+          <p>询盘、报价、跟单、验货、物流，客户交付用的那一套。</p>
+          <div class="open always">打开 →</div>
+        </a>
+        <a class="bcard" href="/sellerpilot/bridge/" target="_blank" rel="noopener">
+          <div class="bn">手机桥 · 验货取证</div><h4>拍一张标签就能核</h4>
+          <p>手机拍标签，识别 SKU 与批次，与工单核对，异常当场留证。</p>
+          <div class="open always">试用 →</div>
+        </a>
+        <a class="bcard" href="/sellerpilot/glasses/" target="_blank" rel="noopener">
+          <div class="bn">硬件 · 进行中</div><h4>AI 眼镜 · 工厂版</h4>
+          <p>消费级眼镜重配为验货/巡检设备，第一视角留证，接进工单。</p>
+          <div class="open always">看技术路线 →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 组 02 · 独立运行的系统 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>02</i><b>独立运行的系统</b><span>外部服务器托管 · 点开即用</span></div>
+      <div class="bgrid">
+        <a class="bcard live" href="https://sellerpilot.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 01 · 聚合总站</div><h4>SellerPilot 聚合总站</h4>
+          <p>整套系统的外部入口与门面。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://sellerpilot-os.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 02 · 工作台</div><h4>SellerPilot OS 外贸工作台</h4>
+          <p>外贸全流程：询盘、报价、跟单、验货。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://margueriteasbury.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 03 · 商城</div><h4>Marguerite &amp; Asbury</h4>
+          <p>AI 搭配 + USDC 结账的线上商城。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://crm.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 04 · CRM</div><h4>EspoCRM 客户关系</h4>
+          <p>客户与联系人管理，点进去就能用。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://sellerpilot-demo.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 05 · 镜像</div><h4>SellerPilot 镜像站</h4>
+          <p>演示与备份环境。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://diglab.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 06 · 镜像</div><h4>DigLab AI</h4>
+          <p>社媒运营平台镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://dropshiplab.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 07 · 镜像</div><h4>DropshipLab</h4>
+          <p>代发货业务镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="https://linglink.47-79-34-141.sslip.io" target="_blank" rel="noopener">
+          <div class="bn">BASE 08 · 镜像</div><h4>LingLink AI</h4>
+          <p>语言与沟通工具镜像。</p><div class="open always">打开 →</div>
+        </a>
+        <a class="bcard live" href="/sinoways/" target="_blank" rel="noopener">
+          <div class="bn">BASE 09 · 旅游</div><h4>Sinoways 丝路行</h4>
+          <p>运河 · 文化 · 货源地深度游，可在线预约。</p><div class="open always">打开 →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 组 03 · 研究 · 简历 · 存档 -->
+    <div class="bgroup rv">
+      <div class="bgh"><i>03</i><b>研究 · 简历 · 存档</b><span>个人内容，与业务系统分开</span></div>
+      <div class="bgrid">
+        <a class="bcard" href="/papers.html">
+          <div class="bn">研究</div><h4>论文空间</h4>
+          <p>政治传播与 AI 治理方向的研究、会议报告、在读计划。</p><div class="open always">进入 →</div>
+        </a>
+        <a class="bcard" href="/index-academic.html">
+          <div class="bn">学术版</div><h4>学术主页</h4>
+          <p>给学术场合看的版本：研究问题、方法、发表。</p><div class="open always">进入 →</div>
+        </a>
+        <a class="bcard" href="/CV_QianruHuang.pdf" target="_blank" rel="noopener">
+          <div class="bn">简历</div><h4>CV · 黄倩如</h4>
+          <p>一页看清教育与经历，可直接下载。</p><div class="open always">下载 PDF ↓</div>
+        </a>
+        <a class="bcard" href="https://github.com/sinyu1998-eng" target="_blank" rel="noopener">
+          <div class="bn">代码</div><h4>GitHub</h4>
+          <p>开源项目与提交记录。</p><div class="open always">打开 →</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 时间轴 ============ -->
+<section id="life">
+  <div class="wrap">
+    <div class="sec-kicker rv">TIMELINE · 年轮</div>
+    <h2 class="sec-h2 rv">这些年我在做什么</h2>
+    <p class="sec-lead rv">1998 年出生在义乌。往下滚，一年一年看过来——滚到最后是「之后可能做什么」。</p>
+
+    <div class="tl">
+      <div class="tl-line"><i id="tlfill"></i></div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">1998<small>— 2016 · 义乌</small></div>
+        <h3>在商贸城长大</h3>
+        <p>从小看着整条街的样品、报价与集装箱长大。义乌不是我的研究背景，是我的母语——长尾供给怎么组织、怎么报价、怎么成交出运，我很早就"见过"。</p>
+        <div class="chips"><span class="chip">小商品之都</span><span class="chip">长尾供给的现场课</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2016<small>— 2020 · 浙江大学</small></div>
+        <h3>传播学本科 · 专业排名第一</h3>
+        <p>GPA 3.98/4.00（1/69），两获国家奖学金（前 1%）。浙大女篮控卫，CUBA 全国八强、浙江省冠军。</p>
+        <div class="chips"><span class="chip">GPA 3.98 · 1/69</span><span class="chip">国家奖学金 ×2</span><span class="chip blue">CUBA 全国八强</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2019<small>· 在路上</small></div>
+        <h3>纪录片《正在连接》执行导演</h3>
+        <p>五条故事线：骑手、网红、流量诈骗、电商转型、网约车司机。四个城市、20+ 受访者，成片播放 100 万+，上过 B 站纪录片频道首页。</p>
+        <div class="chips"><span class="chip">100万+ 播放</span><span class="chip">B站首页 banner</span><span class="chip">澜湄青年论坛</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2020<small>— 2023 · 浙大硕士</small></div>
+        <h3>回到义乌：电商村田野</h3>
+        <p>硕士 1/4。毕业论文回到义乌，对两个电商村做参与式观察、深访 12 位主播——用学术方法解剖自己的家乡。</p>
+        <div class="chips"><span class="chip">1/4 · 专业第一</span><span class="chip">义乌电商村田野</span><span class="chip">IAMCR 2023</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2022<small>— 2024 · 德州 A&amp;M</small></div>
+        <h3>政治传播博士项目 · 全奖</h3>
+        <p>全奖学金 + TA 赴美。系统训练计算社会科学：Python / R / 大规模文本与网络分析。</p>
+        <div class="chips"><span class="chip">全奖学金 + TA</span><span class="chip">计算社会科学</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2024<small>— · 亚利桑那州立大学</small></div>
+        <h3>转向工程：计算机与 AI 工程硕士</h3>
+        <p>ASU 富尔顿工程学院，GPA 3.83。从"研究 AI"转为"用 AI 造东西"。同年在雅典报告 GPT 社区的沉浸式使用研究。</p>
+        <div class="chips"><span class="chip">GPA 3.83</span><span class="chip">Fulton 工程学院</span><span class="chip">雅典 · GPT 社区研究</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">2025<small>— · 马德里 · 创业</small></div>
+        <h3>MBA 满绩 · 做 SellerPilot</h3>
+        <p>马德里欧洲大学 MBA，GPA 4.00/4.00。同时把研究直觉做成产品：SellerPilot——AI 全托管出口系统。</p>
+        <div class="chips"><span class="chip">MBA 4.00/4.00</span><span class="chip">SellerPilot 卖家领航员</span><span class="chip">多智能体系统</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">NOW<small>· 2026 · 进行中</small></div>
+        <h3>把"义乌供给"变成可验证的事实</h3>
+        <p>90+ 店铺运营、3000㎡ 美国展厅、洛杉矶仓储、义乌/永康供应链基地。正在做两件事：给工厂配一双"AI 眼睛"（往下看眼镜工厂版），以及把跨境贸易事件做成可验证的链上凭证。</p>
+        <div class="chips"><span class="chip">90+ 店铺</span><span class="chip">3000㎡ 展厅</span><span class="chip">AI 眼镜 · 工厂版</span><span class="chip">可验证贸易凭证</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="dot"></div>
+        <div class="year">NEXT<small>· 之后可能做什么</small></div>
+        <h3>三条可能的路径</h3>
+        <p>时间轴没有终点，只有分支。这些是我正在同时推进的方向——</p>
+        <div class="fgrid">
+          <div class="fcard"><div class="tag">PATH 01</div><h4>供应链数字化</h4><p>把供应商验证层做成跨国采购的事实标准：让"义乌长尾供给"第一次可以被一眼核实。</p></div>
+          <div class="fcard"><div class="tag">PATH 02</div><h4>实体 AI 硬件</h4><p>眼镜工厂版规模化落地：让每一条产线都有第一视角的 AI 记录与识别能力。</p></div>
+          <div class="fcard"><div class="tag">PATH 03</div><h4>研究与教职</h4><p>计算社会科学 × 全球贸易：平台、供给侧行为者与跨国商业的政治经济学。</p></div>
         </div>
       </div>
-      <img class="avatar" src="avatar.jpg" alt="Qianru (Carol) Huang">
-    </div>
-  </div>
-</header>
-
-<section class="sec" id="about">
-  <div class="wrap">
-    <div class="kicker" data-zh="01 — 关于" data-en="01 — ABOUT">01 — 关于</div>
-    <h2 data-zh="一点点背景" data-en="A little background">一点点背景</h2>
-    <p class="lead" data-zh="我关心人和技术之间到底发生了什么。做过跨境电商的一线运营，把观察写成研究，也用镜头记录普通人的连接。下面这些，都是我自己的经历。" data-en="I care about what actually happens between people and technology. I've run cross-border e-commerce on the ground, turned observations into research, and used a camera to record how ordinary people connect. Below is just my own story.">我关心人和技术之间到底发生了什么。做过跨境电商的一线运营，把观察写成研究，也用镜头记录普通人的连接。下面这些，都是我自己的经历。</p>
-    <div class="facts">
-      <div class="fact"><div class="k" data-zh="教育" data-en="Education">教育</div><div class="v" data-zh="浙江大学 · 亚利桑那州立大学 (MEng, CS)" data-en="Zhejiang University · Arizona State University (MEng, CS)">浙江大学 · 亚利桑那州立大学 (MEng, CS)</div></div>
-      <div class="fact"><div class="k" data-zh="研究" data-en="Research">研究</div><div class="v" data-zh="传播学 / 计算社会科学 · 国际会议报告" data-en="Communication / Computational Social Science · conference talks">传播学 / 计算社会科学 · 国际会议报告</div></div>
-      <div class="fact"><div class="k" data-zh="镜头" data-en="On camera">镜头</div><div class="v" data-zh="纪录片《正在连接》· B站创作者" data-en="Documentary “Connecting” · Bilibili creator">纪录片《正在连接》· B站创作者</div></div>
-      <div class="fact"><div class="k" data-zh="来处" data-en="From">来处</div><div class="v" data-zh="浙江义乌 · 从小在商贸城长大" data-en="Yiwu, Zhejiang · raised around the trade market">浙江义乌 · 从小在商贸城长大</div></div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="social">
+<!-- ============ 眼镜工厂版 ============ -->
+<section id="specs">
   <div class="wrap">
-    <div class="kicker" data-zh="02 — 找到我" data-en="02 — FIND ME">02 — 找到我</div>
-    <h2 data-zh="在别的地方也能找到我" data-en="Find me elsewhere">在别的地方也能找到我</h2>
-    <p class="lead" data-zh="这是我个人的三个账号。聊生活、看动态、找资料，去这些地方就好。" data-en="These are my personal accounts. For life updates, daily posts, or to browse my work, find me here.">这是我个人的三个账号。聊生活、看动态、找资料，去这些地方就好。</p>
-    <div class="socials">
-      <a class="card" href="https://x.com/hungqinr4" target="_blank" rel="noopener">
-        <div class="top"><span class="ico">X / Twitter</span><span class="arrow">↗</span></div>
-        <h3>Carol Qianru Huang</h3>
-        <div class="handle">@hungqinr4</div>
-        <p class="desc" data-zh="日常想法、动态与转发。用中文和英文都在。" data-en="Daily thoughts, updates and reposts. In both Chinese and English.">日常想法、动态与转发。用中文和英文都在。</p>
-        <div class="stat" data-zh="126 关注 · 23 关注者" data-en="126 following · 23 followers">126 关注 · 23 关注者</div>
-      </a>
-      <a class="card" href="https://www.linkedin.com/in/qianru-huang/" target="_blank" rel="noopener">
-        <div class="top"><span class="ico">LinkedIn</span><span class="arrow">↗</span></div>
-        <h3>Qianru (Carol) Huang</h3>
-        <div class="handle">/in/qianru-huang</div>
-        <p class="desc" data-zh="职业经历、教育背景与人脉。正式合作走这里。" data-en="Career, education and network. For formal work, connect here.">职业经历、教育背景与人脉。正式合作走这里。</p>
-        <div class="stat" data-zh="496 位好友 · 美国加州" data-en="496 connections · California, US">496 位好友 · 美国加州</div>
-      </a>
-      <a class="card" href="https://space.bilibili.com/12316908" target="_blank" rel="noopener">
-        <div class="top"><span class="ico">Bilibili</span><span class="arrow">↗</span></div>
-        <h3 data-zh="小黄Cariochi" data-en="Xiao Huang Cariochi">小黄Cariochi</h3>
-        <div class="handle">space.bilibili.com/12316908</div>
-        <p class="desc" data-zh="纪录片、影像与日常。工作事宜可站内联系。" data-en="Documentaries, video work and daily life. Reach me here for work.">纪录片、影像与日常。工作事宜可站内联系。</p>
-        <div class="stat" data-zh="127 粉丝 · 259 获赞 · 11 投稿" data-en="127 fans · 259 likes · 11 posts">127 粉丝 · 259 获赞 · 11 投稿</div>
-      </a>
-    </div>
-  </div>
-</section>
+    <div class="sec-kicker rv">HARDWARE · AI 眼镜 · 工厂版</div>
+    <h2 class="sec-h2 rv">同一台硬件，<br>重新定义为<span style="color:var(--gold)">工厂的眼睛</span></h2>
+    <p class="sec-lead rv">我手上这台 AI GLASSES（AiMB-G3）本来是消费级产品：8MP 摄像头、WiFi、1200p 录制、AI 识别、多语翻译。我把它重新配置成验货与巡检设备——接进 SellerPilot 工单，让每一次验货都有第一视角、可回溯的证据。</p>
 
-<section class="sec" id="creative">
-  <div class="wrap">
-    <div class="kicker" data-zh="03 — 创作" data-en="03 — CREATIVE">03 — 创作</div>
-    <h2 data-zh="拍过的东西" data-en="Things I've made">拍过的东西</h2>
-    <div style="margin-top:32px">
-      <div class="work">
-        <div class="t" data-zh="《正在连接》" data-en="“Connecting”"><span data-zh="纪录片 · 导演/制作" data-en="Documentary · director / producer">纪录片 · 导演/制作</span></div>
-        <div class="n" data-zh="100万+ 播放" data-en="1M+ views">100万+ 播放</div>
+    <div class="gl-grid">
+      <div class="gl-visual rv">
+        <svg viewBox="0 0 420 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 80 Q210 52 360 80" stroke="#8fa0b8" stroke-width="2.5"/>
+          <rect x="70" y="80" width="120" height="76" rx="16" stroke="#4f8fd9" stroke-width="2.5" fill="rgba(79,143,217,.06)"/>
+          <rect x="232" y="80" width="120" height="76" rx="16" stroke="#4f8fd9" stroke-width="2.5" fill="rgba(79,143,217,.06)"/>
+          <path d="M190 84 q10 34 0 68" stroke="#4f8fd9" stroke-width="2"/>
+          <path d="M232 84 q-10 34 0 68" stroke="#4f8fd9" stroke-width="2"/>
+          <path d="M60 84 q-26 10 -30 52 q-2 18 10 20" stroke="#d9b36a" stroke-width="2.5"/>
+          <path d="M360 84 q40 8 44 60" stroke="#d9b36a" stroke-width="2.5"/>
+          <g class="hotspot" data-h="cam" transform="translate(80,92)">
+            <circle class="gl-cam-pulse" r="5" fill="rgba(217,179,106,.5)" stroke="none"/>
+            <circle r="5" fill="#d9b36a"/>
+            <circle r="10" fill="none" stroke="#d9b36a" stroke-opacity=".4"/>
+          </g>
+          <g class="hotspot" data-h="led" transform="translate(76,146)">
+            <circle r="4" fill="#4f8fd9"/><circle r="9" fill="none" stroke="#4f8fd9" stroke-opacity=".4"/>
+          </g>
+          <g class="hotspot" data-h="touch" transform="translate(390,130)">
+            <circle r="4" fill="#d9b36a"/><circle r="9" fill="none" stroke="#d9b36a" stroke-opacity=".4"/>
+          </g>
+          <text x="80" y="196" fill="#54627a" font-size="11" text-anchor="middle">8MP 摄像头</text>
+          <text x="76" y="176" fill="#54627a" font-size="11" text-anchor="middle">拍摄指示灯</text>
+          <text x="392" y="158" fill="#54627a" font-size="11" text-anchor="middle">镜腿触控</text>
+        </svg>
+        <div class="gl-caption">点击镜身上的光点查看部件</div>
       </div>
-      <div class="work">
-        <div class="t" data-zh="B站影像与日常" data-en="Video &amp; daily life on Bilibili"><span data-zh="投稿 / 动态" data-en="Posts / updates">投稿 / 动态</span></div>
-        <div class="n" data-zh="小黄Cariochi ↗" data-en="Xiao Huang Cariochi ↗">小黄Cariochi ↗</div>
+
+      <div class="gl-panel rv">
+        <h3 id="glTitle">来料检验 · IQC</h3>
+        <p class="sub" id="glDesc">QC 戴上眼镜，走进原材料堆放区。</p>
+        <div class="scen" id="scenBtns">
+          <button class="act" data-i="0"><b>来料检验 IQC</b><i>INCOMING INSPECTION</i></button>
+          <button data-i="1"><b>产线巡检</b><i>LINE PATROL</i></button>
+          <button data-i="2"><b>远程客户验货</b><i>REMOTE AUDIT</i></button>
+          <button data-i="3"><b>新员工培训</b><i>WORKER ONBOARDING</i></button>
+        </div>
+        <div class="scen-out" id="glOut">摄像头对准来料 → <b>AI 识别 SKU 与批次标签</b> → 与 SellerPilot 工单自动核对数量与规格 → 异常（错发/破损/颜色偏差）当场亮出，拍照留证并写入验货记录。8MP 静态照片足够支撑标签与外观判定。</div>
+        <div class="specline">
+          <div class="spec-c"><b>8MP</b><span>摄像头 · 拍照取证</span></div>
+          <div class="spec-c"><b>1200p</b><span>30fps 视频记录</span></div>
+          <div class="spec-c"><b>WiFi</b><span>远程连线回传</span></div>
+          <div class="spec-c"><b>AI</b><span>识别 + 多语翻译</span></div>
+          <div class="spec-c"><b>3 组</b><span>可换镜片</span></div>
+          <div class="spec-c"><b>CE</b><span>RoHS 合规</span></div>
+        </div>
       </div>
     </div>
+
+    <div class="fixes rv">
+      <div class="fx">
+        <div class="fx-n">01</div>
+        <h4>硬件加固</h4>
+        <p>防尘防油污镜片、镜腿绑带（弯腰/搬货不掉）、备用电池与充电仓。三组镜片对应强光仓库、室内产线、近视员工——消费版本来就有，直接复用。</p>
+      </div>
+      <div class="fx">
+        <div class="fx-n">02</div>
+        <h4>固件与企业管控</h4>
+        <p>刷成企业设备：关掉个人账号与社交分享，开机自检，录制强制落到 SellerPilot 工单，画面烧入「时间 + 工单号」水印。工厂要的不是酷，是防篡改。</p>
+      </div>
+      <div class="fx">
+        <div class="fx-n">03</div>
+        <h4>工单与证据链</h4>
+        <p>眼镜拍的东西直接挂在订单/批次上，产出「验货报告 PDF + 带时间戳的视频」，可交给客户、平台、保险与采购方复核。这才是工厂愿意付钱的部分。</p>
+      </div>
+    </div>
+    <div class="fixnote rv">成本口径：消费版零售 $199 → 工厂版目标 BOM ¥1,200–1,500 / 台，10 台起试点，先跑一条产线、一个品类。完整方案（含软硬件盘点、三条落地路线、90 天计划）在 <a href="/sellerpilot/glasses/" style="color:var(--gold);border-bottom:1px solid var(--gold)">眼镜 × SellerPilot 技术路线 →</a>。</div>
+    <div class="rv" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="hbtn g" href="/sellerpilot/bridge/">试手机桥原型（真识别一张标签）→</a>
+    </div>
   </div>
 </section>
 
-<section class="sec ventures" id="ventures">
+<!-- ============ 作品 ============ -->
+<section id="work">
   <div class="wrap">
-    <div class="kicker" data-zh="04 — 创业（与上面分开）" data-en="04 — VENTURES (SEPARATE)">04 — 创业（与上面分开）</div>
-    <div class="vbox">
+    <div class="sec-kicker rv">SELECTED WORK · 作品</div>
+    <h2 class="sec-h2 rv">一些做过的东西</h2>
+    <p class="sec-lead rv">更多论文全文与研究计划在 <a href="/papers.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">论文空间 →</a> 。另外我做的系统 <a href="/sellerpilot/console/" style="color:var(--gold);border-bottom:1px solid var(--gold)">SellerPilot 交付控制台 →</a> 五个工作台都能点。</p>
+    <div class="two rv">
       <div>
-        <h3 data-zh="创业是另一件事，不混在这一页" data-en="Ventures are separate — not mixed into this page">创业是另一件事，不混在这一页</h3>
-        <p data-zh="我做的事情里，有一部分是关于创业的——SellerPilot，一套给工厂用的 AI 出海系统。它是工作，不是「我」，所以单独放在另一个站点。" data-en="Part of what I do is about starting a company — SellerPilot, an AI system for factories going global. That's work, not “me,” so it lives on its own site.">我做的事情里，有一部分是关于创业的——SellerPilot，一套给工厂用的 AI 出海系统。它是工作，不是「我」，所以单独放在另一个站点。</p>
-        <div class="sep-note" data-zh="→ 想了解产品、合作、演示，请前往 SellerPilot 主站" data-en="→ For product, partnerships or demos, go to the SellerPilot site">→ 想了解产品、合作、演示，请前往 SellerPilot 主站</div>
+        <div class="item"><span class="k">PRODUCT · TO B</span><b>SellerPilot 卖家领航员</b><span>AI 全托管出口系统：询盘、报价、翻译、跟单、验货排程、物流——工厂只需要发货。</span></div>
+        <div class="item"><span class="k">HARDWARE · 进行中</span><b>AI 眼镜 · 工厂版</b><span>消费级 AiMB-G3 重配为验货/巡检设备，接入 SellerPilot 工单，第一视角留证。</span></div>
+        <div class="item"><span class="k">OPEN RESEARCH</span><b>Verifiable Trade Events</b><span>让跨境贸易事件成为可验证的链上凭证。</span></div>
+        <div class="item"><span class="k">FILM</span><b>纪录片《正在连接》</b><span>执行导演。5 条故事线 × 4 城市，100万+ 播放。</span></div>
       </div>
-      <a class="vbtn" href="/sellerpilot/" data-zh="前往 SellerPilot ↗" data-en="Go to SellerPilot ↗">前往 SellerPilot ↗</a>
+      <div>
+        <div class="item"><span class="k">RESEARCH · IAMCR 2023</span><b>平台化文化生产：中国草根电商直播</b><span>政治经济学分会报告——义乌电商村的参与式观察。</span></div>
+        <div class="item"><span class="k">RESEARCH · Athens 2024</span><b>Reddit GPT 社区的沉浸式使用</b><span>情感分析 + 主题编码。</span></div>
+        <div class="item"><span class="k">RESEARCH · AEJMC 2024</span><b>"六学"迷因与集体认同</b><span>迷因方法论应用于中文网络集体身份建构。</span></div>
+        <div class="item"><span class="k">ESSAY · 2026</span><b>《在义乌长大》</b><span>一座商业城市教会我的事。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 留言墙 ============ -->
+<section id="talk">
+  <div class="wrap">
+    <div class="sec-kicker rv">GUESTBOOK · 留言</div>
+    <h2 class="sec-h2 rv">说点什么吧</h2>
+    <p class="sec-lead rv">看完有想法？无论是谈合作、试眼镜，还是单纯打个招呼——点「发给小黄」，留言会直接出现在我邮箱里。</p>
+    <div class="talk-box">
+      <div class="tform rv">
+        <input id="tName" maxlength="20" placeholder="你的名字 / 公司">
+        <textarea id="tMsg" rows="5" maxlength="500" placeholder="想对我说什么？"></textarea>
+        <button id="tSend">发 给 小 黄</button>
+        <div class="hint">留言会<b>打开你的邮箱</b>并自动填好内容，点发送我就收到了。<br>懒得发邮件也可以 <a href="javascript:void(0)" id="tCopy" style="color:var(--gold);border-bottom:1px solid var(--gold)">复制留言</a> 直接微信发我（workonly1998）。</div>
+      </div>
+      <div class="tlist" id="tList"></div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="foot-in">
-    <div>
-      <span data-zh="联系：" data-en="Contact:">联系：</span>
-      <a href="mailto:sinyu1998@gmail.com">sinyu1998@gmail.com</a>
-      <span style="margin:0 8px;color:var(--faint)">·</span>
-      <span data-zh="微信" data-en="WeChat">微信</span> workonly1998
-    </div>
-    <div>© 2026 黄倩如 Qianru (Carol) Huang</div>
-  </div>
+  <b>sinyu1998@gmail.com</b> · 公众号 Marguerite&amp;Asbury · <a href="/sellerpilot/" style="border-bottom:1px solid var(--faint)">SellerPilot</a> · <a href="https://github.com/sinyu1998-eng" style="border-bottom:1px solid var(--faint)">GitHub</a><br><br>
+  <a href="https://x.com/hungqinr4" style="border-bottom:1px solid var(--faint)">X</a> · <a href="https://www.linkedin.com/in/qianru-huang/" style="border-bottom:1px solid var(--faint)">LinkedIn</a> · <a href="https://space.bilibili.com/12316908" style="border-bottom:1px solid var(--faint)">Bilibili</a><br><br>
+  <a href="/papers.html" style="border-bottom:1px solid var(--faint)">论文空间</a> · <a href="/index-academic.html" style="border-bottom:1px solid var(--faint)">旧版主页</a><br><br>
+  © 2026 黄倩如 Qianru (Carol) Huang
 </footer>
 
 <script>
-(function(){
-  var ZH=false; // set true in /en/ build
-  var html=document.documentElement;
-  function apply(en){
-    html.lang=en?'en':'zh-CN';
-    document.title=en?'小黄 · Qianru (Carol) Huang — Personal Website':'小黄 · Qianru (Carol) Huang — 个人主页';
-    document.querySelectorAll('[data-zh]').forEach(function(el){
-      var t=el.getAttribute(en?'data-en':'data-zh');
-      if(t!==null) el.innerHTML=t;
-    });
-    document.getElementById('btnZh').classList.toggle('on',!en);
-    document.getElementById('btnEn').classList.toggle('on',en);
+/* ---------- 顶部进度 ---------- */
+const prog=document.getElementById('prog'),tlfill=document.getElementById('tlfill');
+function onScroll(){
+  const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  const tl=document.querySelector('.tl');
+  if(tl){
+    const r=tl.getBoundingClientRect(),vh=window.innerHeight;
+    const passed=Math.min(Math.max(vh*0.7-r.top,0),r.height);
+    tlfill.style.height=passed+'px';
   }
-  document.getElementById('btnZh').addEventListener('click',function(){apply(false)});
-  document.getElementById('btnEn').addEventListener('click',function(){apply(true)});
-  apply(ZH);
-  var nav=document.getElementById('nav');
-  function sc(){nav.classList.toggle('scrolled',window.scrollY>10)}
-  window.addEventListener('scroll',sc,{passive:true});sc();
+}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);
+
+/* ---------- Hero 粒子球 ---------- */
+(function(){
+  const cv=document.getElementById('globe'),ctx=cv.getContext('2d');
+  let W,H,dots=[],t=0,converge=0;
+  function resize(){W=cv.width=cv.offsetWidth*devicePixelRatio;H=cv.height=cv.offsetHeight*devicePixelRatio;}
+  resize();addEventListener('resize',resize);
+  const N=900;
+  function init(){
+    dots=[];
+    for(let i=0;i<N;i++){
+      const k=i-0.5,phi=Math.acos(1-2*k/N),th=Math.PI*(1+Math.sqrt(5))*i;
+      const R=Math.min(W,H)*0.28;
+      dots.push({
+        tx:Math.sin(phi)*Math.cos(th)*R,ty:Math.cos(phi)*R,tz:Math.sin(phi)*Math.sin(th)*R,
+        x:Math.random()*W,y:Math.random()*H,
+        d:Math.random()*1.6+0.4,
+        g:Math.random()<0.12
+      });
+    }
+  }
+  init();
+  function frame(){
+    t+=0.004;
+    if(converge<1)converge=Math.min(1,converge+0.003);
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2,cy=H*0.5,cos=Math.cos(t),sin=Math.sin(t),e=converge;
+    for(const p of dots){
+      const x1=p.tx*cos-p.tz*sin,z1=p.tx*sin+p.tz*cos;
+      const persp=300/(300+z1*devicePixelRatio);
+      const gx=cx+x1*persp,gy=cy+p.ty*persp;
+      const x=p.x*(1-e)+gx*e,y=p.y*(1-e)+gy*e;
+      ctx.globalAlpha=z1>0?0.75*persp:0.18;
+      ctx.fillStyle=p.g?'#d9b36a':'#8fb3e0';
+      var _rr=p.d*devicePixelRatio*persp;
+      if(_rr>0.05){ctx.beginPath();ctx.arc(x,y,_rr,0,6.28);ctx.fill();}
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(frame);
+  }
+  frame();
 })();
+
+/* ---------- 彩蛋：点 logo 弹一下；按 g 跳留言 ---------- */
+const logo=document.getElementById('logo');
+logo.addEventListener('click',()=>{
+  logo.style.transform='scale(1.15)';setTimeout(()=>logo.style.transform='',200);
+});
+addEventListener('keydown',e=>{
+  if(e.key==='g'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName))
+    document.getElementById('talk').scrollIntoView({behavior:'smooth'});
+});
+
+/* ---------- 入场 reveal + 计数（含老内核兜底） ---------- */
+/* QQ 浏览器 / 老版 WebKit 可能不触发 IntersectionObserver，
+   若不支持则直接显示全部内容，避免整片黑屏下滑看不见 */
+if(!('IntersectionObserver' in window)){
+  document.querySelectorAll('.rv,.stage').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
+  document.querySelectorAll('.nnum').forEach(el=>{
+    const to=+el.dataset.to,sfx=el.dataset.suffix||'';
+    el.innerHTML=to+'<small>'+sfx+'</small>';
+  });
+}else{
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});
+},{threshold:0.15});
+document.querySelectorAll('.rv,.stage').forEach(el=>io.observe(el));
+
+const nio=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,to=+el.dataset.to,sfx=el.dataset.suffix||'',t0=performance.now();
+    function step(now){
+      const k=Math.min((now-t0)/1600,1),ease=1-Math.pow(1-k,3);
+      el.innerHTML=Math.round(to*ease)+'<small>'+sfx+'</small>';
+      if(k<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);nio.unobserve(el);
+  });
+},{threshold:0.6});
+document.querySelectorAll('.nnum').forEach(el=>nio.observe(el));
+}
+/* 兜底2：滚动时补显示（观察者卡住也不黑），1.5s 后无条件全显 */
+(function(){
+  var pending=false;
+  function sweep(){
+    pending=false;
+    document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.top<window.innerHeight-20&&r.bottom>0)el.classList.add('show');
+    });
+  }
+  window.addEventListener('scroll',function(){if(!pending){pending=true;requestAnimationFrame(sweep);}},{passive:true});
+  setTimeout(function(){
+    document.querySelectorAll('.rv:not(.show),.stage:not(.show)').forEach(function(el){el.classList.add('show');});
+  },1500);
+  setTimeout(sweep,300);
+})();
+
+/* ---------- 眼镜场景切换 ---------- */
+const SCEN=SCEN_L;
+const gb=document.getElementById('scenBtns');
+gb.addEventListener('click',ev=>{
+  const b=ev.target.closest('button');if(!b)return;
+  gb.querySelectorAll('button').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');
+  const s=SCEN[+b.dataset.i],out=document.getElementById('glOut');
+  document.getElementById('glTitle').textContent=s.t;
+  document.getElementById('glDesc').textContent=s.d;
+  out.style.opacity=0;
+  setTimeout(()=>{out.innerHTML=s.o;out.style.opacity=1;},200);
+});
+document.querySelectorAll('.hotspot').forEach(h=>{
+  h.addEventListener('click',()=>{
+    document.querySelectorAll('.hotspot').forEach(x=>x.classList.remove('on'));
+    h.classList.add('on');
+    const m=HOT_L||{};
+    const out=document.getElementById('glOut');
+    out.innerHTML='<b>'+T('part')+(m[h.dataset.h]||'')+'</b>';
+  });
+});
+
+/* ---------- 留言墙 ---------- */
+(function(){
+  const KEY='xh_msgs',list=document.getElementById('tList');
+  const nameEl=document.getElementById('tName'),msgEl=document.getElementById('tMsg');
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+  function save(a){localStorage.setItem(KEY,JSON.stringify(a.slice(0,20)));}
+  function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function render(){
+    const a=load();
+    if(!a.length){list.innerHTML='<div class="tempty">'+T('empty')+'</div>';return;}
+    list.innerHTML=a.map(m=>(
+      '<div class="tmsg mine"><b>'+esc(m.n)+'</b><time>'+m.t+'</time><p>'+esc(m.m).replace(/\n/g,'<br>')+'</p></div>'
+    )).join('');
+  }
+  function add(n,m){
+    const a=load();a.unshift({n:n,m:m,t:new Date().toLocaleString(window.LANG==='en'?'en-US':'zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})});
+    save(a);render();
+  }
+  document.getElementById('tSend').addEventListener('click',()=>{
+    const n=nameEl.value.trim()||T('anon'),m=msgEl.value.trim();
+    if(!m){msgEl.style.borderColor='var(--gold)';msgEl.focus();return;}
+    add(n,m);
+    const body=encodeURIComponent(T('mailBody').replace('{n}',n).replace('{m}',m));
+    location.href='mailto:sinyu1998@gmail.com?subject='+encodeURIComponent(T('mailSubj').replace('{n}',n))+'&body='+body;
+    msgEl.value='';
+  });
+  document.getElementById('tCopy').addEventListener('click',()=>{
+    const n=nameEl.value.trim()||T('anon'),m=msgEl.value.trim();
+    if(!m){msgEl.focus();return;}
+    const txt=T('copyBody').replace('{n}',n).replace('{m}',m);
+    const done=()=>{add(n,m);msgEl.value='';};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(
+        ()=>{done();alert(T('copied'));},
+        ()=>{prompt(T('manual'),txt);done();}
+      );
+    }else{
+      prompt(T('manual'),txt);done();
+    }
+  });
+  render();
+})();
+onScroll();
+</script>
+<script>
+
+/* ============ 术语保护：品牌 / 人名 / 型号不被浏览器机翻 ============ */
+(function(){
+  var TERMS=["MARGUERITE & ASBURY", "Marguerite&Asbury", "Marguerite & Asbury", "Qianru (Carol) Huang", "Qianru Huang", "黄倩如", "XIAOHUANG", "SellerPilot", "SellerPilot OS", "SellerPilot", "EspoCRM", "DigLab AI", "DropshipLab", "LingLink AI", "Sinoways", "AiMB-G3", "AI GLASSES", "workonly1998", "sinyu1998@gmail.com", "USDC", "SKU", "IQC", "RoHS", "CUBA", "IAMCR", "AEJMC"];
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function rx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+  var re=new RegExp('('+TERMS.slice().sort(function(a,b){return b.length-a.length;}).map(rx).join('|')+')','g');
+  var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,list=[];
+  while(w.nextNode()){
+    n=w.currentNode;var p=n.parentElement;
+    if(!p||!n.nodeValue.trim())continue;
+    if(/^(SCRIPT|STYLE|TITLE|TEXTAREA|INPUT)$/.test(p.tagName))continue;
+    if((p.namespaceURI||'').indexOf('svg')>=0)continue;
+    if(p.closest&&p.closest('.nt'))continue;
+    re.lastIndex=0;if(!re.test(n.nodeValue))continue;
+    list.push(n);
+  }
+  list.forEach(function(n){
+    var h=esc(n.nodeValue).replace(re,'<span class="nt notranslate" translate="no">$1</span>');
+    var box=document.createElement('span');box.innerHTML=h;
+    var frag=document.createDocumentFragment();
+    while(box.firstChild)frag.appendChild(box.firstChild);
+    if(n.parentNode)n.parentNode.replaceChild(frag,n);
+  });
+})();
+
 </script>
 </body>
 </html>
