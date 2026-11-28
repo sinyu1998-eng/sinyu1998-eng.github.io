@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SellerPilot — 电商与外贸的出海生意助手</title>
+<meta name="description" content="SellerPilot：从一线跨境电商业务里长出来的出海生意助手。用直播、货代、海外仓、政府关系、商会、AI 软件六类资源，把中国工厂直接接到海外买家。">
+<meta name="theme-color" content="#0f1620">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SellerPilot — 电商与外贸的出海生意助手">
+<meta property="og:description" content="把六类出海资源，接成一条中国工厂直达海外买家的路。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1620'/%3E%3Cpath d='M18 22h28M18 32h28M18 42h18' stroke='%23e8b96a' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0f1620;--bg2:#141e2b;--paper:#f6f4ef;--ink:#eef2f7;--darkink:#141c26;
+  --dim:#93a1b3;--faint:#5e6c7e;--gold:#e8b96a;--line:rgba(147,161,179,.16);
+  --serif:"Noto Serif SC","Songti SC",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold);color:#0f1620}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,64px);background:rgba(15,22,32,.82);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+.logo{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.02em}
+.logo i{font-style:normal;color:var(--gold)}
+.nav-r{display:flex;align-items:center;gap:clamp(14px,2.6vw,30px)}
+.nav-r a{font-size:12.5px;color:var(--dim);transition:color .2s}
+.nav-r a:hover{color:var(--gold)}
+.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px}
+.lang button{border:0;background:none;color:var(--dim);font-family:var(--sans);font-size:11px;padding:4px 11px;border-radius:999px;cursor:pointer;transition:.2s}
+.lang button.on{background:var(--gold);color:#0f1620}
+
+/* shared */
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+h2{font-family:var(--serif);font-size:clamp(27px,4.6vw,44px);font-weight:600;line-height:1.32;letter-spacing:.01em}
+.lead{color:var(--dim);font-size:clamp(14px,1.9vw,17px);max-width:660px;margin-top:20px;line-height:1.85}
+.sec{padding:clamp(74px,11vw,128px) 0;border-top:1px solid var(--line)}
+.sec.gray{background:var(--bg2)}
+
+/* hero */
+header{position:relative;overflow:hidden;padding:clamp(120px,17vh,168px) 0 clamp(72px,10vw,104px)}
+header:after{content:"";position:absolute;right:-120px;top:-120px;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,185,106,.13),transparent 66%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold);
+  border:1px solid rgba(232,185,106,.3);border-radius:999px;padding:7px 15px;margin-bottom:30px}
+.hero-tag b{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+h1{font-family:var(--serif);font-size:clamp(38px,7.2vw,74px);font-weight:600;line-height:1.16;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--gold)}
+.h1sub{margin-top:22px;font-size:clamp(16px,2.2vw,21px);color:var(--ink);max-width:720px;line-height:1.7}
+.h1sub b{color:var(--gold);font-weight:600}
+.hero-note{margin-top:20px;color:var(--dim);font-size:14px;max-width:660px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:38px}
+.btn{font-size:13px;padding:12px 24px;border-radius:999px;border:1px solid var(--faint);color:var(--dim);transition:.25s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn.gold{border-color:var(--gold);color:var(--gold)}
+.btn.gold:hover{background:var(--gold);color:#0f1620}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:52px}
+.num{background:var(--bg);padding:26px 20px}
+.num .v{font-family:var(--serif);font-size:clamp(24px,3.4vw,36px);font-weight:600;color:var(--ink)}
+.num .v small{font-size:.5em;color:var(--gold);margin-left:3px}
+.num .l{font-size:12px;color:var(--dim);margin-top:6px}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
+.p{border:1px solid var(--line);border-radius:13px;padding:24px 22px;background:var(--bg);transition:transform .25s,border-color .25s;position:relative;overflow:hidden}
+.p:hover{transform:translateY(-4px);border-color:var(--faint)}
+.p .idx{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.1em}
+.p .stat{position:absolute;top:20px;right:20px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;padding:3px 9px;border-radius:999px}
+.stat.have{background:rgba(232,185,106,.14);color:var(--gold)}
+.stat.going{background:rgba(147,161,179,.12);color:var(--dim)}
+.p h3{font-family:var(--serif);font-size:21px;font-weight:600;margin-top:16px}
+.p .en{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;margin-top:3px;text-transform:uppercase}
+.p p{color:var(--dim);font-size:13.5px;margin-top:14px;line-height:1.75}
+.p .use{margin-top:16px;padding-top:13px;border-top:1px dashed var(--line);font-size:12px;color:var(--ink)}
+.p .use b{color:var(--gold);font-weight:600}
+
+/* stack / group architecture */
+.stack{margin-top:46px;display:flex;flex-direction:column;gap:12px}
+.layer{border:1px solid var(--line);border-radius:13px;padding:24px 26px;background:var(--bg2)}
+.layer .lh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.layer .ln{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.14em}
+.layer h3{font-family:var(--serif);font-size:22px;font-weight:600}
+.layer .ld{color:var(--dim);font-size:13.5px;margin-top:10px;max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:11.5px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+.chip.hi{color:var(--gold);border-color:rgba(232,185,106,.35)}
+.layer.core{background:linear-gradient(120deg,rgba(232,185,106,.08),rgba(232,185,106,.02));border-color:rgba(232,185,106,.3)}
+
+/* why me */
+.why{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.path{list-style:none;margin-top:30px;border-left:1px solid var(--line);padding-left:26px}
+.path li{position:relative;padding-bottom:26px}
+.path li:before{content:"";position:absolute;left:-32px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1px solid var(--gold)}
+.path li.last:before{background:var(--gold);box-shadow:0 0 0 5px rgba(232,185,106,.12)}
+.path .yr{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em}
+.path .what{font-size:16px;margin-top:5px;font-weight:600}
+.path .meta{font-size:12.5px;color:var(--dim);margin-top:4px}
+.evid{border:1px solid var(--line);border-radius:13px;background:var(--bg2);padding:28px 26px;margin-top:8px}
+.evid h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:20px}
+.evid .row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.evid .row:last-child{border-bottom:0}
+.evid .row span{color:var(--dim)}
+.evid .row b{font-weight:600;color:var(--ink);text-align:right}
+
+/* lean team */
+.lean{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.problem{border:1px solid var(--line);border-radius:13px;padding:28px;background:var(--bg2)}
+.problem .big{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);color:var(--gold);font-weight:600}
+.problem p{color:var(--dim);font-size:14px;margin-top:12px}
+.solve .item{display:flex;gap:16px;padding:17px 0;border-bottom:1px solid var(--line)}
+.solve .item:last-child{border-bottom:0}
+.solve .n{font-family:var(--mono);font-size:12px;color:var(--gold);flex:none;width:26px}
+.solve .t b{font-size:15px;font-weight:600}
+.solve .t p{font-size:13px;color:var(--dim);margin-top:4px}
+
+/* status */
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.sc{border:1px solid var(--line);border-radius:12px;padding:22px;background:var(--bg2)}
+.sc .tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 9px;border-radius:999px;display:inline-block}
+.sc.done .tag{background:rgba(232,185,106,.16);color:var(--gold)}
+.sc.doing .tag{background:rgba(120,190,160,.13);color:#8fd0b2}
+.sc.plan .tag{background:rgba(147,161,179,.13);color:var(--dim)}
+.sc h4{font-family:var(--serif);font-size:17px;font-weight:600;margin-top:14px}
+.sc p{font-size:12.5px;color:var(--dim);margin-top:8px;line-height:1.7}
+
+/* closing */
+.closing{text-align:center;padding:clamp(80px,12vw,130px) 0}
+.closing h2{font-size:clamp(30px,5vw,52px)}
+.closing p{color:var(--dim);margin:18px auto 0;max-width:600px;font-size:15px}
+.closing .btn{margin-top:32px}
+
+footer{border-top:1px solid var(--line);padding:34px clamp(20px,5vw,64px);color:var(--faint);font-size:12px}
+.fin{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer a{border-bottom:1px solid var(--faint)}
+footer a:hover{color:var(--ink)}
+
+@media(max-width:760px){
+  .nums{grid-template-columns:repeat(2,1fr)}
+  .pillars,.status{grid-template-columns:1fr}
+  .why,.lean{grid-template-columns:1fr;gap:32px}
+  .nav-r a{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">Seller<i>Pilot</i></div>
+  <div class="nav-r">
+    <a href="#idea" data-zh="定位" data-en="Idea">定位</a>
+    <a href="#resources" data-zh="六类资源" data-en="Resources">六类资源</a>
+    <a href="#group" data-zh="集团结构" data-en="Structure">集团结构</a>
+    <a href="#why" data-zh="为什么是我" data-en="Why me">为什么是我</a>
+    <a href="#lean" data-zh="少人打法" data-en="Lean model">少人打法</a>
+    <div class="lang"><button id="btnZh" class="on">中文</button><button id="btnEn">EN</button></div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="hero-tag"><b></b><span data-zh="从一线跨境业务里长出来的出海助手" data-en="Born from real cross-border trade, not a slide deck">从一线跨境业务里长出来的出海助手</span></div>
+    <h1 data-zh="把中国工厂，<br>直接接到<em>海外买家</em>" data-en="Connecting Chinese factories<br>straight to <em>overseas buyers</em>">把中国工厂，<br>直接接到<em>海外买家</em></h1>
+    <p class="h1sub"><b data-zh="SellerPilot" data-en="SellerPilot">SellerPilot</b><span data-zh=" 是电商与外贸的出海生意助手。它把客户开发、报价、跟单、验货、物流、交付串成一条自动跑起来的链条——让工厂只管发货。" data-en=" is an overseas-growth assistant for e-commerce and trade. It strings together lead generation, quoting, order follow-up, inspection, logistics and delivery into one chain that runs itself — so factories only have to ship."> 是电商与外贸的出海生意助手。它把客户开发、报价、跟单、验货、物流、交付串成一条自动跑起来的链条——让工厂只管发货。</span></p>
+    <p class="hero-note" data-zh="我打算用自己这些年在义乌、电商一线和 AI 上的全部经历，把六类分散的出海资源整合到一处，长成一个集团：margueritesbury.com。" data-en="I'm using everything I've learned in Yiwu, on the e-commerce frontline and in AI, to bring six scattered resources together — and grow them into a group: margueritesbury.com.">我打算用自己这些年在义乌、电商一线和 AI 上的全部经历，把六类分散的出海资源整合到一处，长成一个集团：margueritesbury.com。</p>
+    <div class="cta">
+      <a class="btn gold" href="#resources" data-zh="看六类资源 →" data-en="See the six resources →">看六类资源 →</a>
+      <a class="btn" href="/sellerpilot/" data-zh="打开 SellerPilot 主站 ↗" data-en="Open SellerPilot site ↗">打开 SellerPilot 主站 ↗</a>
+    </div>
+
+    <div class="nums">
+      <div class="num"><div class="v" data-to="1" data-suffix="亿+">0</div><div class="l" data-zh="上一年度电商 GMV" data-en="Last year's e-commerce GMV">上一年度电商 GMV</div></div>
+      <div class="num"><div class="v" data-to="90" data-suffix="+">0</div><div class="l" data-zh="跨境店铺运营经验" data-en="Cross-border stores run">跨境店铺运营经验</div></div>
+      <div class="num"><div class="v" data-to="3000" data-suffix="㎡">0</div><div class="l" data-zh="美国展厅与仓储" data-en="US showroom &amp; warehouse">美国展厅与仓储</div></div>
+      <div class="num"><div class="v" data-to="6" data-suffix="">0</div><div class="l" data-zh="类待整合的出海资源" data-en="Resource pillars to integrate">类待整合的出海资源</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="idea">
+  <div class="wrap">
+    <div class="kicker" data-zh="01 — 定位" data-en="01 — THE IDEA">01 — 定位</div>
+    <h2 data-zh="不是一个软件，是一门生意的操作系统" data-en="Not just software — an operating system for the business">不是一个软件，是一门生意的操作系统</h2>
+    <p class="lead" data-zh="市面上的工具只解决一个点：翻译、获客、或者跟单。我要做的是把整门出海生意当成一套系统来跑——从找客户到收货款，每一段都能被看见、被自动推进、被核验。这就是 SellerPilot。" data-en="Most tools solve one point: translation, lead-gen, or order follow-up. What I'm building runs the whole business as one system — from finding a buyer to collecting payment, every stage visible, auto-advanced and verifiable. That's SellerPilot.">市面上的工具只解决一个点：翻译、获客、或者跟单。我要做的是把整门出海生意当成一套系统来跑——从找客户到收货款，每一段都能被看见、被自动推进、被核验。这就是 SellerPilot。</p>
+  </div>
+</section>
+
+<section class="sec gray" id="resources">
+  <div class="wrap">
+    <div class="kicker" data-zh="02 — 六类资源" data-en="02 — SIX RESOURCES">02 — 六类资源</div>
+    <h2 data-zh="把散落的资源，接成一条路" data-en="Turning scattered resources into one path">把散落的资源，接成一条路</h2>
+    <p class="lead" data-zh="这些资源我已经有一部分、另一部分正在整合。把它们接进同一条链路，是接下来最重要的事。标签说明了各自的真实进度。" data-en="I already have part of these and am integrating the rest. Connecting them into one chain is the priority ahead. The badges show each one's real status.">这些资源我已经有一部分、另一部分正在整合。把它们接进同一条链路，是接下来最重要的事。标签说明了各自的真实进度。</p>
+    <div class="pillars">
+
+      <div class="p">
+        <span class="idx">01</span><span class="stat going" data-zh="整合中" data-en="INTEGRATING">整合中</span>
+        <h3 data-zh="直播资源" data-en="Livestream">直播资源</h3>
+        <div class="en">LIVESTREAM</div>
+        <p data-zh="用直播把产品讲清楚、把流量带进来。出海不是把货摆上货架就完了，得有人持续地把故事讲给买家听。" data-en="Use livestream to explain products and bring in traffic. Going global isn't just listing goods — someone has to keep telling the story to buyers.">用直播把产品讲清楚、把流量带进来。出海不是把货摆上货架就完了，得有人持续地把故事讲给买家听。</p>
+        <div class="use" data-zh="在链路中的位置：<b>前端获客与信任建立</b>" data-en="Role in the chain: <b>top-of-funnel &amp; trust</b>">在链路中的位置：<b>前端获客与信任建立</b></div>
+      </div>
+
+      <div class="p">
+        <span class="idx">02</span><span class="stat going" data-zh="整合中" data-en="INTEGRATING">整合中</span>
+        <h3 data-zh="货代资源" data-en="Freight forwarding">货代资源</h3>
+        <div class="en">FREIGHT</div>
+        <p data-zh="报关、订舱、清关、拖车——跨境最容易卡住的环节。把货代接进系统，报价时就能算准物流成本和时效。" data-en="Customs, booking, clearance, trucking — the most common bottlenecks. Plug freight into the system and logistics cost &amp; timing become accurate at quoting time.">报关、订舱、清关、拖车——跨境最容易卡住的环节。把货代接进系统，报价时就能算准物流成本和时效。</p>
+        <div class="use" data-zh="在链路中的位置：<b>履约与成本核算</b>" data-en="Role in the chain: <b>fulfilment &amp; costing</b>">在链路中的位置：<b>履约与成本核算</b></div>
+      </div>
+
+      <div class="p">
+        <span class="idx">03</span><span class="stat have" data-zh="已有基础" data-en="FOUNDATION EXISTS">已有基础</span>
+        <h3 data-zh="海外仓资源" data-en="Overseas warehouse">海外仓资源</h3>
+        <div class="en">OVERSEAS WAREHOUSE</div>
+        <p data-zh="海外有展厅与仓储基础，让买家能看样、让订单能本地交付。这是把「中国发货」变成「本地履约」的关键。" data-en="An existing US showroom &amp; warehouse lets buyers inspect samples and orders deliver locally — the key to turning 'ship from China' into 'local fulfilment'.">海外有展厅与仓储基础，让买家能看样、让订单能本地交付。这是把「中国发货」变成「本地履约」的关键。</p>
+        <div class="use" data-zh="在链路中的位置：<b>本地交付与验货</b>" data-en="Role in the chain: <b>local delivery &amp; inspection</b>">在链路中的位置：<b>本地交付与验货</b></div>
+      </div>
+
+      <div class="p">
+        <span class="idx">04</span><span class="stat going" data-zh="整合中" data-en="INTEGRATING">整合中</span>
+        <h3 data-zh="政府关系资源" data-en="Government relations">政府关系资源</h3>
+        <div class="en">PUBLIC SECTOR</div>
+        <p data-zh="出海涉及合规、补贴、展会与产业园区政策。把这条线接进来，能帮工厂少踩坑、用上该用的支持。" data-en="Going global touches compliance, subsidies, trade shows and industrial-park policy. Connecting this line helps factories avoid pitfalls and use the support available.">出海涉及合规、补贴、展会与产业园区政策。把这条线接进来，能帮工厂少踩坑、用上该用的支持。</p>
+        <div class="use" data-zh="在链路中的位置：<b>合规与政策背书</b>" data-en="Role in the chain: <b>compliance &amp; credibility</b>">在链路中的位置：<b>合规与政策背书</b></div>
+      </div>
+
+      <div class="p">
+        <span class="idx">05</span><span class="stat going" data-zh="整合中" data-en="INTEGRATING">整合中</span>
+        <h3 data-zh="商会资源" data-en="Chamber network">商会资源</h3>
+        <div class="en">CHAMBERS</div>
+        <p data-zh="商会和产业社群是信任的放大器。义乌屋顶沙龙已经在做工厂、外贸从业者与海外买家的对接，这是起点。" data-en="Chambers and industry communities amplify trust. The Yiwu rooftop salon already brings factories, traders and overseas buyers together — that's the starting point.">商会和产业社群是信任的放大器。义乌屋顶沙龙已经在做工厂、外贸从业者与海外买家的对接，这是起点。</p>
+        <div class="use" data-zh="在链路中的位置：<b>信任网络与批量获客</b>" data-en="Role in the chain: <b>trust network &amp; bulk leads</b>">在链路中的位置：<b>信任网络与批量获客</b></div>
+      </div>
+
+      <div class="p">
+        <span class="idx">06</span><span class="stat have" data-zh="已跑通" data-en="BUILT &amp; RUNNING">已跑通</span>
+        <h3 data-zh="AI 软件资源" data-en="AI software">AI 软件资源</h3>
+        <div class="en">AI SOFTWARE</div>
+        <p data-zh="SellerPilot OS 已经能跑通询单跟单的九段状态机：保本报价、异常预警、成本账本都已在系统里落地。" data-en="SellerPilot OS already runs a nine-stage state machine for inbound orders — break-even quoting, anomaly alerts and a cost ledger are live in the system.">SellerPilot OS 已经能跑通询单跟单的九段状态机：保本报价、异常预警、成本账本都已在系统里落地。</p>
+        <div class="use" data-zh="在链路中的位置：<b>把前面五类接起来的中枢</b>" data-en="Role in the chain: <b>the hub connecting the other five</b>">在链路中的位置：<b>把前面五类接起来的中枢</b></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="group">
+  <div class="wrap">
+    <div class="kicker" data-zh="03 — 集团结构" data-en="03 — THE GROUP">03 — 集团结构</div>
+    <h2 data-zh="照京东的路子，做重一件事：履约" data-en="The JD playbook: get fulfilment right">照京东的路子，做重一件事：履约</h2>
+    <p class="lead" data-zh="京东赢在把仓储、物流和正品信任握在自己手里。出海生意的京东式打法，是把「流量—系统—履约—信任」四层都接起来，而不是只做一个撮合平台。" data-en="JD won by owning warehousing, logistics and the trust of authentic goods. The JD-style play for going global connects four layers — traffic, system, fulfilment and trust — instead of being just a matchmaking platform.">京东赢在把仓储、物流和正品信任握在自己手里。出海生意的京东式打法，是把「流量—系统—履约—信任」四层都接起来，而不是只做一个撮合平台。</p>
+    <div class="stack">
+      <div class="layer">
+        <div class="lh"><span class="ln">LAYER 01</span><h3 data-zh="流量层 · 把买家带进来" data-en="Traffic · bring buyers in">流量层 · 把买家带进来</h3></div>
+        <p class="ld" data-zh="直播与商会把分散的需求聚到一起，让工厂第一次有了直接面对海外买家的入口。" data-en="Livestream and chambers gather scattered demand, giving factories a direct entry to overseas buyers for the first time.">直播与商会把分散的需求聚到一起，让工厂第一次有了直接面对海外买家的入口。</p>
+        <div class="chips"><span class="chip" data-zh="直播获客" data-en="Livestream acquisition">直播获客</span><span class="chip" data-zh="商会对接地推" data-en="Chamber matchmaking">商会对接地推</span><span class="chip" data-zh="沙龙与展会" data-en="Salons &amp; trade shows">沙龙与展会</span></div>
+      </div>
+      <div class="layer core">
+        <div class="lh"><span class="ln">LAYER 02 · CORE</span><h3 data-zh="系统层 · SellerPilot OS" data-en="System · SellerPilot OS">系统层 · SellerPilot OS</h3></div>
+        <p class="ld" data-zh="整条链路的中枢。询单进来后由系统接手推进，人只在例外时介入——这是「人少也能做大」的关键。" data-en="The hub of the whole chain. Once an inquiry comes in, the system drives it forward and humans step in only for exceptions — the key to doing more with fewer people.">整条链路的中枢。询单进来后由系统接手推进，人只在例外时介入——这是「人少也能做大」的关键。</p>
+        <div class="chips"><span class="chip hi" data-zh="九段状态机" data-en="Nine-stage state machine">九段状态机</span><span class="chip hi" data-zh="CIF 保本报价" data-en="CIF break-even quoting">CIF 保本报价</span><span class="chip hi" data-zh="六项成本账本" data-en="Six-item cost ledger">六项成本账本</span><span class="chip hi" data-zh="异常预警" data-en="Anomaly alerts">异常预警</span></div>
+      </div>
+      <div class="layer">
+        <div class="lh"><span class="ln">LAYER 03</span><h3 data-zh="履约层 · 把货交到手上" data-en="Fulfilment · deliver to their hands">履约层 · 把货交到手上</h3></div>
+        <p class="ld" data-zh="货代与海外仓把报价时的成本和时效变成真实的交付。看样、验货、本地发货都在这一层完成。" data-en="Freight and overseas warehouses turn quoted cost and timing into real delivery. Sampling, inspection and local shipping all happen here.">货代与海外仓把报价时的成本和时效变成真实的交付。看样、验货、本地发货都在这一层完成。</p>
+        <div class="chips"><span class="chip" data-zh="报关与物流" data-en="Customs &amp; logistics">报关与物流</span><span class="chip" data-zh="海外仓看样" data-en="Warehouse sampling">海外仓看样</span><span class="chip" data-zh="本地交付" data-en="Local delivery">本地交付</span></div>
+      </div>
+      <div class="layer">
+        <div class="lh"><span class="ln">LAYER 04</span><h3 data-zh="信任层 · 让陌生人敢下单" data-en="Trust · make strangers dare to order">信任层 · 让陌生人敢下单</h3></div>
+        <p class="ld" data-zh="政府关系、商会背书与可核验的贸易凭证，让海外买家敢把订单交给一个陌生的中国工厂。" data-en="Government ties, chamber endorsement and verifiable trade records give overseas buyers the confidence to order from an unfamiliar Chinese factory.">政府关系、商会背书与可核验的贸易凭证，让海外买家敢把订单交给一个陌生的中国工厂。</p>
+        <div class="chips"><span class="chip" data-zh="合规与政策" data-en="Compliance &amp; policy">合规与政策</span><span class="chip" data-zh="商会背书" data-en="Chamber endorsement">商会背书</span><span class="chip" data-zh="可验证凭证" data-en="Verifiable records">可验证凭证</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec gray" id="why">
+  <div class="wrap">
+    <div class="kicker" data-zh="04 — 为什么是我" data-en="04 — WHY ME">04 — 为什么是我</div>
+    <h2 data-zh="这条路径，刚好把六类资源都走过一遍" data-en="This path happens to touch all six resources">这条路径，刚好把六类资源都走过一遍</h2>
+    <div class="why" style="margin-top:40px">
+      <ul class="path">
+        <li><div class="yr">义乌 · 成长</div><div class="what" data-zh="在商贸城长大" data-en="Raised around the trade market">在商贸城长大</div><div class="meta" data-zh="从小熟悉供应链与做买卖的真实逻辑" data-en="Learned the real logic of supply chains and trade early on">从小熟悉供应链与做买卖的真实逻辑</div></li>
+        <li><div class="yr">2016 — 2023</div><div class="what" data-zh="浙江大学 · 传播学" data-en="Zhejiang University · Communication">浙江大学 · 传播学</div><div class="meta" data-zh="本科与硕士；研究身份建构、社会资本与数字动员" data-en="BA &amp; MPhil; research on identity, social capital and digital mobilisation">本科与硕士；研究身份建构、社会资本与数字动员</div></li>
+        <li><div class="yr">2022 — 2024</div><div class="what" data-zh="Texas A&amp;M · 政治传播" data-en="Texas A&amp;M · Political communication">Texas A&amp;M · 政治传播</div><div class="meta" data-zh="博士阶段科研与助教，理解制度、政策与信任" data-en="Doctoral research &amp; teaching — institutions, policy and trust">博士阶段科研与助教，理解制度、政策与信任</div></li>
+        <li><div class="yr">2024 — 现在</div><div class="what" data-zh="Arizona State University · CS &amp; AI" data-en="Arizona State University · CS &amp; AI">Arizona State University · CS &amp; AI</div><div class="meta" data-zh="工程硕士，把传播与商业判断落到可运行的代码上" data-en="MEng — turning communication and business judgment into running code">工程硕士，把传播与商业判断落到可运行的代码上</div></li>
+        <li class="last"><div class="yr">一线 · 跨境电商</div><div class="what" data-zh="既做过生意，也写得出系统" data-en="Ran the business, and wrote the system">既做过生意，也写得出系统</div><div class="meta" data-zh="90+ 店铺、上亿 GMV、美国展厅仓储——SellerPilot 从这些真实业务里长出来" data-en="90+ stores, 100M+ GMV, a US showroom — SellerPilot grew out of this real business">90+ 店铺、上亿 GMV、美国展厅仓储——SellerPilot 从这些真实业务里长出来</div></li>
+      </ul>
+      <div class="evid">
+        <h3 data-zh="能拿出来的凭据" data-en="Evidence on hand">能拿出来的凭据</h3>
+        <div class="row"><span data-zh="电商业务 GMV" data-en="E-commerce GMV">电商业务 GMV</span><b>¥1亿+</b></div>
+        <div class="row"><span data-zh="跨境店铺运营" data-en="Stores operated">跨境店铺运营</span><b>90+</b></div>
+        <div class="row"><span data-zh="美国展厅与仓储" data-en="US showroom &amp; warehouse">美国展厅与仓储</span><b>3000㎡</b></div>
+        <div class="row"><span data-zh="国际会议报告" data-en="Conference talks">国际会议报告</span><b>4+</b></div>
+        <div class="row"><span data-zh="国家奖学金" data-en="National scholarships">国家奖学金</span><b data-zh="2 次（前 1%）" data-en="2 (top 1%)">2 次（前 1%）</b></div>
+        <div class="row"><span data-zh="纪录片《正在连接》" data-en="Doc film “Connecting”">纪录片《正在连接》</span><b data-zh="100万+ 播放" data-en="1M+ views">100万+ 播放</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="lean">
+  <div class="wrap">
+    <div class="kicker" data-zh="05 — 少人打法" data-en="05 — LEAN MODEL">05 — 少人打法</div>
+    <h2 data-zh="人太少，就更要让系统干活" data-en="Few people? Then let the system do the work">人太少，就更要让系统干活</h2>
+    <div class="lean" style="margin-top:40px">
+      <div class="problem">
+        <div class="big" data-zh="现在最大的约束是人。" data-en="The real constraint today is people.">现在最大的约束是人。</div>
+        <p data-zh="六类资源要接起来，靠堆人去做对接、跟单和协调，成本下不来、速度也上不去。京东的重资产是靠资本堆出来的；我这边必须用另一种方式。" data-en="Connecting six resources by hiring people for coordination, follow-up and support is too slow and too expensive. JD built its heavy assets with capital; I have to get there another way.">六类资源要接起来，靠堆人去做对接、跟单和协调，成本下不来、速度也上不去。京东的重资产是靠资本堆出来的；我这边必须用另一种方式。</p>
+      </div>
+      <div class="solve">
+        <div class="item"><div class="n">01</div><div class="t"><b data-zh="把重复的事交给状态机" data-en="Let the state machine handle repeats">把重复的事交给状态机</b><p data-zh="询单进来后，SellerPilot 自动推进九段流程，人只在例外时介入。" data-en="Once an inquiry arrives, SellerPilot advances the nine stages; humans step in only for exceptions.">询单进来后，SellerPilot 自动推进九段流程，人只在例外时介入。</p></div></div>
+        <div class="item"><div class="n">02</div><div class="t"><b data-zh="先把钱算清楚" data-en="Know the numbers first">先把钱算清楚</b><p data-zh="CIF 保本报价与六项成本账本，让每一单在报价时就知道赚不赚钱。" data-en="CIF break-even quoting and a six-item cost ledger show whether an order makes money before you quote it.">CIF 保本报价与六项成本账本，让每一单在报价时就知道赚不赚钱。</p></div></div>
+        <div class="item"><div class="n">03</div><div class="t"><b data-zh="异常才需要人" data-en="People only for anomalies">异常才需要人</b><p data-zh="系统盯住断点与异常并主动预警，把有限的人手用在真正需要判断的地方。" data-en="The system watches for breakpoints and alerts early, so the few people available focus where judgment matters.">系统盯住断点与异常并主动预警，把有限的人手用在真正需要判断的地方。</p></div></div>
+        <div class="item"><div class="n">04</div><div class="t"><b data-zh="资源用接的，不用买的" data-en="Integrate resources, don't own them">资源用接的，不用买的</b><p data-zh="货代、海外仓、商会、政府关系以合作方式接入，不靠自建和重资产，先跑通链路。" data-en="Freight, warehouses, chambers and public-sector ties plug in as partnerships — no heavy assets up front, just get the chain running.">货代、海外仓、商会、政府关系以合作方式接入，不靠自建和重资产，先跑通链路。</p></div></div>
+      </div>
+    </div>
+
+    <div class="status">
+      <div class="sc done"><span class="tag" data-zh="已跑通" data-en="RUNNING">已跑通</span><h4 data-zh="SellerPilot OS 核心" data-en="SellerPilot OS core">SellerPilot OS 核心</h4><p data-zh="询单跟单九段状态机、CIF 保本报价、异常预警、成本账本已在系统里落地并可演示。" data-en="Nine-stage order state machine, CIF break-even quoting, anomaly alerts and cost ledger are built and demoable.">询单跟单九段状态机、CIF 保本报价、异常预警、成本账本已在系统里落地并可演示。</p></div>
+      <div class="sc doing"><span class="tag" data-zh="整合中" data-en="IN PROGRESS">整合中</span><h4 data-zh="六类资源接入" data-en="Six-resource integration">六类资源接入</h4><p data-zh="直播、货代、政府关系、商会正在对接；海外仓与 AI 软件已有基础。" data-en="Livestream, freight, public-sector and chamber links are in progress; warehouse and AI software foundations exist.">直播、货代、政府关系、商会正在对接；海外仓与 AI 软件已有基础。</p></div>
+      <div class="sc plan"><span class="tag" data-zh="规划中" data-en="PLANNED">规划中</span><h4 data-zh="集团母站" data-en="Group site">集团母站</h4><p data-zh="margueritesbury.com 作为集团入口，把各条业务线统一到一个品牌之下。" data-en="margueritesbury.com as the group entry point, unifying the business lines under one brand.">margueritesbury.com 作为集团入口，把各条业务线统一到一个品牌之下。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="kicker" data-zh="让我们一起把它跑起来" data-en="LET'S MAKE IT RUN">让我们一起把它跑起来</div>
+    <h2 data-zh="工厂只管发货，<br>剩下的交给系统" data-en="Factories just ship.<br>The system handles the rest">工厂只管发货，<br>剩下的交给系统</h2>
+    <p data-zh="如果你是工厂、外贸从业者、货代、海外仓，或者只是想看看这套东西怎么跑——欢迎来聊。" data-en="If you're a factory, trader, freight forwarder, warehouse operator, or just curious how this runs — come talk to me.">如果你是工厂、外贸从业者、货代、海外仓，或者只是想看看这套东西怎么跑——欢迎来聊。</p>
+    <a class="btn gold" href="mailto:sinyu1998@gmail.com" data-zh="聊聊合作 →" data-en="Get in touch →">聊聊合作 →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fin">
+    <div>SellerPilot · <a href="/sellerpilot/" data-zh="产品主站" data-en="Product site">产品主站</a> · <a href="https://sinyu1998-eng.github.io/" data-zh="关于我" data-en="About me">关于我</a></div>
+    <div>sinyu1998@gmail.com · © 2026 Qianru (Carol) Huang</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var EN=false;
+  var html=document.documentElement;
+  function apply(en){
+    html.lang=en?'en':'zh-CN';
+    document.title=en?'SellerPilot — Overseas Growth Assistant for E-commerce & Trade':'SellerPilot — 电商与外贸的出海生意助手';
+    document.querySelectorAll('[data-zh]').forEach(function(el){
+      var t=el.getAttribute(en?'data-en':'data-zh');
+      if(t!==null) el.innerHTML=t;
+    });
+    document.getElementById('btnZh').classList.toggle('on',!en);
+    document.getElementById('btnEn').classList.toggle('on',en);
+  }
+  document.getElementById('btnZh').addEventListener('click',function(){apply(false)});
+  document.getElementById('btnEn').addEventListener('click',function(){apply(true)});
+  apply(EN);
+  var nav=document.getElementById('nav');
+  function sc(){nav.classList.toggle('scrolled',window.scrollY>10)}
+  window.addEventListener('scroll',sc,{passive:true});sc();
+  // count-up numbers
+  var done=false;
+  function countUp(){
+    if(done)return; done=true;
+    document.querySelectorAll('.num .v').forEach(function(el){
+      var to=parseFloat(el.getAttribute('data-to')),sfx=el.getAttribute('data-suffix')||'',s=el;
+      var st=null,dur=1100;
+      function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/dur,1);var v=Math.floor(p*to);
+        s.textContent=v+sfx;if(p<1)requestAnimationFrame(step);else s.textContent=to+sfx}
+      requestAnimationFrame(step);
+    });
+  }
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)countUp()})},{threshold:.3});
+  var nt=document.querySelector('.nums');if(nt)obs.observe(nt);
+})();
+</script>
+</body>
+</html>
